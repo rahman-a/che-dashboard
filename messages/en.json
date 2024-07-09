@@ -1,0 +1,9 @@
+{
+  "General": {
+    "welcome": "Welcome and Hello"
+  },
+  "NotFound": {
+    "back_to_home": "Back to home",
+    "not_found": "Page not found"
+  }
+}
