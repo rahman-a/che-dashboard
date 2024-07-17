@@ -33,7 +33,7 @@ export default function Dashboard({}: Props) {
           icon={<DollarSign className='h-4 w-4 text-muted-foreground' />}
         />
         <SmallStatCard
-          title='Subscriptions'
+          title='Customers'
           value='+2350'
           state='+180.1% from last month'
           icon={<Users className='h-4 w-4 text-muted-foreground' />}
@@ -45,13 +45,13 @@ export default function Dashboard({}: Props) {
           icon={<CreditCard className='h-4 w-4 text-muted-foreground' />}
         />
         <SmallStatCard
-          title='Active Now'
+          title='Orders'
           value='+573'
           state='+201 since last hour'
           icon={<Activity className='h-4 w-4 text-muted-foreground' />}
         />
       </section>
-      <section className='w-full md:h-44'>
+      <section className='w-full md:h-46'>
         <OrderStatusChart />
       </section>
       <section className='w-full'>
@@ -70,7 +70,7 @@ export default function Dashboard({}: Props) {
           tableHeads={['Country', 'Name', 'Total Orders']}
         />
       </section>
-      <section className='grid md:grid-cols-3 w-screen md:w-full gap-5'>
+      <section className='grid md:grid-cols-2 w-screen md:w-full gap-5'>
         <TopBySales
           data={topCountriesBySales}
           tableHeads={['Country', 'Name', 'Total Paid']}
@@ -79,18 +79,19 @@ export default function Dashboard({}: Props) {
           data={topStatesBySales}
           tableHeads={['Country', 'Name', 'Total Sales']}
         />
+      </section>
+      <section className='grid md:grid-cols-2 w-screen md:w-full gap-5'>
         <TopByAttributes
           data={topCategories}
           tableHeads={['Category', 'Total Orders', 'Total Sales']}
         />
-      </section>
-      <section className='grid md:grid-cols-[1fr_370px] w-screen md:w-full gap-5'>
-        <TopProductsTable />
         <TopByAttributes
           data={topSizes}
           tableHeads={['Size', 'Total Orders', 'Total Sales']}
-          className='[&_table]:md:mt-2'
         />
+      </section>
+      <section className='grid w-screen md:w-full'>
+        <TopProductsTable />
       </section>
     </div>
   )

@@ -27,10 +27,13 @@
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 60 9.1% 97.8%;
-    --order-new: 0, 0%, 93%;
-    --order-cut: 219, 13%, 22%;
-    --order-sewed: 216, 18%, 16%;
-    --order-delivered: 183, 26%, 57%;
+    --order-new: 26, 13%, 65%;
+    --order-cut: 212, 74%, 27%;
+    --order-sewed: 221, 19%, 23%;
+    --order-delivered: 144, 11%, 46%;
+    --order-urgent: 0, 39%, 44%;
+    --order-important: 37, 65%, 37%;
+    --order-contact: 186, 9%, 42%;
 
     --border: 20 5.9% 90%;
     --input: 20 5.9% 90%;

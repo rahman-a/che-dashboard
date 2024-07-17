@@ -13,6 +13,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from '@/components/ui/popover'
+import { useMediaQuery } from '@/hooks/useMediaQuery'
 
 export default function DateRangePicker({
   className,
@@ -21,6 +22,8 @@ export default function DateRangePicker({
     from: new Date(2022, 0, 20),
     to: addDays(new Date(2022, 0, 20), 20),
   })
+
+  const isSmallScreen = useMediaQuery('(max-width: 640px)')
 
   return (
     <div className={cn('grid gap-2', className)}>
@@ -49,7 +52,12 @@ export default function DateRangePicker({
             )}
           </Button>
         </PopoverTrigger>
-        <PopoverContent className='w-auto p-0' align='start'>
+        <PopoverContent
+          className='w-auto p-0'
+          align='center'
+          side='right'
+          avoidCollisions={!isSmallScreen}
+        >
           <Calendar
             initialFocus
             mode='range'

@@ -18,7 +18,7 @@ import { orderStatusChartConfig, ordersStatusData } from '@/demo/charts'
 
 export default function OrderStatusChart() {
   return (
-    <Card className='grid gap-2 w-full h-full md:grid-cols-[1fr_220px] lg:grid-cols-[1fr_500px]'>
+    <Card className='grid gap-2 w-full h-full md:grid-cols-[1fr_500px] lg:grid-cols-[1fr_500px]'>
       <div className='flex flex-col'>
         <CardHeader className='pb-4 md:pb-8'>
           <CardTitle>Orders Status</CardTitle>
@@ -33,8 +33,7 @@ export default function OrderStatusChart() {
               <span className='text-sm font-semibold'>{data.pieces}</span>
               <h4
                 className={cn(
-                  `flex justify-center w-16 capitalize text-xs rounded-lg px-2 py-1`,
-                  data.status === 'new' ? 'text-black' : 'text-white'
+                  `flex justify-center w-16 capitalize text-xs text-white rounded-lg px-2 py-1`
                 )}
                 style={{ backgroundColor: data.fill }}
               >
