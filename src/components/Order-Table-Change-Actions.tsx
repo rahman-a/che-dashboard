@@ -24,6 +24,8 @@ import {
   statuses,
   payment,
 } from '@/app/[locale]/orders/(data)/data'
+import { useLocale, useTranslations } from 'next-intl'
+import { getLangDir } from 'rtl-detect'
 
 type ActionTriggerProps = {
   label: string
@@ -44,27 +46,27 @@ export function OrderTableChangeActions({
   value,
   Icon,
 }: ActionTriggerProps) {
+  const t = useTranslations()
+  const locale = useLocale()
   return (
     <Dialog>
       <DialogTrigger asChild>
         <Button
           variant='ghost'
-          className='p-4 pl-1 pr-0 space-x-2 rtl:space-x-reverse justify-start 
-                font-normal text-gray-800'
+          className='p-4 pl-1 pr-0 rtl:pl-0 rtl:pr-1 space-x-2 rtl:space-x-reverse justify-start 
+                font-normal text-gray-800 rtl:flex-row-reverse'
         >
           {Icon && <Icon className='h-4 w-4' />}
           <span>{label}</span>
         </Button>
       </DialogTrigger>
       <DialogContent className='sm:max-w-[425px]'>
-        <DialogHeader>
+        <DialogHeader className='rtl:text-center'>
           <DialogTitle>{label}</DialogTitle>
-          <DialogDescription>
-            Make changes to your order here. Click save when you&apos;re done.
-          </DialogDescription>
+          <DialogDescription>{t('order_change_guide_msg')}</DialogDescription>
         </DialogHeader>
         <div className='flex justify-center items-center py-4'>
-          <Select>
+          <Select dir={getLangDir(locale)}>
             <SelectTrigger className='w-full'>
               <SelectValue placeholder={label} />
             </SelectTrigger>
@@ -73,9 +75,9 @@ export function OrderTableChangeActions({
                 <SelectLabel>{label}</SelectLabel>
                 {options[value as OptionsValue].map((option: any) => (
                   <SelectItem key={option.value} value={option.value}>
-                    <div className='flex items-center space-x-2'>
+                    <div className='flex items-center space-x-2 rtl:space-x-reverse'>
                       {option.icon && <option.icon className='h-4 w-4' />}
-                      <span>{option.label}</span>
+                      <span>{t(option.label)}</span>
                     </div>
                   </SelectItem>
                 ))}
@@ -84,7 +86,7 @@ export function OrderTableChangeActions({
           </Select>
         </div>
         <DialogFooter>
-          <Button type='submit'>Save changes</Button>
+          <Button type='submit'>{t('save_change')}</Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>

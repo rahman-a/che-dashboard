@@ -20,27 +20,35 @@ import { Button } from './ui/button'
 import { topProducts } from '@/demo/data'
 import { cn } from '@/lib/utils'
 import Image from 'next/image'
+import { useTranslations } from 'next-intl'
 
 type Props = {
   className?: string
 }
 
 export default function TopProductsTable({ className }: Props) {
+  const t = useTranslations()
   return (
-    <Card className={cn('flex flex-col w-screen md:w-full', className)}>
+    <Card className={cn('flex flex-col w-full', className)}>
       <CardHeader>
-        <CardTitle>Top Products</CardTitle>
+        <CardTitle>{t('top_products')}</CardTitle>
       </CardHeader>
       <CardContent>
         <Table className='border-separate'>
           <TableHeader>
             <TableRow className='bg-gray-50'>
-              <TableHead className='w-[100px]'>No</TableHead>
-              <TableHead>Image</TableHead>
-              <TableHead>Name</TableHead>
-              <TableHead>Total Orders</TableHead>
-              <TableHead>Total Sales</TableHead>
-              <TableHead></TableHead>
+              <TableHead className='w-[100px] rtl:text-right'>
+                {t('no')}
+              </TableHead>
+              <TableHead className='rtl:text-right'>{t('image')}</TableHead>
+              <TableHead className='rtl:text-right'>{t('name')}</TableHead>
+              <TableHead className='rtl:text-right'>
+                {t('total_orders')}
+              </TableHead>
+              <TableHead className='rtl:text-right'>
+                {t('total_sales')}
+              </TableHead>
+              <TableHead className='rtl:text-right'></TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -78,7 +86,7 @@ export default function TopProductsTable({ className }: Props) {
       </CardContent>
       <CardFooter className='w-full flex-col items-end gap-2 text-sm mt-auto'>
         <Button variant='outline' size='sm' asChild>
-          <Link href={topProducts.url}>View All</Link>
+          <Link href={topProducts.url}>{t('view_all')}</Link>
         </Button>
       </CardFooter>
     </Card>

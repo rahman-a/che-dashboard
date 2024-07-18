@@ -10,6 +10,7 @@ import { Label } from '@/components/ui/label'
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
 import { Column } from '@tanstack/react-table'
 import { Input } from '../ui/input'
+import { useTranslations } from 'next-intl'
 
 interface DataTableFilterByOptionsProps<TData> {
   getColumn: (columnId: string) => Column<TData, unknown> | undefined
@@ -25,10 +26,11 @@ export function DateTableFilterByOptions<TData>({
   options,
 }: DataTableFilterByOptionsProps<TData>) {
   const [filterColumn, setFilterColumn] = React.useState('no')
+  const t = useTranslations()
   return (
-    <div className='flex items-center space-x-2'>
+    <div className='flex items-center space-x-2 rtl:space-x-reverse'>
       <Input
-        placeholder='Filter orders...'
+        placeholder={t('filter_orders')}
         value={(getColumn(filterColumn)?.getFilterValue() as string) ?? ''}
         onChange={(event) =>
           getColumn(filterColumn)?.setFilterValue(event.target.value)
@@ -50,7 +52,7 @@ export function DateTableFilterByOptions<TData>({
             {options.map((option) => (
               <div
                 key={option.value}
-                className='flex items-center space-x-2 cursor-pointer hover:bg-primary-foreground p-2 rounded-sm'
+                className='flex items-center space-x-2 rtl:space-x-reverse rtl:flex-row-reverse cursor-pointer hover:bg-primary-foreground p-2 rounded-sm'
               >
                 <RadioGroupItem value={option.value} id={option.value} />
                 {option.icon && (
@@ -60,7 +62,7 @@ export function DateTableFilterByOptions<TData>({
                   htmlFor={option.value}
                   className='text-[13px] text-primary cursor-pointer'
                 >
-                  {option.label}
+                  {t(option.label)}
                 </Label>
               </div>
             ))}

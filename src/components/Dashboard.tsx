@@ -1,5 +1,5 @@
 import React from 'react'
-import { Activity, CreditCard, DollarSign, Users } from 'lucide-react'
+import { Activity, CreditCard, DollarSign, Filter, Users } from 'lucide-react'
 import SmallStatCard from './Small-Stat-Card'
 import TotalSalesChart from './Total-Sales-Chart'
 import RecentOrdersTable from './Recent-Orders-Table'
@@ -15,39 +15,49 @@ import {
   topSizes,
 } from '@/demo/data'
 import TopProductsTable from './Top-Products'
+import DateRangePicker from './Date-Range-Picker'
+import { Button } from './ui/button'
+import { useTranslations } from 'next-intl'
 
 type Props = {}
 
 export default function Dashboard({}: Props) {
+  const t = useTranslations()
   return (
     <div
-      className='flex flex-col space-y-5 flex-1 items-start rounded-lg p-4 
+      className='flex flex-col space-y-5 flex-1 items-start rounded-lg py-4 px-2 
       border border-dashed shadow-sm'
       x-chunk='dashboard-02-chunk-1'
     >
+      <section className='flex items-center space-x-2 rtl:space-x-reverse justify-end w-full'>
+        <DateRangePicker />
+        <Button size='icon' variant='outline'>
+          <Filter className='h-4 w-4' />
+        </Button>
+      </section>
       <section className='grid gap-4 md:grid-cols-2 md:gap-8 lg:grid-cols-4 w-full'>
         <SmallStatCard
-          title='Total Revenue'
+          title={t('total_revenue')}
           value='$45,231.89'
-          state='+20.1% from last month'
+          state={`+20.1% ${t('from_last_month')}`}
           icon={<DollarSign className='h-4 w-4 text-muted-foreground' />}
         />
         <SmallStatCard
-          title='Customers'
+          title={t('customers')}
           value='+2350'
-          state='+180.1% from last month'
+          state={`+180.1% ${t('from_last_month')}`}
           icon={<Users className='h-4 w-4 text-muted-foreground' />}
         />
         <SmallStatCard
-          title='Sales'
+          title={t('sales')}
           value='+12,234'
-          state='+19% from last month'
+          state={`+19% ${t('from_last_month')}`}
           icon={<CreditCard className='h-4 w-4 text-muted-foreground' />}
         />
         <SmallStatCard
-          title='Orders'
+          title={t('orders')}
           value='+573'
-          state='+201 since last hour'
+          state={`+25 ${t('last_24h')}`}
           icon={<Activity className='h-4 w-4 text-muted-foreground' />}
         />
       </section>
@@ -57,40 +67,40 @@ export default function Dashboard({}: Props) {
       <section className='w-full'>
         <TotalSalesChart />
       </section>
-      <section className='w-screen md:w-full'>
+      <section className='w-full'>
         <RecentOrdersTable />
       </section>
-      <section className='grid md:grid-cols-2 w-screen md:w-full gap-5'>
+      <section className='w-full grid md:grid-cols-2 gap-5'>
         <TopBySales
           data={topCustomersBySales}
-          tableHeads={['Country', 'Name', 'Total Paid']}
+          tableHeads={[t('country'), t('name'), t('total_paid')]}
         />
         <TopBySales
           data={topCustomersByOrders}
-          tableHeads={['Country', 'Name', 'Total Orders']}
+          tableHeads={[t('country'), t('name'), t('total_orders')]}
         />
       </section>
-      <section className='grid md:grid-cols-2 w-screen md:w-full gap-5'>
+      <section className='w-full grid md:grid-cols-2 gap-5'>
         <TopBySales
           data={topCountriesBySales}
-          tableHeads={['Country', 'Name', 'Total Paid']}
+          tableHeads={[t('country'), t('name'), t('total_paid')]}
         />
         <TopBySales
           data={topStatesBySales}
-          tableHeads={['Country', 'Name', 'Total Sales']}
+          tableHeads={[t('country'), t('name'), t('total_sales')]}
         />
       </section>
-      <section className='grid md:grid-cols-2 w-screen md:w-full gap-5'>
+      <section className='w-full grid md:grid-cols-2 gap-5'>
         <TopByAttributes
           data={topCategories}
-          tableHeads={['Category', 'Total Orders', 'Total Sales']}
+          tableHeads={[t('category'), t('total_orders'), t('total_sales')]}
         />
         <TopByAttributes
           data={topSizes}
-          tableHeads={['Size', 'Total Orders', 'Total Sales']}
+          tableHeads={[t('size'), t('total_orders'), t('total_sales')]}
         />
       </section>
-      <section className='grid w-screen md:w-full'>
+      <section className='w-full'>
         <TopProductsTable />
       </section>
     </div>

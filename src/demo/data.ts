@@ -43,7 +43,7 @@ export const invoices = [
 ]
 
 export const topCountriesBySales = {
-  title: 'Top Countries by Sales',
+  title: 'top_countries_by_sales',
   totalSales: '35,750 ',
   trending: 'up',
   url: '/top-countries-by-sales',
@@ -82,7 +82,7 @@ export const topCountriesBySales = {
 }
 
 export const topStatesBySales = {
-  title: 'Top Governorate by Sales',
+  title: 'top_governorates_by_sales',
   totalSales: '35,750 ',
   trending: 'down',
   url: '/top-governorate-by-sales',
@@ -121,7 +121,7 @@ export const topStatesBySales = {
 }
 
 export const topCustomersBySales = {
-  title: 'Top Customers by Sales',
+  title: 'top_customers_by_sales',
   totalSales: '35,750 ',
   trending: 'up',
   url: '/top-customers-by-sales',
@@ -160,7 +160,7 @@ export const topCustomersBySales = {
 }
 
 export const topCustomersByOrders = {
-  title: 'Top Customers by Orders',
+  title: 'top_customers_by_orders',
   totalSales: '35,750 ',
   trending: 'down',
   url: '/top-customers-by-orders',
@@ -200,7 +200,7 @@ export const topCustomersByOrders = {
 
 export const topCategories = {
   url: '/top-categories-by-sales',
-  title: 'Top Categories by Sales',
+  title: 'top_categories_by_sales',
   data: [
     {
       id: 1,
@@ -237,7 +237,7 @@ export const topCategories = {
 
 export const topSizes = {
   url: '/top-sizes-by-sales',
-  title: 'Top Sizes by Sales',
+  title: 'top_sizes_by_sales',
   data: [
     {
       id: 1,

@@ -17,6 +17,7 @@ import {
   ChartTooltipContent,
 } from '@/components/ui/chart'
 import DateRangePicker from './Date-Range-Picker'
+import { useTranslations, useLocale } from 'next-intl'
 const chartData = [
   { date: '2024-04-01', desktop: 222, mobile: 150 },
   { date: '2024-04-02', desktop: 97, mobile: 180 },
@@ -111,24 +112,24 @@ const chartData = [
   { date: '2024-06-30', desktop: 446, mobile: 400 },
 ]
 
-const chartConfig = {
-  views: {
-    label: 'Page Views',
-  },
-  desktop: {
-    label: 'Desktop',
-    color: 'hsl(var(--chart-1))',
-  },
-  mobile: {
-    label: 'Mobile',
-    color: 'hsl(var(--chart-2))',
-  },
-} satisfies ChartConfig
-
 export default function TotalSalesChart() {
   const [activeChart, setActiveChart] =
     React.useState<keyof typeof chartConfig>('desktop')
-
+  const t = useTranslations()
+  const locale = useLocale()
+  const chartConfig = {
+    views: {
+      label: t('total_sales'),
+    },
+    desktop: {
+      label: 'Desktop',
+      color: 'hsl(var(--chart-1))',
+    },
+    mobile: {
+      label: 'Mobile',
+      color: 'hsl(var(--chart-2))',
+    },
+  } satisfies ChartConfig
   const total = React.useMemo(
     () => ({
       desktop: chartData.reduce((acc, curr) => acc + curr.desktop, 0),
@@ -141,10 +142,8 @@ export default function TotalSalesChart() {
     <Card>
       <CardHeader className='flex flex-col items-center space-y-0 border-b py-5 md:p-0 sm:flex-row'>
         <div className='flex flex-1 flex-col justify-center gap-1 px-6 py-5 sm:py-6'>
-          <CardTitle>Total Sales</CardTitle>
-          <CardDescription>
-            Showing total sales for the last 3 months
-          </CardDescription>
+          <CardTitle>{t('total_sales')}</CardTitle>
+          <CardDescription>{t('show_sales_last_3months')}</CardDescription>
         </div>
         <div className='flex mx-4'>
           <DateRangePicker />
@@ -172,10 +171,13 @@ export default function TotalSalesChart() {
               minTickGap={32}
               tickFormatter={(value) => {
                 const date = new Date(value)
-                return date.toLocaleDateString('en-US', {
-                  month: 'short',
-                  day: 'numeric',
-                })
+                return date.toLocaleDateString(
+                  locale === 'en' ? 'en-US' : 'ar-KW',
+                  {
+                    month: 'short',
+                    day: 'numeric',
+                  }
+                )
               }}
             />
             <ChartTooltip
@@ -184,11 +186,14 @@ export default function TotalSalesChart() {
                   className='w-[150px]'
                   nameKey='views'
                   labelFormatter={(value) => {
-                    return new Date(value).toLocaleDateString('en-US', {
-                      month: 'short',
-                      day: 'numeric',
-                      year: 'numeric',
-                    })
+                    return new Date(value).toLocaleDateString(
+                      locale === 'en' ? 'en-US' : 'ar-KW',
+                      {
+                        month: 'short',
+                        day: 'numeric',
+                        year: 'numeric',
+                      }
+                    )
                   }}
                 />
               }

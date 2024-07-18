@@ -29,10 +29,10 @@ export default async function Orders({}: Props) {
   const orders = await getOrders()
   return (
     <Template>
-      <main className='flex flex-1 flex-col gap-4 lg:gap-6 lg:p-6 '>
+      <main className='flex flex-1 flex-col gap-4 lg:gap-6 lg:p-6 w-screen md:w-[1190px] overflow-x-auto'>
         <div
-          className='flex flex-col space-y-5 flex-1 items-start rounded-lg p-4 
-        border border-dashed shadow-sm w-screen md:w-[1190px] overflow-x-auto'
+          className='flex flex-col space-y-5 flex-1 items-start rounded-lg py-4 px-2 
+        border border-dashed shadow-sm'
           x-chunk='dashboard-orders'
         >
           <DataTable data={orders} columns={columns} />

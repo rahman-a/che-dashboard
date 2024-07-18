@@ -18,6 +18,7 @@ type Props = {
 }
 
 export default function ProductCartEdit({ className, btnClassName }: Props) {
+  const t = useTranslations()
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -32,7 +33,7 @@ export default function ProductCartEdit({ className, btnClassName }: Props) {
             type='submit'
             className='text-black capitalize hover:bg-primary rtl:ml-2'
           >
-            Edit
+            {t('edit')}
           </Button>
           <DialogClose asChild>
             <Button
@@ -40,7 +41,7 @@ export default function ProductCartEdit({ className, btnClassName }: Props) {
               className='text-white capitalize hover:bg-red-800'
               variant='secondary'
             >
-              Close
+              {t('close')}
             </Button>
           </DialogClose>
         </DialogFooter>

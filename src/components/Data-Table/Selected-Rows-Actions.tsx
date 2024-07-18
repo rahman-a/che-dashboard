@@ -19,6 +19,7 @@ import { Column, Row, RowSelectionState } from '@tanstack/react-table'
 import { OrderTableChangeActions } from '../Order-Table-Change-Actions'
 import DeleteBtn from '../Delete-Btn'
 import { get } from 'http'
+import { useTranslations } from 'next-intl'
 
 interface SelectedRowsActionsProps<TData> {
   getColumn: (columnId: string) => Column<TData, unknown> | undefined
@@ -39,6 +40,7 @@ export function SelectedRowsActions<TData>({
   isRowsSelected,
   selectedRows,
 }: SelectedRowsActionsProps<TData>) {
+  const t = useTranslations()
   const SelectedRowsCount = Object.keys(selectedRows).filter(
     (key) => selectedRows[key]
   ).length
@@ -62,8 +64,8 @@ export function SelectedRowsActions<TData>({
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className='w-40 p-1'>
-        <DropdownMenuLabel className='flex items-center justify-between text-[13px]'>
-          <span>Selected Rows</span>
+        <DropdownMenuLabel className='flex items-center justify-between text-[13px] rtl:flex-row-reverse'>
+          <span>{t('selected_rows')}</span>
           <span className='border border-dashed px-1 rounded-sm'>
             {SelectedRowsCount > 0 ? SelectedRowsCount : ''}
           </span>
@@ -73,7 +75,7 @@ export function SelectedRowsActions<TData>({
           {options.map((option) => (
             <OrderTableChangeActions
               key={option.value}
-              label={option.label}
+              label={t(option.label)}
               value={option.value}
               Icon={option.icon}
             />

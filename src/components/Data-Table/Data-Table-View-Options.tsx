@@ -12,6 +12,7 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
 } from '../ui/dropdown-menu'
+import { useTranslations } from 'next-intl'
 
 interface DataTableViewOptionsProps<TData> {
   table: Table<TData>
@@ -20,16 +21,21 @@ interface DataTableViewOptionsProps<TData> {
 export function DataTableViewOptions<TData>({
   table,
 }: DataTableViewOptionsProps<TData>) {
+  const t = useTranslations()
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant='outline' size='sm' className='ml-auto  h-8 '>
-          <Settings2 className='mr-2 h-4 w-4' />
-          <span className='hidden lg:flex'>View</span>
+        <Button
+          variant='outline'
+          size='sm'
+          className='ml-auto h-7 lg:h-8 py-0 px-2'
+        >
+          <Settings2 className='m-0 lg:mr-2 rtl:lg:ml-2 rtl:lg:mr-0 h-4 w-4' />
+          <span className='hidden lg:flex'>{t('view')}</span>
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align='end' className='w-[150px]'>
-        <DropdownMenuLabel>Toggle columns</DropdownMenuLabel>
+      <DropdownMenuContent align='end' className='w-[150px] rtl:text-end'>
+        <DropdownMenuLabel>{t('toggle_columns')}</DropdownMenuLabel>
         <DropdownMenuSeparator />
         {table
           .getAllColumns()
@@ -41,11 +47,11 @@ export function DataTableViewOptions<TData>({
             return (
               <DropdownMenuCheckboxItem
                 key={column.id}
-                className='capitalize'
+                className='capitalize rtl:justify-end'
                 checked={column.getIsVisible()}
                 onCheckedChange={(value) => column.toggleVisibility(!!value)}
               >
-                {column.id}
+                {t(column.id)}
               </DropdownMenuCheckboxItem>
             )
           })}

@@ -27,6 +27,7 @@ import {
 
 import { DataTablePagination } from './Data-Table-Pagination'
 import { DataTableToolbar } from './Data-Table-Toolbar'
+import { useTranslations } from 'next-intl'
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
@@ -43,6 +44,7 @@ export function DataTable<TData, TValue>({
   columns,
   data,
 }: DataTableProps<TData, TValue>) {
+  const t = useTranslations()
   const [rowSelection, setRowSelection] = React.useState({})
   const [columnVisibility, setColumnVisibility] =
     React.useState<VisibilityState>(initialVisibilityState)
@@ -81,7 +83,12 @@ export function DataTable<TData, TValue>({
               <TableRow key={headerGroup.id}>
                 {headerGroup.headers.map((header) => {
                   return (
-                    <TableHead key={header.id} colSpan={header.colSpan}>
+                    <TableHead
+                      className='rtl:text-right [&:has([role=checkbox])]:rtl:pl-0 
+                      [&:has([role=checkbox])]:rtl:pr-4'
+                      key={header.id}
+                      colSpan={header.colSpan}
+                    >
                       {header.isPlaceholder
                         ? null
                         : flexRender(
@@ -102,7 +109,11 @@ export function DataTable<TData, TValue>({
                   data-state={row.getIsSelected() && 'selected'}
                 >
                   {row.getVisibleCells().map((cell) => (
-                    <TableCell key={cell.id}>
+                    <TableCell
+                      key={cell.id}
+                      className='[&:has([role=checkbox])]:rtl:pl-0 
+                      [&:has([role=checkbox])]:rtl:pr-4'
+                    >
                       {flexRender(
                         cell.column.columnDef.cell,
                         cell.getContext()

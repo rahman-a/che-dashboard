@@ -10,9 +10,11 @@ import {
 import { Button } from './ui/button'
 import { CircleUser } from 'lucide-react'
 import Link from 'next/link'
+import { useTranslations } from 'next-intl'
 type Props = {}
 
 export default function ProfileDropdown({}: Props) {
+  const t = useTranslations()
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -22,13 +24,19 @@ export default function ProfileDropdown({}: Props) {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align='end'>
-        <DropdownMenuLabel>My Account</DropdownMenuLabel>
+        <DropdownMenuLabel className='cursor-pointer rtl:justify-end'>
+          {t('my_account')}
+        </DropdownMenuLabel>
         <DropdownMenuSeparator />
-        <DropdownMenuItem>Settings</DropdownMenuItem>
-        <DropdownMenuItem>Support</DropdownMenuItem>
+        <DropdownMenuItem className='cursor-pointer rtl:justify-end'>
+          {t('account_setting')}
+        </DropdownMenuItem>
+        <DropdownMenuItem className='cursor-pointer rtl:justify-end'>
+          {t('view_accounts')}
+        </DropdownMenuItem>
         <DropdownMenuSeparator />
-        <DropdownMenuItem>
-          <Link href='/login'>Logout</Link>
+        <DropdownMenuItem className='cursor-pointer rtl:justify-end'>
+          <Link href='/login'>{t('logout')}</Link>
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

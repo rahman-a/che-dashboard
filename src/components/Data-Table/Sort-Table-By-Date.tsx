@@ -14,6 +14,7 @@ import { CalendarSearchIcon } from 'lucide-react'
 import { DatePicker } from '../Date-Picker'
 import { Column } from '@tanstack/react-table'
 import { addDays } from 'date-fns'
+import { useTranslations } from 'next-intl'
 interface SortDataTableByDateProps<TData, TValue> {
   column?: Column<TData, TValue>
 }
@@ -21,6 +22,7 @@ interface SortDataTableByDateProps<TData, TValue> {
 export default function SortDataTableByDate<TData, TValue>({
   column,
 }: SortDataTableByDateProps<TData, TValue>) {
+  const t = useTranslations()
   const [start, setStart] = React.useState<Date | undefined>(new Date())
   const [end, setEnd] = React.useState<Date | undefined>(addDays(new Date(), 7))
   const [isOpen, setIsOpen] = React.useState(false)
@@ -40,28 +42,30 @@ export default function SortDataTableByDate<TData, TValue>({
         </Button>
       </DialogTrigger>
       <DialogContent className='sm:max-w-[425px]'>
-        <DialogHeader>
-          <DialogTitle>Sort by date</DialogTitle>
-          <DialogDescription>Filter orders by date range</DialogDescription>
+        <DialogHeader className='rtl:text-center'>
+          <DialogTitle>{t('sort_by_date')}</DialogTitle>
+          <DialogDescription>
+            {t('filter_orders_by_date_range')}
+          </DialogDescription>
         </DialogHeader>
         <div className='flex justify-center items-center py-4'>
           <div className='flex flex-col space-y-2'>
             <div className='flex items-center space-x-2 rtl:space-x-reverse'>
-              <span className='w-10'>From</span>
+              <span className='w-10'>{t('from')}</span>
               <DatePicker
                 date={start}
                 onSelect={(newDate) => setStart(newDate)}
               />
             </div>
             <div className='flex items-center space-x-2 rtl:space-x-reverse'>
-              <span className='w-10'>To</span>
+              <span className='w-10'>{t('to')}</span>
               <DatePicker date={end} onSelect={(newDate) => setEnd(newDate)} />
             </div>
           </div>
         </div>
         <DialogFooter>
           <Button type='submit' onClick={handleSubmit}>
-            Show Result
+            {t('show_results')}
           </Button>
         </DialogFooter>
       </DialogContent>

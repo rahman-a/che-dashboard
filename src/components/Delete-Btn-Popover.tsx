@@ -7,6 +7,7 @@ import {
 import { Trash } from 'lucide-react'
 import { Button } from './ui/button'
 import { cn } from '@/lib/utils'
+import { useTranslations } from 'next-intl'
 
 type Props = {
   className?: string
@@ -14,6 +15,7 @@ type Props = {
 }
 
 export default function DeleteBtnPopover({ className, btnClassName }: Props) {
+  const t = useTranslations()
   return (
     <Popover>
       <PopoverTrigger asChild>
@@ -25,7 +27,7 @@ export default function DeleteBtnPopover({ className, btnClassName }: Props) {
         <div className='flex items-center justify-center'>
           <Button variant='destructive'>
             <Trash className='mr-1 rtl:ml-1 rtl:mr-0 h-4 w-4' />
-            <span>Confirm Delete</span>
+            <span>{t('confirm_deletion')}</span>
           </Button>
         </div>
       </PopoverContent>

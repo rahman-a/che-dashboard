@@ -28,11 +28,12 @@ export default function ProductNote({
   note,
   isOrder,
 }: Props) {
+  const t = useTranslations()
   const NoteComponent =
     isOrder && note ? (
       <h3>{note}</h3>
     ) : isOrder && !note ? (
-      <h3 className='text-gray-900 text-center'>No notes found</h3>
+      <h3 className='text-gray-900 text-center'>{t('no_note_found')}</h3>
     ) : (
       <Textarea
         placeholder='Add a note'
@@ -48,21 +49,21 @@ export default function ProductNote({
       </DialogTrigger>
       <DialogContent className={cn('sm:max-w-[425px]', className)}>
         <DialogHeader className='rtl:text-right mt-2'>
-          <DialogTitle>Product Note Title</DialogTitle>
+          <DialogTitle>{t('product_title')}</DialogTitle>
           {!isOrder && (
-            <DialogDescription>Product Note Description</DialogDescription>
+            <DialogDescription>{t('product_description')}</DialogDescription>
           )}
         </DialogHeader>
         <div className='flex flex-col space-y-2'>{NoteComponent}</div>
         <DialogFooter className='flex-row space-x-3'>
           {!isOrder && (
             <Button type='submit' className='rtl:ml-2'>
-              Save
+              {t('save')}
             </Button>
           )}
           <DialogClose asChild>
             <Button type='button' variant='secondary'>
-              Close
+              {t('close')}
             </Button>
           </DialogClose>
         </DialogFooter>

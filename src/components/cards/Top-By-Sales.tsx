@@ -18,9 +18,9 @@ import { Button } from '../ui/button'
 import Link from 'next/link'
 import { TrendingDown, TrendingUp } from 'lucide-react'
 import Image from 'next/image'
-import { topCountriesBySales } from '@/demo/data'
 import { type CardStats } from '@/types/stat-cards'
 import { cn } from '@/lib/utils'
+import { useTranslations } from 'next-intl'
 type Props = {
   className?: string
   data: CardStats
@@ -32,18 +32,19 @@ export default function TopCountriesBySales({
   tableHeads,
   className,
 }: Props) {
+  const t = useTranslations()
   return (
     <Card className={cn('flex flex-col', className)}>
       <CardHeader>
         <CardTitle className='text-xl text-gray-700 font-medium'>
-          {data.title}
+          {t(data.title)}
         </CardTitle>
       </CardHeader>
       <CardContent>
         <div className='w-full flex items-center justify-center pt-5 pb-8 space-x-8 rtl:space-x-reverse'>
           <h2 className='text-3xl'>
             <span>{data.totalSales}</span>
-            <span className='text-xl'>kw</span>
+            <span className='text-xl'>{t('kw')}</span>
           </h2>
           {data.trending === 'up' ? (
             <TrendingUp className='h-10 w-10 text-green-500' />
@@ -85,7 +86,7 @@ export default function TopCountriesBySales({
       </CardContent>
       <CardFooter className='w-full flex-col items-end gap-2 text-sm mt-auto'>
         <Button variant='outline' size='sm' asChild>
-          <Link href={data.url}>View All</Link>
+          <Link href={data.url}>{t('view_all')}</Link>
         </Button>
       </CardFooter>
     </Card>

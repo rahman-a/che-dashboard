@@ -7,7 +7,7 @@ import Link from 'next/link'
 // is necessary for this page to render.
 
 export default function NotFoundPage() {
-  const t = useTranslations('NotFound')
+  const t = useTranslations()
 
   return (
     <main

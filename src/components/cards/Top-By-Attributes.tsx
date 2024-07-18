@@ -17,6 +17,7 @@ import { Button } from '../ui/button'
 import Link from 'next/link'
 import { type TopAttributes } from '@/types/stat-cards'
 import { cn } from '@/lib/utils'
+import { useTranslations } from 'next-intl'
 type Props = {
   className?: string
   data: TopAttributes
@@ -28,11 +29,12 @@ export default function TopByAttributes({
   className,
   tableHeads,
 }: Props) {
+  const t = useTranslations()
   return (
     <Card className={cn(className)}>
       <CardHeader>
         <CardTitle className='text-xl text-gray-700 font-medium'>
-          {data.title}
+          {t(data.title)}
         </CardTitle>
       </CardHeader>
       <CardContent>
@@ -64,7 +66,7 @@ export default function TopByAttributes({
       </CardContent>
       <CardFooter className='w-full flex-col items-end gap-2 text-sm mt-auto'>
         <Button variant='outline' size='sm' asChild>
-          <Link href={data.url}>View All</Link>
+          <Link href={data.url}>{t('view_all')}</Link>
         </Button>
       </CardFooter>
     </Card>

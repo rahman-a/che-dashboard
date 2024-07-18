@@ -6,6 +6,7 @@ import ProductNote from './Product-Note'
 import ProductQuantityControl from './Product-Quantity-Control'
 import ProductCartEdit from './Product-Card-Edit'
 import DeleteBtnPopover from './Delete-Btn-Popover'
+import { useTranslations } from 'next-intl'
 
 type Props = {
   isOrder?: boolean
@@ -13,6 +14,7 @@ type Props = {
 }
 
 export default function CartProductCard({ isOrder, note }: Props) {
+  const t = useTranslations()
   return (
     <div className='w-full max-w-screen-2xl flex items-start justify-between bg-primary/10 p-2 rounded-md'>
       <div className='flex space-x-3'>
@@ -28,15 +30,15 @@ export default function CartProductCard({ isOrder, note }: Props) {
         <div className='flex flex-col justify-evenly space-y-2'>
           <h2
             className={cn(
-              'flex items-center flex-nowrap w-max text-[11px] md:text-sm font-semibold md:font-light',
+              'flex items-center text-[11px] md:text-sm font-semibold md:font-light',
               isOrder ? 'md:text-base' : 'md:text-lg'
             )}
           >
-            Golden White Abaya - 50 - embroidery
+            {t('product_name')}
           </h2>
           {isOrder ? (
             <p className='flex items-center text-xs md:text-md space-x-1 tracking-wide'>
-              <span>Order Quantity:</span>
+              <span>{t('order_quantity')}:</span>
               <span>12</span>
             </p>
           ) : (
@@ -51,7 +53,7 @@ export default function CartProductCard({ isOrder, note }: Props) {
             isOrder ? 'md:text-base' : 'md:text-lg'
           )}
         >
-          50,00 kw
+          50,00 {t('kw')}
         </h3>
         <div
           className={cn(

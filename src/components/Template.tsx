@@ -8,9 +8,9 @@ type Props = {
 
 export default function Template({ children }: Props) {
   return (
-    <div className='grid min-h-screen w-full md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr]'>
+    <div className='grid min-h-screen overflow-hidden w-full md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr]'>
       <Sidebar />
-      <div className='flex flex-col'>
+      <div className='flex flex-col w-full'>
         <Header />
         {children}
       </div>

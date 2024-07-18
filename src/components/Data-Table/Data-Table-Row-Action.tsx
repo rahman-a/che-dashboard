@@ -13,6 +13,7 @@ import {
   DropdownMenuTrigger,
 } from '../ui/dropdown-menu'
 import DeleteBtn from '../Delete-Btn'
+import { useTranslations } from 'next-intl'
 
 interface DataTableRowActionsProps<TData> {
   row: Row<TData>
@@ -21,6 +22,7 @@ interface DataTableRowActionsProps<TData> {
 export function DataTableRowActions<TData>({
   row,
 }: DataTableRowActionsProps<TData>) {
+  const t = useTranslations()
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -33,9 +35,9 @@ export function DataTableRowActions<TData>({
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align='end' className='w-[160px]'>
-        <DropdownMenuItem className='cursor-pointer'>
-          <span>View</span>
-          <DropdownMenuShortcut>
+        <DropdownMenuItem className='cursor-pointer flex-row-reverse rtl:flex-row justify-end'>
+          <span>{t('view')}</span>
+          <DropdownMenuShortcut className='mr-2 ml-0 rtl:ml-2 rtl:mr-0'>
             <Link className='h-4 w-4' />
           </DropdownMenuShortcut>
         </DropdownMenuItem>

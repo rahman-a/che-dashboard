@@ -14,7 +14,7 @@ export default function MobileSidebar({}: Props) {
           <span className='sr-only'>Toggle navigation menu</span>
         </Button>
       </SheetTrigger>
-      <SheetContent side='left' className='flex flex-col'>
+      <SheetContent side='right' className='flex flex-col'>
         <NavigationItems />
       </SheetContent>
     </Sheet>

@@ -1,7 +1,8 @@
 'use client'
 
 import * as React from 'react'
-import { addDays, format } from 'date-fns'
+import { addDays, format, subDays } from 'date-fns'
+import { arEG, enUS } from 'date-fns/locale'
 import { Calendar as CalendarIcon } from 'lucide-react'
 import { DateRange } from 'react-day-picker'
 
@@ -13,17 +14,14 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from '@/components/ui/popover'
-import { useMediaQuery } from '@/hooks/useMediaQuery'
+import { useTranslations, useLocale } from 'next-intl'
 
 export default function DateRangePicker({
   className,
 }: React.HTMLAttributes<HTMLDivElement>) {
-  const [date, setDate] = React.useState<DateRange | undefined>({
-    from: new Date(2022, 0, 20),
-    to: addDays(new Date(2022, 0, 20), 20),
-  })
-
-  const isSmallScreen = useMediaQuery('(max-width: 640px)')
+  const t = useTranslations()
+  const locale = useLocale()
+  const [date, setDate] = React.useState<DateRange | undefined>()
 
   return (
     <div className={cn('grid gap-2', className)}>
@@ -37,27 +35,29 @@ export default function DateRangePicker({
               !date && 'text-muted-foreground'
             )}
           >
-            <CalendarIcon className='mr-2 h-4 w-4' />
+            <CalendarIcon className='mr-2 rtl:ml-2 rtl:mr-0 h-4 w-4' />
             {date?.from ? (
               date.to ? (
                 <>
-                  {format(date.from, 'LLL dd, y')} -{' '}
-                  {format(date.to, 'LLL dd, y')}
+                  {format(date.from, 'LLL dd, y', {
+                    locale: locale === 'en' ? enUS : arEG,
+                  })}{' '}
+                  -{' '}
+                  {format(date.to, 'LLL dd, y', {
+                    locale: locale === 'en' ? enUS : arEG,
+                  })}
                 </>
               ) : (
-                format(date.from, 'LLL dd, y')
+                format(date.from, 'LLL dd, y', {
+                  locale: locale === 'en' ? enUS : arEG,
+                })
               )
             ) : (
-              <span>Pick a date</span>
+              <span>{t('pick_date')}</span>
             )}
           </Button>
         </PopoverTrigger>
-        <PopoverContent
-          className='w-auto p-0'
-          align='center'
-          side='right'
-          avoidCollisions={!isSmallScreen}
-        >
+        <PopoverContent className='w-auto p-0'>
           <Calendar
             initialFocus
             mode='range'
@@ -65,6 +65,7 @@ export default function DateRangePicker({
             selected={date}
             onSelect={setDate}
             numberOfMonths={2}
+            locale={locale === 'en' ? enUS : arEG}
           />
         </PopoverContent>
       </Popover>

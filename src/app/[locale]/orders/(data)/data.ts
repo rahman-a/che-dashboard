@@ -21,25 +21,25 @@ import {
 export const statuses = [
   {
     value: 'new',
-    label: 'New',
+    label: 'new',
     icon: LucideLogIn,
     color: '--order-new',
   },
   {
     value: 'cut',
-    label: 'Cut',
+    label: 'cut',
     icon: Scissors,
     color: '--order-cut',
   },
   {
     value: 'sewed',
-    label: 'Sewed',
+    label: 'sewed',
     icon: Shirt,
     color: '--order-sewed',
   },
   {
     value: 'delivered',
-    label: 'Delivered',
+    label: 'delivered',
     icon: Truck,
     color: '--order-delivered',
   },
@@ -48,12 +48,12 @@ export const statuses = [
 export const payment = [
   {
     value: 'paid',
-    label: 'Paid',
+    label: 'paid',
     icon: CircleCheckBig,
   },
   {
     value: 'unpaid',
-    label: 'Unpaid',
+    label: 'unpaid',
     icon: CircleX,
   },
 ]
@@ -61,22 +61,22 @@ export const payment = [
 export const filterByOptions = [
   {
     value: 'no',
-    label: 'Order No',
+    label: 'order_no',
     icon: Hash,
   },
   {
     value: 'customer',
-    label: 'Customer',
+    label: 'customer',
     icon: UserCheck2,
   },
   {
     value: 'country',
-    label: 'Country',
+    label: 'country',
     icon: Globe,
   },
   {
     value: 'phone',
-    label: 'Phone',
+    label: 'phone',
     icon: Phone,
   },
 ]
@@ -84,19 +84,19 @@ export const filterByOptions = [
 export const prioritization = [
   {
     value: 'urgent',
-    label: 'Urgent',
+    label: 'urgent',
     icon: Siren,
     color: '--order-urgent',
   },
   {
     value: 'important',
-    label: 'Important',
+    label: 'important',
     icon: FileWarningIcon,
     color: '--order-important',
   },
   {
     value: 'contact',
-    label: 'Contact',
+    label: 'contact',
     icon: PhoneForwarded,
     color: '--order-contact',
   },
@@ -105,17 +105,17 @@ export const prioritization = [
 export const selectedRowsOptions = [
   {
     value: 'change-status',
-    label: 'Change Status',
+    label: 'change_status',
     icon: Factory,
   },
   {
     value: 'change-priority',
-    label: 'Change Priority',
+    label: 'change_priority',
     icon: ArrowUpDown,
   },
   {
     value: 'change-payment',
-    label: 'Change Payment',
+    label: 'change_payment',
     icon: BadgeDollarSign,
   },
 ]

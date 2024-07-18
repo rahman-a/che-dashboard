@@ -14,6 +14,7 @@ import { List, CircleCheckBig, CircleX, FileCog } from 'lucide-react'
 import { cn, filterDateWithinRange } from '@/lib/utils'
 import OrdersItems from '@/components/Order-Items'
 import { OrderInvoiceActions } from '@/components/Order-Invoice-Actions'
+import { useTranslations } from 'next-intl'
 
 export const columns: ColumnDef<Order>[] = [
   {
@@ -43,7 +44,7 @@ export const columns: ColumnDef<Order>[] = [
   {
     accessorKey: 'no',
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title='NO' />
+      <DataTableColumnHeader column={column} title='no' />
     ),
     cell: ({ row }) => <div className='w-[80px]'>{row.getValue('no')}</div>,
     enableSorting: false,
@@ -52,7 +53,7 @@ export const columns: ColumnDef<Order>[] = [
   {
     accessorKey: 'status',
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title='Status' />
+      <DataTableColumnHeader column={column} title='status' />
     ),
     cell: ({ row }) => {
       const status = statuses.find(
@@ -68,8 +69,10 @@ export const columns: ColumnDef<Order>[] = [
           className='flex w-28 items-center justify-center'
           style={{ backgroundColor: `hsl(var(${status.color}))` }}
         >
-          {status.icon && <status.icon className='mr-2 h-4 w-4 text-white' />}
-          <span>{status.label}</span>
+          {status.icon && (
+            <status.icon className='mr-2 rtl:ml-2 rtl:mr-0 h-4 w-4 text-white' />
+          )}
+          <RenderColumnHeader title={status.label} />
         </Badge>
       )
     },
@@ -81,7 +84,7 @@ export const columns: ColumnDef<Order>[] = [
   {
     accessorKey: 'priority',
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title='Priority' />
+      <DataTableColumnHeader column={column} title='priority' />
     ),
     cell: ({ row }) => {
       const priority = prioritization.find(
@@ -98,9 +101,9 @@ export const columns: ColumnDef<Order>[] = [
           style={{ backgroundColor: `hsl(var(${priority.color}))` }}
         >
           {priority.icon && (
-            <priority.icon className='mr-2 h-4 w-4 text-white' />
+            <priority.icon className='mr-2 rtl:ml-2 rtl:mr-0 h-4 w-4 text-white' />
           )}
-          <span>{priority.label}</span>
+          <RenderColumnHeader title={priority.label} />
         </Badge>
       )
     },
@@ -112,22 +115,23 @@ export const columns: ColumnDef<Order>[] = [
   {
     accessorKey: 'payment',
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title='Payment' />
+      <DataTableColumnHeader column={column} title='payment' />
     ),
     cell: ({ row }) => {
       return (
         <Badge
           className='flex items-center justify-center 
-        w-20 space-x-1 rtl:space-x-reverse bg-neutral-100 border hover:bg-slate-100'
+        w-24 space-x-1 rtl:space-x-reverse bg-neutral-100 border hover:bg-slate-100'
         >
           {row.original.payment === 'paid' ? (
             <CircleCheckBig className='h-4 w-4 text-green-500' />
           ) : (
             <CircleX className='h-4 w-4 text-red-500' />
           )}
-          <span className='capitalize text-slate-800'>
-            {row.getValue('payment')}
-          </span>
+          <RenderColumnHeader
+            title={row.getValue('payment')}
+            className='capitalize text-slate-800'
+          />
         </Badge>
       )
     },
@@ -139,16 +143,18 @@ export const columns: ColumnDef<Order>[] = [
   {
     accessorKey: 'total',
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title='Total' />
+      <DataTableColumnHeader column={column} title='total' />
     ),
-    cell: ({ row }) => <span>{row.getValue('total')} kw</span>,
+    cell: ({ row }) => (
+      <RenderColumnHeader text={row.getValue('total')} title='kw' />
+    ),
     filterFn: (row, id, value) => {
       return value.includes(row.getValue(id))
     },
   },
   {
     accessorKey: 'products',
-    header: () => <span>Products</span>,
+    header: () => <RenderColumnHeader title='products' />,
     cell: ({ row }) => {
       return <OrdersItems />
     },
@@ -157,7 +163,7 @@ export const columns: ColumnDef<Order>[] = [
   {
     accessorKey: 'customer',
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title='Customer' />
+      <DataTableColumnHeader column={column} title='customer' />
     ),
     cell: ({ row }) => <span>{row.getValue('customer')}</span>,
     enableSorting: false,
@@ -165,7 +171,7 @@ export const columns: ColumnDef<Order>[] = [
   {
     accessorKey: 'country',
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title='Country' />
+      <DataTableColumnHeader column={column} title='country' />
     ),
     cell: ({ row }) => <span>{row.getValue('country')}</span>,
     enableSorting: false,
@@ -173,23 +179,25 @@ export const columns: ColumnDef<Order>[] = [
   {
     accessorKey: 'phone',
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title='Phone' className='w-32' />
+      <DataTableColumnHeader column={column} title='phone' className='w-32' />
     ),
-    cell: ({ row }) => <span className='w-32'>{row.getValue('phone')}</span>,
+    cell: ({ row }) => (
+      <span className='w-32 order-customer-phone'>{row.getValue('phone')}</span>
+    ),
     enableSorting: false,
   },
 
   {
     accessorKey: 'date',
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title='Date' />
+      <DataTableColumnHeader column={column} title='date' />
     ),
     cell: ({ row }) => <span>{row.getValue('date')}</span>,
     filterFn: filterDateWithinRange,
   },
   {
     accessorKey: 'invoice',
-    header: () => <span>Invoice</span>,
+    header: () => <RenderColumnHeader title='invoice' />,
     cell: ({ row }) => {
       return <OrderInvoiceActions row={row} />
     },
@@ -201,3 +209,21 @@ export const columns: ColumnDef<Order>[] = [
     enableHiding: false,
   },
 ]
+
+function RenderColumnHeader({
+  text,
+  title,
+  className,
+}: {
+  text?: string
+  title: string
+  className?: string
+}) {
+  const t = useTranslations()
+  return (
+    <span className={className}>
+      {text ? `${text} ` : ''}
+      {t(title)}
+    </span>
+  )
+}

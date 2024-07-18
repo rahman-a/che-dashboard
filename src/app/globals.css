@@ -90,3 +90,8 @@
 .clip-circle {
   clip-path: circle();
 }
+
+td:has(.order-customer-phone) {
+  direction: ltr;
+  text-align: end;
+}

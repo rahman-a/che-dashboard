@@ -1,5 +1,5 @@
 'use client'
-import { Printer, FileEdit, FileOutput, FileCog } from 'lucide-react'
+import { Printer, FileEdit, FileOutput, FileCog, FileInput } from 'lucide-react'
 import { Row } from '@tanstack/react-table'
 import { Button } from './ui/button'
 import { Order } from '@/app/[locale]/orders/(data)/data-schema'
@@ -10,6 +10,7 @@ import {
   DropdownMenuShortcut,
   DropdownMenuTrigger,
 } from './ui/dropdown-menu'
+import { useTranslations } from 'next-intl'
 
 interface DataTableRowActionsProps<TData> {
   row: Row<TData>
@@ -19,6 +20,7 @@ export function OrderInvoiceActions<TData extends Order>({
   row,
 }: DataTableRowActionsProps<TData>) {
   const rowData = row.original
+  const t = useTranslations()
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -27,23 +29,24 @@ export function OrderInvoiceActions<TData extends Order>({
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align='end' className='w-[160px]'>
-        <DropdownMenuItem className='cursor-pointer'>
+        <DropdownMenuItem className='cursor-pointer rtl:flex-row-reverse space-x-2 rtl:space-x-reverse'>
           <DropdownMenuShortcut className='mr-1 ml-0'>
             <Printer className='h-4 w-4' />
           </DropdownMenuShortcut>
-          <span>Print Invoice</span>
+          <span>{t('print_invoice')}</span>
         </DropdownMenuItem>
-        <DropdownMenuItem className='cursor-pointer'>
+        <DropdownMenuItem className='cursor-pointer rtl:flex-row-reverse space-x-2 rtl:space-x-reverse'>
           <DropdownMenuShortcut className='mr-1 ml-0'>
-            <FileOutput className='h-4 w-4' />
+            <FileOutput className='flex rtl:hidden h-4 w-4' />
+            <FileInput className='hidden rtl:flex h-4 w-4' />
           </DropdownMenuShortcut>
-          <span>Send Invoice</span>
+          <span>{t('send_invoice')}</span>
         </DropdownMenuItem>
-        <DropdownMenuItem className='cursor-pointer'>
+        <DropdownMenuItem className='cursor-pointer rtl:flex-row-reverse space-x-2 rtl:space-x-reverse'>
           <DropdownMenuShortcut className='mr-1 ml-0'>
             <FileEdit className='h-4 w-4' />
           </DropdownMenuShortcut>
-          <span>View Invoice</span>
+          <span>{t('view_invoice')}</span>
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
