@@ -42,7 +42,7 @@ export default function DeleteBtn({ className }: Props) {
           <DialogDescription>{t('confirm_deletion_msg')}</DialogDescription>
         </DialogHeader>
         <div className='flex justify-center items-center py-4'></div>
-        <DialogFooter className='flex-row-reverse'>
+        <DialogFooter className='rtl:flex-row rtl:justify-end'>
           <Button type='submit' variant='destructive' className='ml-2'>
             {t('delete')}
           </Button>

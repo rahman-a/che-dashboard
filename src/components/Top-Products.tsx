@@ -65,8 +65,10 @@ export default function TopProductsTable({ className }: Props) {
                   />
                 </TableCell>
                 <TableCell className='max-w-40'>{product.name}</TableCell>
-                <TableCell>{product.orders}</TableCell>
-                <TableCell>{product.sales}</TableCell>
+                <TableCell>
+                  {t('no_of_orders', { count: product.orders })}
+                </TableCell>
+                <TableCell>{product.sales + ' ' + t('kw')}</TableCell>
                 <TableCell>
                   <Button
                     variant='outline'

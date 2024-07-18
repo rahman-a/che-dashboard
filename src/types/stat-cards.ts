@@ -7,7 +7,7 @@ export type CardStats = {
     id: number
     country?: string
     name: string
-    value: string
+    value: string | number
   }[]
 }
 
@@ -17,7 +17,7 @@ export type TopAttributes = {
   data: {
     id: number
     name: string
-    orders: string
+    orders: number
     sales: string
   }[]
 }
@@ -28,7 +28,7 @@ export type TopProducts = {
     id: number
     image: string
     name: string
-    orders: string
+    orders: number
     sales: string
   }[]
 }

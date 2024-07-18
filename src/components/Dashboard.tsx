@@ -73,30 +73,36 @@ export default function Dashboard({}: Props) {
       <section className='w-full grid md:grid-cols-2 gap-5'>
         <TopBySales
           data={topCustomersBySales}
+          type='top-customer-by-sales'
           tableHeads={[t('country'), t('name'), t('total_paid')]}
         />
         <TopBySales
           data={topCustomersByOrders}
+          type='top-customer-by-orders'
           tableHeads={[t('country'), t('name'), t('total_orders')]}
         />
       </section>
       <section className='w-full grid md:grid-cols-2 gap-5'>
         <TopBySales
           data={topCountriesBySales}
+          type='top-countries-by-sales'
           tableHeads={[t('country'), t('name'), t('total_paid')]}
         />
         <TopBySales
           data={topStatesBySales}
+          type='top-states-by-sales'
           tableHeads={[t('country'), t('name'), t('total_sales')]}
         />
       </section>
       <section className='w-full grid md:grid-cols-2 gap-5'>
         <TopByAttributes
           data={topCategories}
+          type='top-categories'
           tableHeads={[t('category'), t('total_orders'), t('total_sales')]}
         />
         <TopByAttributes
           data={topSizes}
+          type='top-sizes'
           tableHeads={[t('size'), t('total_orders'), t('total_sales')]}
         />
       </section>

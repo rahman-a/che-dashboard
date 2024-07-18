@@ -18,9 +18,13 @@ import Link from 'next/link'
 import { type TopAttributes } from '@/types/stat-cards'
 import { cn } from '@/lib/utils'
 import { useTranslations } from 'next-intl'
+
+type TopByAttributesType = 'top-categories' | 'top-sizes'
+
 type Props = {
   className?: string
   data: TopAttributes
+  type: TopByAttributesType
   tableHeads: string[]
 }
 
@@ -57,8 +61,12 @@ export default function TopByAttributes({
                 <TableCell className='font-medium text-center' title={d.name}>
                   {d.name}
                 </TableCell>
-                <TableCell className='text-center'>{d.orders}</TableCell>
-                <TableCell className='text-center'>{d.sales}</TableCell>
+                <TableCell className='text-center'>
+                  {t('no_of_orders', { count: d.orders })}
+                </TableCell>
+                <TableCell className='text-center'>
+                  {d.sales + ' ' + t('kw')}
+                </TableCell>
               </TableRow>
             ))}
           </TableBody>

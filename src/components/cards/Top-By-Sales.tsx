@@ -21,18 +21,34 @@ import Image from 'next/image'
 import { type CardStats } from '@/types/stat-cards'
 import { cn } from '@/lib/utils'
 import { useTranslations } from 'next-intl'
+
+type TopBySalesType =
+  | 'top-customer-by-sales'
+  | 'top-customer-by-orders'
+  | 'top-states-by-sales'
+  | 'top-countries-by-sales'
+
 type Props = {
   className?: string
   data: CardStats
+  type: TopBySalesType
   tableHeads: string[]
 }
 
 export default function TopCountriesBySales({
   data,
+  type,
   tableHeads,
   className,
 }: Props) {
   const t = useTranslations()
+
+  const renderValue = (value: number | string) => {
+    if (type === 'top-customer-by-orders') {
+      return t('no_of_orders', { count: value })
+    }
+    return value + ' ' + t('kw')
+  }
   return (
     <Card className={cn('flex flex-col', className)}>
       <CardHeader>
@@ -78,7 +94,9 @@ export default function TopCountriesBySales({
                   />
                 </TableCell>
                 <TableCell className='text-center'>{d.name}</TableCell>
-                <TableCell className='text-center'>{d.value}</TableCell>
+                <TableCell className='text-center'>
+                  {renderValue(d.value)}
+                </TableCell>
               </TableRow>
             ))}
           </TableBody>
