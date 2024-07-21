@@ -12,8 +12,7 @@ import { DataTableRowActions } from '@/components/Data-Table/Data-Table-Row-Acti
 import { Button } from '@/components/ui/button'
 import { List, CircleCheckBig, CircleX, FileCog } from 'lucide-react'
 import { cn, filterDateWithinRange } from '@/lib/utils'
-import OrdersItems from '@/components/Order-Items'
-import { OrderInvoiceActions } from '@/components/Order-Invoice-Actions'
+import { OrdersItems, OrderInvoiceActions } from '@/components/Orders'
 import { useTranslations } from 'next-intl'
 
 export const columns: ColumnDef<Order>[] = [
@@ -53,7 +52,11 @@ export const columns: ColumnDef<Order>[] = [
   {
     accessorKey: 'status',
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title='status' />
+      <DataTableColumnHeader
+        column={column}
+        title='status'
+        className='order-status-head'
+      />
     ),
     cell: ({ row }) => {
       const status = statuses.find(
@@ -84,7 +87,11 @@ export const columns: ColumnDef<Order>[] = [
   {
     accessorKey: 'priority',
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title='priority' />
+      <DataTableColumnHeader
+        column={column}
+        title='priority'
+        className='order-priority-head'
+      />
     ),
     cell: ({ row }) => {
       const priority = prioritization.find(
@@ -115,7 +122,11 @@ export const columns: ColumnDef<Order>[] = [
   {
     accessorKey: 'payment',
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title='payment' />
+      <DataTableColumnHeader
+        column={column}
+        title='payment'
+        className='order-payment-head'
+      />
     ),
     cell: ({ row }) => {
       return (
@@ -143,7 +154,11 @@ export const columns: ColumnDef<Order>[] = [
   {
     accessorKey: 'total',
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title='total' />
+      <DataTableColumnHeader
+        column={column}
+        title='total'
+        className='order-total-head'
+      />
     ),
     cell: ({ row }) => (
       <RenderColumnHeader text={row.getValue('total')} title='kw' />

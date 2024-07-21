@@ -15,7 +15,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '../ui/dropdown-menu'
-import DateRangePicker from '../Date-Range-Picker'
+import { DateRangePicker } from '../'
 import SortDataTableByDate from './Sort-Table-By-Date'
 import { useTranslations } from 'next-intl'
 
@@ -23,6 +23,7 @@ interface DataTableColumnHeaderProps<TData, TValue>
   extends React.HTMLAttributes<HTMLDivElement> {
   column: Column<TData, TValue>
   title: string
+  className?: string
 }
 
 export function DataTableColumnHeader<TData, TValue>({

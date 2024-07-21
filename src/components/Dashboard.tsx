@@ -1,11 +1,10 @@
 import React from 'react'
 import { Activity, CreditCard, DollarSign, Filter, Users } from 'lucide-react'
-import SmallStatCard from './Small-Stat-Card'
-import TotalSalesChart from './Total-Sales-Chart'
-import RecentOrdersTable from './Recent-Orders-Table'
-import OrderStatusChart from './Orders-Status-Chart'
-import TopBySales from './cards/Top-By-Sales'
-import TopByAttributes from './cards/Top-By-Attributes'
+import { SmallStatCard, TotalSalesChart, DateRangePicker } from '@/components'
+import { RecentOrdersTable, OrderStatusChart } from '@/components/Orders'
+import { TopByAttributes, TopBySales } from '@/components/cards'
+import { TopProductsTable } from '@/components/Products'
+import { Button } from '@/components/ui/button'
 import {
   topCountriesBySales,
   topCustomersByOrders,
@@ -14,19 +13,16 @@ import {
   topCategories,
   topSizes,
 } from '@/demo/data'
-import TopProductsTable from './Top-Products'
-import DateRangePicker from './Date-Range-Picker'
-import { Button } from './ui/button'
-import { useTranslations } from 'next-intl'
+import { getTranslations } from 'next-intl/server'
 
 type Props = {}
 
-export default function Dashboard({}: Props) {
-  const t = useTranslations()
+export async function Dashboard({}: Props) {
+  const t = await getTranslations()
   return (
     <div
       className='flex flex-col space-y-5 flex-1 items-start rounded-lg py-4 px-2 
-      border border-dashed shadow-sm'
+      border border-dashed shadow-sm mt-2 mx-2 lg:m-0'
       x-chunk='dashboard-02-chunk-1'
     >
       <section className='flex items-center space-x-2 rtl:space-x-reverse justify-end w-full'>
@@ -35,7 +31,7 @@ export default function Dashboard({}: Props) {
           <Filter className='h-4 w-4' />
         </Button>
       </section>
-      <section className='grid gap-4 md:grid-cols-2 md:gap-8 lg:grid-cols-4 w-full'>
+      <section className='grid gap-4 md:grid-cols-2 lg:grid-cols-4 lg:gap-8 w-full'>
         <SmallStatCard
           title={t('total_revenue')}
           value='$45,231.89'
@@ -61,7 +57,7 @@ export default function Dashboard({}: Props) {
           icon={<Activity className='h-4 w-4 text-muted-foreground' />}
         />
       </section>
-      <section className='w-full md:h-46'>
+      <section className='w-full lg:h-46'>
         <OrderStatusChart />
       </section>
       <section className='w-full'>

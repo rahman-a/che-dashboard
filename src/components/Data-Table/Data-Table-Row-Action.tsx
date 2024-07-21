@@ -12,7 +12,7 @@ import {
   DropdownMenuShortcut,
   DropdownMenuTrigger,
 } from '../ui/dropdown-menu'
-import DeleteBtn from '../Delete-Btn'
+import { DeleteBtn } from '../'
 import { useTranslations } from 'next-intl'
 
 interface DataTableRowActionsProps<TData> {

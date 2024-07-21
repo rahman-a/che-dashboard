@@ -16,7 +16,7 @@ import {
 } from '@/components/ui/popover'
 import { useTranslations, useLocale } from 'next-intl'
 
-export default function DateRangePicker({
+export function DateRangePicker({
   className,
 }: React.HTMLAttributes<HTMLDivElement>) {
   const t = useTranslations()

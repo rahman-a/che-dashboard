@@ -84,8 +84,13 @@ export function DataTable<TData, TValue>({
                 {headerGroup.headers.map((header) => {
                   return (
                     <TableHead
-                      className='rtl:text-right [&:has([role=checkbox])]:rtl:pl-0 
-                      [&:has([role=checkbox])]:rtl:pr-4'
+                      className='rtl:text-right 
+                      [&:has([role=checkbox])]:rtl:pl-0 
+                      [&:has([role=checkbox])]:rtl:pr-4 
+                      [&:has(>.order-status-head)]:text-center
+                      [&:has(>.order-priority-head)]:text-center
+                      [&:has(>.order-payment-head)]:text-center
+                      [&:has(>.order-total-head)]:rtl:translate-x-2'
                       key={header.id}
                       colSpan={header.colSpan}
                     >

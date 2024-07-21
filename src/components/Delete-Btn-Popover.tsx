@@ -14,13 +14,13 @@ type Props = {
   btnClassName?: string
 }
 
-export default function DeleteBtnPopover({ className, btnClassName }: Props) {
+export function DeleteBtnPopover({ className, btnClassName }: Props) {
   const t = useTranslations()
   return (
     <Popover>
       <PopoverTrigger asChild>
         <button className={btnClassName}>
-          <Trash size={20} />
+          <Trash size={16} />
         </button>
       </PopoverTrigger>
       <PopoverContent className={cn('w-32', className)}>

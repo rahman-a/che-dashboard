@@ -17,7 +17,7 @@ type Props = {
   className?: string
 }
 
-export default function DeleteBtn({ className }: Props) {
+export function DeleteBtn({ className }: Props) {
   const t = useTranslations()
   return (
     <Dialog>

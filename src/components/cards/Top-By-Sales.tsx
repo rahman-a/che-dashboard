@@ -35,12 +35,7 @@ type Props = {
   tableHeads: string[]
 }
 
-export default function TopCountriesBySales({
-  data,
-  type,
-  tableHeads,
-  className,
-}: Props) {
+export function TopBySales({ data, type, tableHeads, className }: Props) {
   const t = useTranslations()
 
   const renderValue = (value: number | string) => {

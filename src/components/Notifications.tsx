@@ -15,7 +15,7 @@ type Props = {
   triggerClassName?: string
 }
 
-export default function Notifications({ className, triggerClassName }: Props) {
+export function Notifications({ className, triggerClassName }: Props) {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>

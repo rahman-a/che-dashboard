@@ -16,9 +16,8 @@ import {
 } from '../ui/dropdown-menu'
 import { Button } from '@/components/ui/button'
 import { Column, Row, RowSelectionState } from '@tanstack/react-table'
-import { OrderTableChangeActions } from '../Order-Table-Change-Actions'
-import DeleteBtn from '../Delete-Btn'
-import { get } from 'http'
+import { OrderTableChangeActions } from '../Orders/Order-Table-Change-Actions'
+import { DeleteBtn } from '../'
 import { useTranslations } from 'next-intl'
 
 interface SelectedRowsActionsProps<TData> {

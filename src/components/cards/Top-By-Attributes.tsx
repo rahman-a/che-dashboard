@@ -28,11 +28,7 @@ type Props = {
   tableHeads: string[]
 }
 
-export default function TopByAttributes({
-  data,
-  className,
-  tableHeads,
-}: Props) {
+export function TopByAttributes({ data, className, tableHeads }: Props) {
   const t = useTranslations()
   return (
     <Card className={cn(className)}>

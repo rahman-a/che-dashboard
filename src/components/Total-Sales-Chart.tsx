@@ -16,7 +16,7 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from '@/components/ui/chart'
-import DateRangePicker from './Date-Range-Picker'
+import { DateRangePicker } from './'
 import { useTranslations, useLocale } from 'next-intl'
 const chartData = [
   { date: '2024-04-01', desktop: 222, mobile: 150 },
@@ -112,7 +112,7 @@ const chartData = [
   { date: '2024-06-30', desktop: 446, mobile: 400 },
 ]
 
-export default function TotalSalesChart() {
+export function TotalSalesChart() {
   const [activeChart, setActiveChart] =
     React.useState<keyof typeof chartConfig>('desktop')
   const t = useTranslations()
@@ -140,7 +140,7 @@ export default function TotalSalesChart() {
 
   return (
     <Card>
-      <CardHeader className='flex flex-col items-center space-y-0 border-b py-5 md:p-0 sm:flex-row'>
+      <CardHeader className='flex flex-col items-center space-y-0 border-b py-5 lg:p-0 sm:flex-row'>
         <div className='flex flex-1 flex-col justify-center gap-1 px-6 py-5 sm:py-6'>
           <CardTitle>{t('total_sales')}</CardTitle>
           <CardDescription>{t('show_sales_last_3months')}</CardDescription>

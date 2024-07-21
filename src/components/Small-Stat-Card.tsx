@@ -13,7 +13,7 @@ type Props = {
   icon: React.ReactNode
 }
 
-export default function SmallStatCard({ title, value, state, icon }: Props) {
+export function SmallStatCard({ title, value, state, icon }: Props) {
   return (
     <Card x-chunk='dashboard-01-chunk-0'>
       <CardHeader className='flex flex-row items-center justify-between space-y-0 pb-2'>
