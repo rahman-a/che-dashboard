@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { Inter, Almarai } from 'next/font/google'
+import { Inter, Almarai, Cairo } from 'next/font/google'
 import '../globals.css'
 import { getLangDir } from 'rtl-detect'
 import { NextIntlClientProvider } from 'next-intl'
@@ -8,6 +8,11 @@ import { unstable_setRequestLocale } from 'next-intl/server'
 
 const inter = Inter({ subsets: ['latin'] })
 const almarai = Almarai({
+  subsets: ['arabic'],
+  weight: ['300', '400', '700', '800'],
+})
+
+const cairo = Cairo({
   subsets: ['arabic'],
   weight: ['300', '400', '700', '800'],
 })

@@ -1,3 +1,4 @@
+import { Metadata } from 'next'
 import { Button } from '@/components/ui/button'
 import { Home } from 'lucide-react'
 import { useTranslations } from 'next-intl'
@@ -5,6 +6,11 @@ import Link from 'next/link'
 
 // Note that `app/[locale]/[...rest]/page.tsx`
 // is necessary for this page to render.
+
+export const metadata: Metadata = {
+  title: 'RB - Not found',
+  description: 'Page not found',
+}
 
 export default function NotFoundPage() {
   const t = useTranslations()

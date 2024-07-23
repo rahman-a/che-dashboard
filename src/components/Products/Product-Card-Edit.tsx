@@ -1,3 +1,4 @@
+'use client'
 import React from 'react'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
@@ -31,7 +32,7 @@ type Props = {
   btnClassName?: string
 }
 
-export function ProductCartEdit({ className, btnClassName }: Props) {
+export function ProductCardEdit({ className, btnClassName }: Props) {
   const t = useTranslations()
   const form = useForm<z.infer<typeof schema>>({
     resolver: zodResolver(schema),

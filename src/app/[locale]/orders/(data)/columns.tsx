@@ -132,7 +132,7 @@ export const columns: ColumnDef<Order>[] = [
       return (
         <Badge
           className='flex items-center justify-center 
-        w-24 space-x-1 rtl:space-x-reverse bg-neutral-100 border hover:bg-slate-100'
+        w-28 space-x-1 rtl:space-x-reverse bg-neutral-100 border hover:bg-slate-100'
         >
           {row.original.payment === 'paid' ? (
             <CircleCheckBig className='h-4 w-4 text-green-500' />

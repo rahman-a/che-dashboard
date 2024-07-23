@@ -4,7 +4,7 @@ import Image from 'next/image'
 import { useTranslations } from 'next-intl'
 import { cn } from '@/lib/utils'
 import abaya from '@/images/demo/products/abaya_1.png'
-import { ProductNote, ProductCartEdit } from './'
+import { ProductNote, ProductCardEdit } from './'
 import { DeleteBtnPopover } from '../'
 import { Button } from 'react-day-picker'
 import { Separator } from '../ui/separator'
@@ -28,7 +28,7 @@ export function ProductCard({ className, isOrder, note, isSelectMode }: Props) {
     } else {
       return (
         <>
-          {!isOrder && <ProductCartEdit />}
+          {!isOrder && <ProductCardEdit />}
           <ProductNote btnClassName='rtl:ml-2' isOrder={isOrder} note={note} />
           {!isOrder && <DeleteBtnPopover className='w-44 rtl:w-36' />}
         </>

@@ -7,12 +7,13 @@ import { cn } from '@/lib/utils'
 type Props = {
   title?: string
   mode?: 'view' | 'edit' | 'select'
+  className?: string
 }
 
-export function CustomerCard({ title, mode }: Props) {
+export function CustomerCard({ title, mode, className }: Props) {
   const t = useTranslations()
   return (
-    <div className='w-full lg:w-auto flex flex-col space-y-2'>
+    <div className={cn(`w-full lg:w-auto flex flex-col space-y-2`, className)}>
       {title && (
         <div
           className='w-full flex items-center justify-between 

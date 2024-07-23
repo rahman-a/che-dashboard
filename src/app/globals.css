@@ -85,6 +85,10 @@
   body {
     @apply bg-background text-foreground;
   }
+  img,
+  canvas {
+    @apply inline-block;
+  }
 }
 
 .clip-circle {
@@ -94,4 +98,11 @@
 td:has(.order-customer-phone) {
   direction: ltr;
   text-align: end;
+}
+
+.dir-rtl {
+  direction: rtl;
+}
+.dir-ltr {
+  direction: ltr;
 }

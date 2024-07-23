@@ -1,3 +1,4 @@
+'use client'
 import * as React from 'react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -16,72 +17,42 @@ export interface ICustomerCreationProps {
   mode?: 'create' | 'edit'
 }
 
-const FormSchema = z.object({
-  name: z.string().min(2, {
-    message: 'Username must be at least 2 characters.',
-  }),
-  email: z.string().email({
-    message: 'Please enter a valid email.',
-  }),
-  phone: z.string().min(10, {
-    message: 'Please enter a valid phone number.',
-  }),
-  address: z.object({
-    country: z.string().min(2, {
-      message: 'Please enter a valid country.',
-    }),
-    governorate: z.string().min(2, {
-      message: 'Please enter a valid governorate.',
-    }),
-    region: z.string().min(2, {
-      message: 'Please enter a valid region.',
-    }),
-    block: z
-      .string()
-      .min(2, {
-        message: 'Please enter a valid Block.',
-      })
-      .optional(),
-    street: z
-      .string()
-      .min(2, {
-        message: 'Please enter a valid street address.',
-      })
-      .optional(),
-    neighborhood: z
-      .string()
-      .min(2, {
-        message: 'Please enter a valid Neighborhood.',
-      })
-      .optional(),
-    building: z
-      .string()
-      .min(2, {
-        message: 'Please enter a valid Building.',
-      })
-      .optional(),
-    floor: z
-      .string()
-      .min(2, {
-        message: 'Please enter a valid floor.',
-      })
-      .optional(),
-    apartment: z
-      .string()
-      .min(5, {
-        message: 'Please enter a valid apartment.',
-      })
-      .optional(),
-    note: z.string().optional(),
-  }),
-})
-
 export function CustomerFullData({
   customer,
   customerStep,
   setCustomerStep,
 }: ICustomerCreationProps) {
   const t = useTranslations()
+  const FormSchema = z.object({
+    name: z.string().min(2, {
+      message: t('provide_valid_name'),
+    }),
+    email: z.string().email({
+      message: t('provide_valid_email'),
+    }),
+    phone: z.string().min(10, {
+      message: t('provide_valid_phone'),
+    }),
+    address: z.object({
+      country: z.string().min(2, {
+        message: t('choose_a_country'),
+      }),
+      governorate: z.string().min(2, {
+        message: t('choose_a_governorate'),
+      }),
+      region: z.string().min(2, {
+        message: t('choose_a_region'),
+      }),
+      block: z.string(),
+      street: z.string(),
+      neighborhood: z.string(),
+      building: z.string(),
+      floor: z.string(),
+      apartment: z.string(),
+      note: z.string(),
+    }),
+  })
+
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {

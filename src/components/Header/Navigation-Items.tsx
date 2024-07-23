@@ -63,6 +63,13 @@ export function NavigationItems({}: Props) {
         <LineChart className='h-5 w-5 md:h-4 md:w-4' />
         {t('offers')}
       </Link>
+      <Link
+        href='/invoices/1'
+        className='mx-[-0.65rem] md:mx-0 flex items-center gap-4 md:gap-4 rounded-xl md:rounded-lg px-3 py-2 text-muted-foreground md:transition-all hover:text-foreground md:hover:text-primary'
+      >
+        <Package className='h-5 w-5 md:h-4 md:w-4' />
+        {t('invoices')}
+      </Link>
     </nav>
   )
 }
