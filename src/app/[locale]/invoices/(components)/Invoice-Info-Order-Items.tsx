@@ -38,6 +38,8 @@ const productsData = [
   },
 ]
 
+type ValidStatusKeys = 'new' | 'cut' | 'sewed' | 'delivered'
+
 export function InvoiceInfoOrderItems(props: IInvoiceInfoOrderItemsProps) {
   const t = useTranslations()
   return (
@@ -60,7 +62,7 @@ export function InvoiceInfoOrderItems(props: IInvoiceInfoOrderItemsProps) {
             {productsData.map((product) => (
               <TableRow key={product.id}>
                 <TableCell>{product.product}</TableCell>
-                <TableCell>{t(product.status)}</TableCell>
+                <TableCell>{t(product.status as ValidStatusKeys)}</TableCell>
                 <TableCell>{product.quantity}</TableCell>
                 <TableCell>{product.amount}</TableCell>
                 <TableCell>
