@@ -18,11 +18,12 @@ import {
 import { DateRangePicker } from '../'
 import SortDataTableByDate from './Sort-Table-By-Date'
 import { useTranslations } from 'next-intl'
+import { TranslationKeys } from '@/types'
 
 interface DataTableColumnHeaderProps<TData, TValue>
   extends React.HTMLAttributes<HTMLDivElement> {
   column: Column<TData, TValue>
-  title: string
+  title: TranslationKeys
   className?: string
 }
 

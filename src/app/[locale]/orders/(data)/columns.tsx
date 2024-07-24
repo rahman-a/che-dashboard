@@ -1,7 +1,6 @@
 'use client'
 
 import { ColumnDef } from '@tanstack/react-table'
-
 import { Badge } from '@/components/ui/badge'
 import { Checkbox } from '@/components/ui/checkbox'
 
@@ -13,7 +12,8 @@ import { Button } from '@/components/ui/button'
 import { List, CircleCheckBig, CircleX, FileCog } from 'lucide-react'
 import { cn, filterDateWithinRange } from '@/lib/utils'
 import { OrdersItems, OrderInvoiceActions } from '@/components/Orders'
-import { useTranslations } from 'next-intl'
+import { MessageKeys, useTranslations } from 'next-intl'
+import { TranslationKeys } from '@/types'
 
 export const columns: ColumnDef<Order>[] = [
   {
@@ -231,14 +231,14 @@ function RenderColumnHeader({
   className,
 }: {
   text?: string
-  title: string
+  title: TranslationKeys | string
   className?: string
 }) {
   const t = useTranslations()
   return (
     <span className={className}>
       {text ? `${text} ` : ''}
-      {t(title)}
+      {t(title as TranslationKeys)}
     </span>
   )
 }

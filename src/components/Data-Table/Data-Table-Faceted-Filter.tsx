@@ -17,12 +17,13 @@ import {
 import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover'
 import { Separator } from '../ui/separator'
 import { useTranslations } from 'next-intl'
+import { StatusLabelTypes, TranslationKeys } from '@/types'
 
 interface DataTableFacetedFilterProps<TData, TValue> {
   column?: Column<TData, TValue>
-  title?: string
+  title?: TranslationKeys
   options: {
-    label: string
+    label: TranslationKeys
     value: string
     icon?: React.ComponentType<{ className?: string }>
   }[]
@@ -46,7 +47,7 @@ export function DataTableFacetedFilter<TData, TValue>({
           className='text-xs lg:text-sm h-8 border-dashed'
         >
           <PlusCircleIcon className='mr-2 rtl:ml-2 rtl:mr-auto h-4 w-4' />
-          {t(title)}
+          {t(title!)}
           {selectedValues?.size > 0 && (
             <>
               <Separator orientation='vertical' className='mx-2 h-4' />

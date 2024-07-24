@@ -26,9 +26,10 @@ import {
 } from '@/app/[locale]/orders/(data)/data'
 import { useLocale, useTranslations } from 'next-intl'
 import { getLangDir } from 'rtl-detect'
+import { TranslationKeys } from '@/types'
 
 type ActionTriggerProps = {
-  label: string
+  label: TranslationKeys
   value: string
   Icon?: React.ComponentType<{ className?: string }>
 }
@@ -57,22 +58,22 @@ export function OrderTableChangeActions({
                 font-normal text-gray-800 rtl:flex-row-reverse'
         >
           {Icon && <Icon className='h-4 w-4' />}
-          <span>{label}</span>
+          <span>{t(label)}</span>
         </Button>
       </DialogTrigger>
       <DialogContent className='sm:max-w-[425px]'>
         <DialogHeader className='rtl:text-center'>
-          <DialogTitle>{label}</DialogTitle>
+          <DialogTitle>{t(label)}</DialogTitle>
           <DialogDescription>{t('order_change_guide_msg')}</DialogDescription>
         </DialogHeader>
         <div className='flex justify-center items-center py-4'>
           <Select dir={getLangDir(locale)}>
             <SelectTrigger className='w-full'>
-              <SelectValue placeholder={label} />
+              <SelectValue placeholder={t(label)} />
             </SelectTrigger>
             <SelectContent>
               <SelectGroup>
-                <SelectLabel>{label}</SelectLabel>
+                <SelectLabel>{t(label)}</SelectLabel>
                 {options[value as OptionsValue].map((option: any) => (
                   <SelectItem key={option.value} value={option.value}>
                     <div className='flex items-center space-x-2 rtl:space-x-reverse'>

@@ -1,5 +1,7 @@
+import { TranslationKeys } from '.'
+
 export type CardStats = {
-  title: string
+  title: TranslationKeys
   totalSales: string
   trending: string
   url: string
@@ -13,7 +15,7 @@ export type CardStats = {
 
 export type TopAttributes = {
   url: string
-  title: string
+  title: TranslationKeys
   data: {
     id: number
     name: string

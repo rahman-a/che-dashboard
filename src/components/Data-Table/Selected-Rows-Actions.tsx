@@ -19,12 +19,13 @@ import { Column, Row, RowSelectionState } from '@tanstack/react-table'
 import { OrderTableChangeActions } from '../Orders/Order-Table-Change-Actions'
 import { DeleteBtn } from '../'
 import { useTranslations } from 'next-intl'
+import { TranslationKeys } from '@/types'
 
 interface SelectedRowsActionsProps<TData> {
   getColumn: (columnId: string) => Column<TData, unknown> | undefined
   getRow: (id: string, searchAll?: boolean) => Row<TData>
   options: {
-    label: string
+    label: TranslationKeys
     value: string
     icon?: React.ComponentType<{ className?: string }>
   }[]
@@ -74,7 +75,7 @@ export function SelectedRowsActions<TData>({
           {options.map((option) => (
             <OrderTableChangeActions
               key={option.value}
-              label={t(option.label)}
+              label={option.label}
               value={option.value}
               Icon={option.icon}
             />

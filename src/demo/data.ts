@@ -8,6 +8,7 @@ import abaya2 from './images/products/abaya_2.png'
 import abaya3 from './images/products/abaya_3.png'
 import abaya4 from './images/products/abaya_4.png'
 import abaya5 from './images/products/abaya_5.png'
+import { TranslationKeys } from '@/types'
 
 export const invoices = [
   {
@@ -43,7 +44,7 @@ export const invoices = [
 ]
 
 export const topCountriesBySales = {
-  title: 'top_countries_by_sales',
+  title: 'top_countries_by_sales' as TranslationKeys,
   totalSales: '35,750 ',
   trending: 'up',
   url: '/top-countries-by-sales',
@@ -82,7 +83,7 @@ export const topCountriesBySales = {
 }
 
 export const topStatesBySales = {
-  title: 'top_governorates_by_sales',
+  title: 'top_governorates_by_sales' as TranslationKeys,
   totalSales: '35,750 ',
   trending: 'down',
   url: '/top-governorate-by-sales',
@@ -121,7 +122,7 @@ export const topStatesBySales = {
 }
 
 export const topCustomersBySales = {
-  title: 'top_customers_by_sales',
+  title: 'top_customers_by_sales' as TranslationKeys,
   totalSales: '35,750 ',
   trending: 'up',
   url: '/top-customers-by-sales',
@@ -160,7 +161,7 @@ export const topCustomersBySales = {
 }
 
 export const topCustomersByOrders = {
-  title: 'top_customers_by_orders',
+  title: 'top_customers_by_orders' as TranslationKeys,
   totalSales: '35,750 ',
   trending: 'down',
   url: '/top-customers-by-orders',
@@ -200,7 +201,7 @@ export const topCustomersByOrders = {
 
 export const topCategories = {
   url: '/top-categories-by-sales',
-  title: 'top_categories_by_sales',
+  title: 'top_categories_by_sales' as TranslationKeys,
   data: [
     {
       id: 1,
@@ -237,7 +238,7 @@ export const topCategories = {
 
 export const topSizes = {
   url: '/top-sizes-by-sales',
-  title: 'top_sizes_by_sales',
+  title: 'top_sizes_by_sales' as TranslationKeys,
   data: [
     {
       id: 1,

@@ -19,6 +19,7 @@ import Link from 'next/link'
 import { Button } from '../ui/button'
 import orders from '@/demo/data/orders.json'
 import { useTranslations } from 'next-intl'
+import { TranslationKeys } from '@/types'
 
 type Props = {}
 
@@ -58,7 +59,7 @@ export function RecentOrdersTable({}: Props) {
             {orders.slice(0, 5).map((order) => (
               <TableRow key={order.no}>
                 <TableCell className='font-medium'>{order.no}</TableCell>
-                <TableCell>{t(order.status)}</TableCell>
+                <TableCell>{t(order.status as TranslationKeys)}</TableCell>
                 <TableCell>{order.country}</TableCell>
                 <TableCell>{order.customer}</TableCell>
                 <TableCell>{order.date}</TableCell>

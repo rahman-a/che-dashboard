@@ -11,11 +11,12 @@ import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
 import { Column } from '@tanstack/react-table'
 import { Input } from '../ui/input'
 import { useTranslations } from 'next-intl'
+import { TranslationKeys } from '@/types'
 
 interface DataTableFilterByOptionsProps<TData> {
   getColumn: (columnId: string) => Column<TData, unknown> | undefined
   options: {
-    label: string
+    label: TranslationKeys
     value: string
     icon?: React.ComponentType<{ className?: string }>
   }[]

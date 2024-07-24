@@ -13,6 +13,7 @@ import {
   DropdownMenuSeparator,
 } from '../ui/dropdown-menu'
 import { useTranslations } from 'next-intl'
+import { TranslationKeys } from '@/types'
 
 interface DataTableViewOptionsProps<TData> {
   table: Table<TData>
@@ -51,7 +52,7 @@ export function DataTableViewOptions<TData>({
                 checked={column.getIsVisible()}
                 onCheckedChange={(value) => column.toggleVisibility(!!value)}
               >
-                {t(column.id)}
+                {t(column.id as TranslationKeys)}
               </DropdownMenuCheckboxItem>
             )
           })}

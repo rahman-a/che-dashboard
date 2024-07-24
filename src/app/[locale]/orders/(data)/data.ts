@@ -1,3 +1,4 @@
+import { StatusLabelTypes, TranslationKeys } from '@/types'
 import {
   LucideLogIn,
   Scissors,
@@ -17,35 +18,38 @@ import {
   BadgeDollarSign,
 } from 'lucide-react'
 
+type OptionsTypes = {
+  value: string
+  label: TranslationKeys
+  icon: React.ComponentType<{ className?: string }>
+  color?: string
+}
+
 // new - cut - sewed - delivered
-export const statuses = [
+export const statuses: OptionsTypes[] = [
   {
     value: 'new',
     label: 'new',
     icon: LucideLogIn,
-    color: '--order-new',
   },
   {
     value: 'cut',
     label: 'cut',
     icon: Scissors,
-    color: '--order-cut',
   },
   {
     value: 'sewed',
     label: 'sewed',
     icon: Shirt,
-    color: '--order-sewed',
   },
   {
     value: 'delivered',
     label: 'delivered',
     icon: Truck,
-    color: '--order-delivered',
   },
 ]
 
-export const payment = [
+export const payment: OptionsTypes[] = [
   {
     value: 'paid',
     label: 'paid',
@@ -58,7 +62,7 @@ export const payment = [
   },
 ]
 
-export const filterByOptions = [
+export const filterByOptions: OptionsTypes[] = [
   {
     value: 'no',
     label: 'order_no',
@@ -81,7 +85,7 @@ export const filterByOptions = [
   },
 ]
 // urgent - important - contact
-export const prioritization = [
+export const prioritization: OptionsTypes[] = [
   {
     value: 'urgent',
     label: 'urgent',
@@ -102,7 +106,7 @@ export const prioritization = [
   },
 ]
 
-export const selectedRowsOptions = [
+export const selectedRowsOptions: OptionsTypes[] = [
   {
     value: 'change-status',
     label: 'change_status',
