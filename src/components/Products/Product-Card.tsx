@@ -66,7 +66,7 @@ export function ProductCard({ className, isOrder, note, isSelectMode }: Props) {
                 isOrder ? 'md:text-base' : 'md:text-lg'
               )}
             >
-              {t('product_name')}
+              {t('product_name_example')}
             </h2>
             {isOrder && (
               <p className='flex items-center text-xs md:text-md space-x-1 tracking-wide'>

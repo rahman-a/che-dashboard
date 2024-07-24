@@ -17,7 +17,7 @@ type Props = {
 }
 
 export function ProductDetails({ className, description, isTitle }: Props) {
-  const t = useTranslations('Product')
+  const t = useTranslations()
   const locale = useLocale() as 'en' | 'ar'
   return (
     <div className={cn('flex flex-col space-y-3', className)}>

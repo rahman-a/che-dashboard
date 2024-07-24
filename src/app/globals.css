@@ -106,3 +106,34 @@ td:has(.order-customer-phone) {
 .dir-ltr {
   direction: ltr;
 }
+.rsw-ce {
+  background-color: hsl(var(--background));
+}
+
+.rsw-toolbar {
+  align-items: center;
+  background-color: #f5f5f5;
+  border-bottom: 1px solid #ddd;
+  display: flex;
+}
+.rsw-ce ul {
+  list-style: disc;
+  padding-left: 2em;
+}
+
+.rsw-ce ul:where([dir='rtl'], [dir='rtl'] *) {
+  list-style: decimal;
+  padding-right: 1em;
+  padding-left: 2rem;
+}
+
+.rsw-ce ol {
+  list-style: decimal;
+  padding-left: 2em;
+}
+
+.rsw-ce ol:where([dir='rtl'], [dir='rtl'] *) {
+  list-style: decimal;
+  padding-right: 1em;
+  padding-left: 2rem;
+}
