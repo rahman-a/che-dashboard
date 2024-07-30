@@ -140,11 +140,13 @@ export function CreateUpdateCategory({
               )}
             />
 
-            <DialogFooter className='rtl:space-x-reverse !mt-4'>
-              <DialogClose>
-                <Button variant='outline'>{t('cancel')}</Button>
-              </DialogClose>
+            <DialogFooter className='flex-row space-x-2 rtl:space-x-reverse justify-end !mt-5'>
               <Button type='submit'>{t('save')}</Button>
+              <DialogClose>
+                <Button type='button' variant='outline' className='w-full'>
+                  {t('cancel')}
+                </Button>
+              </DialogClose>
             </DialogFooter>
           </form>
         </Form>

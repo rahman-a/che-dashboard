@@ -119,11 +119,11 @@ export function CreateUpdateSize({ mode, data }: ICreateUpdateSizeProps) {
                 </FormItem>
               )}
             />
-            <DialogFooter className='rtl:space-x-reverse !mt-4'>
+            <DialogFooter className='flex-row space-x-2 rtl:space-x-reverse justify-end !mt-5'>
+              <Button type='submit'>{t('save')}</Button>
               <DialogClose>
                 <Button variant='outline'>{t('cancel')}</Button>
               </DialogClose>
-              <Button type='submit'>{t('save')}</Button>
             </DialogFooter>
           </form>
         </Form>
