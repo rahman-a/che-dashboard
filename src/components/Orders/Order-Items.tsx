@@ -28,9 +28,9 @@ export function OrdersItems({}: Props) {
       </SheetTrigger>
       <SheetContent className='w-full sm:max-w-xl'>
         <div className='flex flex-col space-y-2 py-4'>
-          <ProductCard isOrder />
-          <ProductCard isOrder note={note} />
-          <ProductCard isOrder />
+          <ProductCard mode='view' />
+          <ProductCard mode='view' note={note} />
+          <ProductCard mode='view' />
         </div>
         <SheetFooter>
           <SheetClose asChild>

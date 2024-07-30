@@ -13,6 +13,7 @@ import {
 } from '@/components/ui/table'
 import { cn } from '@/lib/utils'
 import { useTranslations } from 'next-intl'
+import { orderCostumerExample } from '@/demo/data/orders'
 
 export interface IInvoicePreviewProps {
   className?: string
@@ -37,7 +38,10 @@ export const InvoicePreview = React.forwardRef<
         </Badge>
       </div>
       <div className='flex items-center justify-between'>
-        <CustomerShippingAddress className='[&_ul]:text-sm [&_ul]:space-y-1.5 [&_ul]:text-gray-500' />
+        <CustomerShippingAddress
+          data={orderCostumerExample.address[0]}
+          className='[&_ul]:text-sm [&_ul]:space-y-1.5 [&_ul]:text-gray-500'
+        />
         <div
           className='flex items-center justify-center 
         w-28 h-20 md:h-24 lg:h-28 rounded-full border border-dashed border-gray-400 bg-gray-200'

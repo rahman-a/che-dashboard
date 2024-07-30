@@ -34,7 +34,7 @@ interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
   data: TData[]
   toolbarOptions: ToolbarOptions
-  type: 'completed' | 'non-completed' | 'canceled' | 'returned'
+  type?: 'completed' | 'non-completed' | 'canceled' | 'returned'
 }
 
 const initialVisibilityState = {
