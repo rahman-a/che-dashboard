@@ -11,6 +11,7 @@ import {
 import { cn } from '@/lib/utils'
 import { Input } from '../ui/input'
 import { useTranslations } from 'next-intl'
+import { Customer } from '@/types'
 
 export interface ICustomerInfoProps {
   isCurrent: boolean
@@ -18,7 +19,7 @@ export interface ICustomerInfoProps {
 
 export function CustomerInfo({ isCurrent }: ICustomerInfoProps) {
   const t = useTranslations()
-  const { control } = useFormContext()
+  const { control } = useFormContext<Customer>()
   return (
     <section
       className={cn(`hidden flex-col space-y-2`, {

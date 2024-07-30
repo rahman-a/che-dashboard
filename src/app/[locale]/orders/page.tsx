@@ -3,13 +3,10 @@ import { promises as fs } from 'fs'
 import path from 'path'
 import { Metadata } from 'next'
 import { z } from 'zod'
-import Link from 'next/link'
 import { DataTable } from '@/components/Data-Table'
-import { Button } from '@/components/ui/button'
 import { Template } from '@/components'
 import { orderSchema } from './(data)/data-schema'
-import { columns } from './(data)/columns'
-import { CartPlus } from '@/icons'
+import { columns, toolbarOptions } from './(data)/columns'
 import { getTranslations } from 'next-intl/server'
 
 type Props = {}
@@ -40,17 +37,15 @@ export default async function Orders({}: Props) {
         border border-dashed shadow-sm mt-2 lg:m-0'
           x-chunk='dashboard-orders'
         >
-          <Button variant='outline' asChild>
-            <Link
-              href='/orders/new'
-              className='flex items-center justify-center 
-            space-x-2 rtl:space-x-reverse'
-            >
-              <CartPlus className='w-5 h-5' />
-              <span>{t('create_new_order')}</span>
-            </Link>
-          </Button>
-          <DataTable data={orders} columns={columns} />
+          <h1 className='text-2xl text-center md:text-start w-full md:text-3xl py-4'>
+            {t('completed_orders')}
+          </h1>
+          <DataTable
+            data={orders}
+            columns={columns}
+            toolbarOptions={toolbarOptions}
+            type='completed'
+          />
         </div>
       </main>
     </Template>

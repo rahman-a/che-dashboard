@@ -1,7 +1,7 @@
 import React from 'react'
 import { Template } from '@/components'
 import { getTranslations } from 'next-intl/server'
-import { NewOrder } from '../(components)'
+import { CreateUpdateOrder } from '../(components)'
 import { Metadata } from 'next'
 
 export const metadata: Metadata = {
@@ -27,7 +27,7 @@ export default async function CreateNewOrder({}: Props) {
           <h1 className='text-3xl font-light tracking-wide py-4'>
             {t('create_new_order')}
           </h1>
-          <NewOrder />
+          <CreateUpdateOrder mode='create' />
         </div>
       </main>
     </Template>

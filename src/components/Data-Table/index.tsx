@@ -28,10 +28,13 @@ import {
 import { DataTablePagination } from './Data-Table-Pagination'
 import { DataTableToolbar } from './Data-Table-Toolbar'
 import { useTranslations } from 'next-intl'
+import { ToolbarOptions } from '@/types'
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
   data: TData[]
+  toolbarOptions: ToolbarOptions
+  type: 'completed' | 'non-completed' | 'canceled' | 'returned'
 }
 
 const initialVisibilityState = {
@@ -43,6 +46,7 @@ const initialVisibilityState = {
 export function DataTable<TData, TValue>({
   columns,
   data,
+  toolbarOptions,
 }: DataTableProps<TData, TValue>) {
   const t = useTranslations()
   const [rowSelection, setRowSelection] = React.useState({})
@@ -75,7 +79,7 @@ export function DataTable<TData, TValue>({
   })
   return (
     <div className='space-y-4 w-full'>
-      <DataTableToolbar table={table} />
+      <DataTableToolbar table={table} toolbarOptions={toolbarOptions} />
       <div className='rounded-md border'>
         <Table>
           <TableHeader>

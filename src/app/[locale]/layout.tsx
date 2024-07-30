@@ -5,6 +5,7 @@ import { getLangDir } from 'rtl-detect'
 import { NextIntlClientProvider } from 'next-intl'
 import { getMessages } from 'next-intl/server'
 import { unstable_setRequestLocale } from 'next-intl/server'
+import { Toaster } from 'sonner'
 
 const inter = Inter({ subsets: ['latin'] })
 const almarai = Almarai({
@@ -34,6 +35,7 @@ export default async function RootLayout({
     <html lang={locale} dir={direction}>
       <body className={mainFont.className}>
         <NextIntlClientProvider messages={messages}>
+          <Toaster richColors />
           {children}
         </NextIntlClientProvider>
       </body>

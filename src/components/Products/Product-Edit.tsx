@@ -1,7 +1,7 @@
 'use client'
-import React from 'react'
-import { useTranslations, useLocale } from 'next-intl'
-import { useFormContext } from 'react-hook-form'
+import React, { useCallback, useEffect } from 'react'
+import { useTranslations } from 'next-intl'
+import { useFormContext, useFieldArray } from 'react-hook-form'
 import {
   Select,
   SelectContent,
@@ -16,35 +16,36 @@ import {
   AccordionTrigger,
 } from '@/components/ui/accordion'
 import {
-  Form,
   FormControl,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
 } from '@/components/ui/form'
-import { getLangDir } from 'rtl-detect'
 import { Input } from '../ui/input'
 import { AlignJustify } from 'lucide-react'
 import { ProductDetails } from './'
-import { demoProductDescription } from '@/demo/data/products'
 import { Label } from '../ui/label'
-import { cn } from '@/lib/utils'
-type Props = {}
+import { Order } from '@/types'
+type Props = {
+  keyIndex?: number
+  id?: string
+}
 
 // Define the schema for the form fields [sizes, types,note, quantity]
 
-export function ProductEdit({}: Props) {
-  const locale = useLocale()
+export function ProductEdit({ keyIndex, id }: Props) {
   const t = useTranslations()
-  const form = useFormContext()
+  const form = useFormContext<Order>()
+
+  if (keyIndex === undefined) return null
   return (
     <div className='flex flex-col space-y-4 mt-2'>
       <div className='flex items-center justify-between'>
         <div className='relative flex flex-col items-center space-y-3'>
           <FormField
             control={form.control}
-            name='quantity'
+            name={`products.${keyIndex}.quantity`}
             render={({ field }) => (
               <FormItem>
                 <FormLabel className='text-center w-full block'>
@@ -69,7 +70,7 @@ export function ProductEdit({}: Props) {
         <div className='relative flex flex-col items-center mx-2 space-y-3'>
           <FormField
             control={form.control}
-            name='price'
+            name={`products.${keyIndex}.price`}
             render={({ field }) => (
               <FormItem>
                 <FormLabel className='text-center w-full block'>
@@ -104,7 +105,7 @@ export function ProductEdit({}: Props) {
           <div className='flex relative items-center'>
             <FormField
               control={form.control}
-              name='discount.value'
+              name={`products.${keyIndex}.discount.value`}
               render={({ field }) => (
                 <FormItem>
                   <FormControl>
@@ -125,7 +126,7 @@ export function ProductEdit({}: Props) {
             />
             <FormField
               control={form.control}
-              name='discount.type'
+              name={`products.${keyIndex}.discount.type`}
               render={({ field }) => (
                 <FormItem>
                   <FormControl>
@@ -164,7 +165,7 @@ export function ProductEdit({}: Props) {
           </AccordionTrigger>
           <AccordionContent>
             <ProductDetails
-              description={demoProductDescription}
+              description={form.getValues('products')[keyIndex]?.details}
               className='basis-2/4 [&_ul]:list-disc 
               [&_ul]:pl-4 [&_ul]:rtl:pr-4 [&>article]:bg-transparent 
               [&>article]:text-sm [&>article]:md:text-base'

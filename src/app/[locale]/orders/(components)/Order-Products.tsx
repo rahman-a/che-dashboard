@@ -1,14 +1,22 @@
+'use client'
+import React from 'react'
+import { useFormContext } from 'react-hook-form'
+import { useTranslations } from 'next-intl'
+import uuid from 'react-uuid'
 import { AsyncSelectInput } from '@/components'
 import { AsyncDataOptions, colourOptions } from '@/demo/data/async-select-data'
 import { ProductCard } from '@/components/Products'
-import React from 'react'
-import { useTranslations } from 'next-intl'
+import { Order } from '@/types'
+import { orderProductExample } from '@/demo/data/orders'
 
 type Props = {}
 
-export function NewOrderProducts({}: Props) {
-  const [dataCard, setDataCard] = React.useState(0)
+export function NewOrderProducts(props: Props) {
+  const orderDataForm = useFormContext<Order>()
   const t = useTranslations()
+
+  const products = orderDataForm.watch('products')
+
   const filterColors = (inputValue: string) => {
     return colourOptions.filter((i) =>
       i.label.toLowerCase().includes(inputValue.toLowerCase())
@@ -28,11 +36,25 @@ export function NewOrderProducts({}: Props) {
           className='w-80'
           placeholder={t(`search_products_placeholder`)}
           loadedData={promiseOptions}
-          onChange={(value) => setDataCard(dataCard + 1)}
+          onChange={(value) =>
+            orderDataForm.setValue('products', [
+              ...orderDataForm.getValues('products'),
+              {
+                ...orderProductExample,
+                id: uuid(),
+              },
+            ])
+          }
         />
         <div className='flex flex-col space-y-2'>
-          {Array.from({ length: dataCard }).map((_, index) => (
-            <ProductCard key={index} className='bg-transparent border' />
+          {products.map((product, index) => (
+            <ProductCard
+              key={product.id}
+              data={product}
+              mode='edit'
+              keyIndex={index}
+              className='bg-transparent border'
+            />
           ))}
         </div>
       </div>

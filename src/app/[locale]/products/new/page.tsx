@@ -1,9 +1,15 @@
 import { Template } from '@/components'
 import React from 'react'
-import { ProductCreationForm } from '../(components)'
+import { ProductForm } from '../(components)'
 import { useTranslations } from 'next-intl'
+import { Metadata } from 'next'
 
 type Props = {}
+
+export const metadata: Metadata = {
+  title: 'RB - New Products',
+  description: 'Create new products',
+}
 
 export default function NewProduct({}: Props) {
   const t = useTranslations()
@@ -17,7 +23,7 @@ export default function NewProduct({}: Props) {
           <h1 className='text-3xl font-light tracking-wide py-4'>
             {t('create_new_product')}
           </h1>
-          <ProductCreationForm />
+          <ProductForm mode='create' />
         </div>
       </main>
     </Template>

@@ -1,0 +1,24 @@
+[
+  {
+    "no": "854169",
+    "name": "this is product name number 1",
+    "description": "It's important to be aware of each prop's responsibility when working with external controlled components, such as MUI, AntD, Chakra UI.",
+    "price": 48,
+    "stock": 18,
+    "category": "classic",
+    "SKUs": ["ST-55-MAKANI", "ST-47-CLASSIC", "ST-36-WHITE"],
+    "createdAt": "2021-07-01T00:00:00.000Z",
+    "image": "/images/products/abaya_1.png"
+  },
+  {
+    "no": "478912",
+    "name": "this is product name number 2",
+    "description": "It's important to be aware of each prop's responsibility when working with external controlled components, such as MUI, AntD, Chakra UI.",
+    "price": 50,
+    "stock": 20,
+    "category": "vintage",
+    "SKUs": ["ST-89-VINTAGE", "ER-48-BLACK", "ST-41-EMROIDERY"],
+    "createdAt": "2021-09-21T00:00:00.000Z",
+    "image": "/images/products/abaya_2.png"
+  }
+]

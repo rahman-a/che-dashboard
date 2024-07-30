@@ -16,29 +16,34 @@ import { Input } from '@/components/ui/input'
 import { Trash } from 'lucide-react'
 import Image from 'next/image'
 import { Button } from '@/components/ui/button'
-import { set } from 'date-fns'
+import { blobUrlToFile } from '@/lib/utils'
+import { RequiredAsterisk } from '@/components'
+export interface IProductImagesProps {
+  data?: string[]
+}
 
-export interface IProductNewImagesProps {}
-
-export function ProductNewImages(props: IProductNewImagesProps) {
+export function ProductImages({ data }: IProductImagesProps) {
   const t = useTranslations()
   const inputRef = React.useRef<HTMLInputElement>(null)
   const [images, setImages] = React.useState<{ id: string; image: string }[]>(
     []
   )
   const form = useFormContext<z.infer<ReturnType<typeof productSchema>>>()
-  console.log('Errors: ', form.formState.errors)
   const imagesWatch = form.watch('images')
 
   const handleImages = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files
+    const images: { id: string; image: string }[] = []
     if (!files) return
     const pictures = Array.from(files)
     for (const picture of pictures) {
       const imageUrl = URL.createObjectURL(picture)
-      setImages((prev) => [...prev, { id: uuid(), image: imageUrl }])
+      images.push({ id: uuid(), image: imageUrl })
     }
-    form.setValue('images', [...imagesWatch, ...pictures])
+    setImages((prev) => [...prev, ...images])
+    form.setValue('images', [...imagesWatch, ...pictures], {
+      shouldValidate: true,
+    })
   }
 
   const removeImage = async (index: number, id: string) => {
@@ -49,7 +54,7 @@ export function ProductNewImages(props: IProductNewImagesProps) {
     )
   }
 
-  const updateInputValue = React.useCallback(() => {
+  const updateFileInputValue = React.useCallback(() => {
     const dataTransfer = new DataTransfer()
     for (const image of imagesWatch) {
       dataTransfer.items.add(image)
@@ -60,8 +65,28 @@ export function ProductNewImages(props: IProductNewImagesProps) {
   }, [imagesWatch])
 
   React.useEffect(() => {
-    updateInputValue()
-  }, [imagesWatch, updateInputValue])
+    updateFileInputValue()
+  }, [imagesWatch, updateFileInputValue])
+
+  // in edit product page set the images value in defaultValues
+  const setImagesFromData = React.useCallback(async () => {
+    if (data?.length) {
+      const imagesArr: File[] = []
+      const imagesData: { id: string; image: string }[] = []
+      for (const image of data) {
+        const file = await blobUrlToFile(image)
+        imagesData.push({ id: uuid(), image })
+        imagesArr.push(file)
+      }
+      setImages(imagesData)
+      form.setValue('images', imagesArr, { shouldValidate: true })
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [data])
+
+  React.useEffect(() => {
+    setImagesFromData()
+  }, [setImagesFromData])
   return (
     <div className='flex flex-col space-y-4'>
       <div className='flex flex-col space-y-2 gap-4'>
@@ -69,10 +94,12 @@ export function ProductNewImages(props: IProductNewImagesProps) {
           <FormField
             control={form.control}
             name='images'
-            rules={{ required: true }}
             render={({ field }) => (
               <FormItem className='w-full'>
-                <FormLabel htmlFor='images'>{t('product_images')}</FormLabel>
+                <FormLabel htmlFor='images'>
+                  {t('product_images')}
+                  <RequiredAsterisk />
+                </FormLabel>
                 <FormControl>
                   <Input
                     {...field}
@@ -103,6 +130,7 @@ export function ProductNewImages(props: IProductNewImagesProps) {
                   height={50}
                   src={image.image}
                   alt='product'
+                  unoptimized
                   className='w-full object-contain h-full'
                 />
                 <Button

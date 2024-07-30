@@ -25,15 +25,12 @@ import { Trash } from 'lucide-react'
 import { useLocale, useTranslations } from 'next-intl'
 import { Separator } from '@/components/ui/separator'
 import { getLangDir } from 'rtl-detect'
-export interface INewProductSKUsProps {
+export interface IProductSKUsProps {
   generateSKU: () => void
   removeSKU: (id: string) => void
 }
 
-export function ProductNewSKUs({
-  generateSKU,
-  removeSKU,
-}: INewProductSKUsProps) {
+export function ProductSKUs({ generateSKU, removeSKU }: IProductSKUsProps) {
   const t = useTranslations()
   const locale = useLocale()
   const form = useFormContext<z.infer<ReturnType<typeof productSchema>>>()

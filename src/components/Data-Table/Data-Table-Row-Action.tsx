@@ -1,8 +1,8 @@
 'use client'
 
-import { EllipsisVertical, LucideEye, Link } from 'lucide-react'
+import { EllipsisVertical, Link } from 'lucide-react'
 import { Row } from '@tanstack/react-table'
-
+import { useRouter } from 'next/navigation'
 import { Button } from '../ui/button'
 import {
   DropdownMenu,
@@ -14,15 +14,42 @@ import {
 } from '../ui/dropdown-menu'
 import { DeleteBtn } from '../'
 import { useTranslations } from 'next-intl'
+import { ResourceTypes } from '@/types'
+import React from 'react'
 
 interface DataTableRowActionsProps<TData> {
   row: Row<TData>
+  resource: ResourceTypes
+  updateLink?: string
+  updateComponent?: React.ReactNode
 }
 
 export function DataTableRowActions<TData>({
   row,
+  resource,
+  updateLink,
+  updateComponent,
 }: DataTableRowActionsProps<TData>) {
   const t = useTranslations()
+  const router = useRouter()
+  const renderUpdateComponent = () => {
+    if (updateLink) {
+      return (
+        <DropdownMenuItem asChild>
+          <Button
+            variant='outline'
+            onClick={() => router.push(updateLink)}
+            className='w-full cursor-pointer rtl:flex-row-reverse justify-start space-x-1 rtl:space-x-reverse'
+          >
+            <Link className='h-4 w-4' />
+            <span>{t('edit')}</span>
+          </Button>
+        </DropdownMenuItem>
+      )
+    } else if (updateComponent) {
+      return <DropdownMenuItem asChild>{updateComponent}</DropdownMenuItem>
+    }
+  }
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -35,12 +62,7 @@ export function DataTableRowActions<TData>({
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align='end' className='w-[160px]'>
-        <DropdownMenuItem className='cursor-pointer flex-row-reverse rtl:flex-row justify-end'>
-          <span>{t('view')}</span>
-          <DropdownMenuShortcut className='mr-2 ml-0 rtl:ml-2 rtl:mr-0'>
-            <Link className='h-4 w-4' />
-          </DropdownMenuShortcut>
-        </DropdownMenuItem>
+        {renderUpdateComponent()}
         <DropdownMenuSeparator />
         <DropdownMenuItem>
           <DeleteBtn />

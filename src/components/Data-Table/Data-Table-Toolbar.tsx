@@ -15,17 +15,20 @@ import {
   selectedRowsOptions,
 } from '@/app/[locale]/orders/(data)/data'
 import { DataTableFacetedFilter } from './Data-Table-Faceted-Filter'
-import { DateTableFilterByOptions } from './Date-Table-FilterBy-Options'
+import { DataTableFilterByOptions } from './Data-Table-FilterBy-Options'
 import { SelectedRowsActions } from './Selected-Rows-Actions'
 import SortDataTableByDate from './Sort-Table-By-Date'
 import { useTranslations } from 'next-intl'
+import { ToolbarOptions } from '@/types'
 
 interface DataTableToolbarProps<TData> {
   table: Table<TData>
+  toolbarOptions: ToolbarOptions
 }
 
 export function DataTableToolbar<TData>({
   table,
+  toolbarOptions,
 }: DataTableToolbarProps<TData>) {
   const t = useTranslations()
   const isFiltered = table.getState().columnFilters.length > 0
@@ -36,34 +39,29 @@ export function DataTableToolbar<TData>({
       rtl:space-x-reverse flex-wrap lg:flex-nowrap'
       >
         <div className='flex items-center space-x-1 rtl:space-x-reverse'>
-          <DateTableFilterByOptions
-            options={filterByOptions}
+          <DataTableFilterByOptions
+            options={toolbarOptions.filterByOptions}
             getColumn={table.getColumn}
           />
-          <SortDataTableByDate column={table.getColumn('date')} />
+          {toolbarOptions.filterByDateRange.show && (
+            <SortDataTableByDate
+              column={table.getColumn(toolbarOptions.filterByDateRange.column!)}
+            />
+          )}
         </div>
         <div className='flex items-center w-[22rem] lg:w-80 flex-wrap lg:flex-nowrap gap-1'>
-          {table.getColumn('status') && (
-            <DataTableFacetedFilter
-              column={table.getColumn('status')}
-              title='status'
-              options={statuses}
-            />
-          )}
-          {table.getColumn('priority') && (
-            <DataTableFacetedFilter
-              column={table.getColumn('priority')}
-              title='priority'
-              options={prioritization}
-            />
-          )}
-          {table.getColumn('payment') && (
-            <DataTableFacetedFilter
-              column={table.getColumn('payment')}
-              title='payment'
-              options={payment}
-            />
-          )}
+          {toolbarOptions.facetedFilter.show &&
+            toolbarOptions.facetedFilter.data?.map(
+              (filter) =>
+                table.getColumn(filter.column) && (
+                  <DataTableFacetedFilter
+                    key={filter.column}
+                    column={table.getColumn(filter.column)}
+                    title={filter.column}
+                    options={filter.options}
+                  />
+                )
+            )}
           {isFiltered && (
             <Button
               variant='ghost'
@@ -80,17 +78,22 @@ export function DataTableToolbar<TData>({
         className='flex items-center space-x-2 rtl:space-x-reverse 
       -translate-x-16 rtl:translate-x-16 lg:translate-x-0 rtl:lg:translate-x-0'
       >
-        <SelectedRowsActions
-          getColumn={table.getColumn}
-          getRow={table.getRow}
-          options={selectedRowsOptions}
-          isRowsSelected={
-            table.getIsAllPageRowsSelected() ||
-            table.getIsSomePageRowsSelected()
-          }
-          selectedRows={table.getState().rowSelection}
-        />
-        <DataTableViewOptions table={table} />
+        {toolbarOptions.selectedRowFilter.show && (
+          <SelectedRowsActions
+            getColumn={table.getColumn}
+            getRow={table.getRow}
+            options={toolbarOptions.selectedRowFilter.options!}
+            isRowsSelected={
+              table.getIsAllPageRowsSelected() ||
+              table.getIsSomePageRowsSelected()
+            }
+            selectedRows={table.getState().rowSelection}
+          />
+        )}
+
+        {toolbarOptions.toggleColumn.show && (
+          <DataTableViewOptions table={table} />
+        )}
       </div>
     </div>
   )

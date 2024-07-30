@@ -1,19 +1,23 @@
 'use client'
-
 import { ColumnDef } from '@tanstack/react-table'
 import { Badge } from '@/components/ui/badge'
 import { Checkbox } from '@/components/ui/checkbox'
-
-import { prioritization, statuses } from './data'
+import {
+  prioritization,
+  statuses,
+  filterByOptions,
+  payment,
+  selectedRowsOptions,
+} from './data'
 import { Order } from './data-schema'
 import { DataTableColumnHeader } from '@/components/Data-Table/Data-Table-Column-Header'
 import { DataTableRowActions } from '@/components/Data-Table/Data-Table-Row-Action'
-import { Button } from '@/components/ui/button'
-import { List, CircleCheckBig, CircleX, FileCog } from 'lucide-react'
-import { cn, filterDateWithinRange } from '@/lib/utils'
+import { CircleCheckBig, CircleX } from 'lucide-react'
+import { filterDateWithinRange } from '@/lib/utils'
 import { OrdersItems, OrderInvoiceActions } from '@/components/Orders'
-import { MessageKeys, useTranslations } from 'next-intl'
-import { TranslationKeys } from '@/types'
+import { DataTableSimpleHeaderRender } from '@/components/Data-Table/Data-Table-Simple-Header-Render'
+import { ToolbarOptions } from '@/types'
+import { format } from 'date-fns'
 
 export const columns: ColumnDef<Order>[] = [
   {
@@ -62,7 +66,6 @@ export const columns: ColumnDef<Order>[] = [
       const status = statuses.find(
         (status) => status.value === row.getValue('status')
       )
-
       if (!status) {
         return null
       }
@@ -75,7 +78,7 @@ export const columns: ColumnDef<Order>[] = [
           {status.icon && (
             <status.icon className='mr-2 rtl:ml-2 rtl:mr-0 h-4 w-4 text-white' />
           )}
-          <RenderColumnHeader title={status.label} />
+          <DataTableSimpleHeaderRender title={status.label} />
         </Badge>
       )
     },
@@ -110,7 +113,7 @@ export const columns: ColumnDef<Order>[] = [
           {priority.icon && (
             <priority.icon className='mr-2 rtl:ml-2 rtl:mr-0 h-4 w-4 text-white' />
           )}
-          <RenderColumnHeader title={priority.label} />
+          <DataTableSimpleHeaderRender title={priority.label} />
         </Badge>
       )
     },
@@ -139,7 +142,7 @@ export const columns: ColumnDef<Order>[] = [
           ) : (
             <CircleX className='h-4 w-4 text-red-500' />
           )}
-          <RenderColumnHeader
+          <DataTableSimpleHeaderRender
             title={row.getValue('payment')}
             className='capitalize text-slate-800'
           />
@@ -161,7 +164,7 @@ export const columns: ColumnDef<Order>[] = [
       />
     ),
     cell: ({ row }) => (
-      <RenderColumnHeader text={row.getValue('total')} title='kw' />
+      <DataTableSimpleHeaderRender text={row.getValue('total')} title='kw' />
     ),
     filterFn: (row, id, value) => {
       return value.includes(row.getValue(id))
@@ -169,7 +172,7 @@ export const columns: ColumnDef<Order>[] = [
   },
   {
     accessorKey: 'products',
-    header: () => <RenderColumnHeader title='products' />,
+    header: () => <DataTableSimpleHeaderRender title='products' />,
     cell: ({ row }) => {
       return <OrdersItems />
     },
@@ -207,38 +210,59 @@ export const columns: ColumnDef<Order>[] = [
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title='date' />
     ),
-    cell: ({ row }) => <span>{row.getValue('date')}</span>,
-    filterFn: filterDateWithinRange,
+    cell: ({ row }) => (
+      <span>{format(new Date(row.getValue('date')), 'dd/MM/yyyy')}</span>
+    ),
+    filterFn: filterDateWithinRange<Order>,
   },
   {
     accessorKey: 'invoice',
-    header: () => <RenderColumnHeader title='invoice' />,
+    header: () => <DataTableSimpleHeaderRender title='invoice' />,
     cell: ({ row }) => {
       return <OrderInvoiceActions row={row} />
     },
   },
   {
     id: 'actions',
-    cell: ({ row }) => <DataTableRowActions row={row} />,
+    cell: ({ row }) => <DataTableRowActions resource='orders' row={row} />,
     enableSorting: false,
     enableHiding: false,
   },
 ]
 
-function RenderColumnHeader({
-  text,
-  title,
-  className,
-}: {
-  text?: string
-  title: TranslationKeys | string
-  className?: string
-}) {
-  const t = useTranslations()
-  return (
-    <span className={className}>
-      {text ? `${text} ` : ''}
-      {t(title as TranslationKeys)}
-    </span>
-  )
+export const toolbarOptions: ToolbarOptions = {
+  filterByOptions: {
+    show: true,
+    options: filterByOptions,
+    defaultFilterColumn: 'no',
+    inputPlaceholder: 'filter_orders',
+  },
+  filterByDateRange: {
+    show: true,
+    column: 'date',
+  },
+  facetedFilter: {
+    show: true,
+    data: [
+      {
+        column: 'status',
+        options: statuses,
+      },
+      {
+        column: 'priority',
+        options: prioritization,
+      },
+      {
+        column: 'payment',
+        options: payment,
+      },
+    ],
+  },
+  selectedRowFilter: {
+    show: true,
+    options: selectedRowsOptions,
+  },
+  toggleColumn: {
+    show: true,
+  },
 }

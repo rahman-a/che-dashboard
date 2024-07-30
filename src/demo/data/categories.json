@@ -1,0 +1,18 @@
+[
+  {
+    "no": "85496",
+    "name": "classic",
+    "description": "Classic Description",
+    "image": "/images/products/abaya_1.png",
+    "products_no": 25,
+    "createdAt": "2021-07-01T00:00:00.000Z"
+  },
+  {
+    "no": "54123",
+    "name": "black",
+    "description": "Black Description",
+    "image": "/images/products/abaya_2.png",
+    "products_no": 20,
+    "createdAt": "2021-09-21T00:00:00.000Z"
+  }
+]

@@ -5,10 +5,10 @@ import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 import { useLocale, useTranslations } from 'next-intl'
 import uuid from 'react-uuid'
+import { getLangDir } from 'rtl-detect'
 import { productSchema } from '@/schema'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
-import { Textarea } from '@/components/ui/textarea'
 import {
   Form,
   FormControl,
@@ -24,39 +24,31 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
-import { ProductNewImages, ProductNewSKUs } from './'
-import { SimpleRichTextEditor } from '@/components'
-import { getLangDir } from 'rtl-detect'
+import { ProductImages, ProductSKUs } from '.'
+import { RequiredAsterisk, SimpleRichTextEditor } from '@/components'
+import { Label } from '@/components/ui/label'
 
-export interface INewProductFormProps {}
+type Product = z.infer<ReturnType<typeof productSchema>>
 
-// name - details - price - category - type -size - images -discount
+export interface IProductFormProps {
+  mode: 'create' | 'update'
+  data?: Product
+}
 
-/**
- * name - shortcut
- * details
- * size - type - category
- * price - discount - shipping
- * images
- * //////////////////////////
- * sku/'s
- */
-
-export function ProductCreationForm(props: INewProductFormProps) {
+export function ProductForm({ mode, data }: IProductFormProps) {
   const t = useTranslations()
   const locale = useLocale()
-  const form = useForm<z.infer<ReturnType<typeof productSchema>>>({
+  const form = useForm<Product>({
     resolver: zodResolver(productSchema(t)),
     defaultValues: {
-      name: '',
-      abbr: 'ST',
-      details: '',
-      category: '',
-      price: 0,
-      discount: 0,
-      shipping: 0,
-      stock: 0,
-      SKUs: [
+      name: data?.name || '',
+      abbr: data?.abbr || 'ST',
+      details: data?.details || '',
+      category: data?.category || '',
+      price: data?.price || 0,
+      discount: data?.discount || { value: 0, type: 'amount' },
+      stock: data?.stock || 0,
+      SKUs: data?.SKUs || [
         {
           id: uuid(),
           sku: 'ST',
@@ -64,17 +56,13 @@ export function ProductCreationForm(props: INewProductFormProps) {
           size: '',
         },
       ],
-      images: [] as File[],
+      images: [],
     },
   })
 
-  const onSubmit = form.handleSubmit(
-    (data: z.infer<ReturnType<typeof productSchema>>) => {
-      const jsonData = JSON.stringify(data, null, 2)
-      window.alert(jsonData)
-      console.log('Product: ', data)
-    }
-  )
+  const onSubmit = form.handleSubmit((data: Product) => {
+    console.log('Product: ', data)
+  })
 
   const generateSKU = () => {
     const SKUsValues = form.getValues('SKUs')
@@ -109,18 +97,23 @@ export function ProductCreationForm(props: INewProductFormProps) {
     })
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [abbrWatch])
+
   return (
     <Form {...form}>
-      <form action='' onSubmit={onSubmit} className='w-full'>
+      <form onSubmit={onSubmit} className='w-full'>
         <div
           className='absolute hidden md:block top-24 lg:top-28 right-8 
         rtl:left-8 rtl:right-auto'
         >
-          <Button className='w-full'>
-            <span>{t('add_new_product')}</span>
+          <Button type='submit' className='w-full'>
+            {mode === 'create' ? (
+              <span>{t('add_new_product')}</span>
+            ) : (
+              <span>{t('update_product')}</span>
+            )}
           </Button>
         </div>
-        <div className='grid xl:grid-cols-[1fr_500px] gap-2 space-y-2'>
+        <div className='grid xl:grid-cols-[1fr_500px] gap-2 space-y-2 xl:space-y-0'>
           <section className='flex flex-col space-y-5'>
             {/* Product Details [Name - Abbreviation - Description] */}
             <div className='flex flex-col space-y-5 bg-gray-100 p-4 rounded-lg'>
@@ -130,7 +123,10 @@ export function ProductCreationForm(props: INewProductFormProps) {
                   name='name'
                   render={({ field }) => (
                     <FormItem className='w-full'>
-                      <FormLabel htmlFor='name'>{t('product_name')}</FormLabel>
+                      <FormLabel htmlFor='name'>
+                        {t('product_name')}
+                        <RequiredAsterisk />
+                      </FormLabel>
                       <FormControl>
                         <Input
                           {...field}
@@ -146,7 +142,10 @@ export function ProductCreationForm(props: INewProductFormProps) {
                   name='abbr'
                   render={({ field }) => (
                     <FormItem className='w-full'>
-                      <FormLabel>{t('product_abbr')}</FormLabel>
+                      <FormLabel>
+                        {t('product_abbr')}
+                        <RequiredAsterisk />
+                      </FormLabel>
                       <FormControl>
                         <Input
                           {...field}
@@ -166,6 +165,7 @@ export function ProductCreationForm(props: INewProductFormProps) {
                     <FormItem className='w-full'>
                       <FormLabel htmlFor='details'>
                         {t('product_details')}
+                        <RequiredAsterisk />
                       </FormLabel>
                       <FormControl>
                         <SimpleRichTextEditor
@@ -190,6 +190,7 @@ export function ProductCreationForm(props: INewProductFormProps) {
                       <FormItem className='w-full lg:w-6/12'>
                         <FormLabel htmlFor='category'>
                           {t('category')}
+                          <RequiredAsterisk />
                         </FormLabel>
                         <FormControl>
                           <Select
@@ -206,19 +207,16 @@ export function ProductCreationForm(props: INewProductFormProps) {
                               />
                             </SelectTrigger>
                             <SelectContent>
-                              <SelectItem
-                                value='embroidery_abaya'
-                                defaultChecked
-                              >
+                              <SelectItem value='embroidery' defaultChecked>
                                 {t('embroidery_abaya')}
                               </SelectItem>
-                              <SelectItem value='classic_abaya'>
+                              <SelectItem value='classic'>
                                 {t('classic_abaya')}
                               </SelectItem>
-                              <SelectItem value='white_abaya'>
+                              <SelectItem value='white'>
                                 {t('white_abaya')}
                               </SelectItem>
-                              <SelectItem value='black_abaya'>
+                              <SelectItem value='black'>
                                 {t('black_abaya')}
                               </SelectItem>
                             </SelectContent>
@@ -233,7 +231,10 @@ export function ProductCreationForm(props: INewProductFormProps) {
                     name='price'
                     render={({ field }) => (
                       <FormItem className='w-full lg:w-6/12'>
-                        <FormLabel htmlFor='price'>{t('price')}</FormLabel>
+                        <FormLabel htmlFor='price'>
+                          {t('price')}
+                          <RequiredAsterisk />
+                        </FormLabel>
                         <FormControl>
                           <Input
                             {...field}
@@ -251,54 +252,59 @@ export function ProductCreationForm(props: INewProductFormProps) {
                   />
                 </div>
                 <div className='flex flex-col md:flex-row items-center gap-4'>
-                  <FormField
-                    control={form.control}
-                    name='discount'
-                    render={({ field }) => (
-                      <FormItem className='w-full lg:w-6/12'>
-                        <FormLabel htmlFor='discount'>
-                          {t('discount')}
-                        </FormLabel>
-                        <FormControl>
-                          <Input
-                            {...field}
-                            type='text'
-                            inputMode='numeric'
-                            pattern='^[0-9]*$'
-                            maxLength={6}
-                            onChange={field.onChange}
-                            placeholder={t('enter_product_discount')}
-                          />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                  <FormField
-                    control={form.control}
-                    name='shipping'
-                    render={({ field }) => (
-                      <FormItem className='w-full lg:w-6/12'>
-                        <FormLabel htmlFor='shipping'>
-                          {t('shipping')}
-                        </FormLabel>
-                        <FormControl>
-                          <Input
-                            {...field}
-                            type='text'
-                            inputMode='numeric'
-                            pattern='^[0-9]*$'
-                            maxLength={6}
-                            onChange={field.onChange}
-                            placeholder={t('enter_product_shipping_value')}
-                          />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                </div>
-                <div className='flex flex-col md:flex-row items-center gap-4'>
+                  <div className='w-full lg:w-6/12 flex flex-col space-y-3'>
+                    <Label>{t('discount')}</Label>
+                    <div className='w-full flex relative items-center'>
+                      <FormField
+                        control={form.control}
+                        name='discount.value'
+                        render={({ field }) => (
+                          <FormItem className='w-full'>
+                            <FormControl>
+                              <Input
+                                {...field}
+                                type='text'
+                                inputMode='numeric'
+                                pattern='^[0-9]*$'
+                                maxLength={6}
+                                onChange={field.onChange}
+                                className='w-full h-10 rounded-md rounded-e-none 
+                          focus-visible:ring-0 focus-visible:ring-offset-0'
+                              />
+                            </FormControl>
+                            <FormMessage className='absolute w-full text-sm' />
+                          </FormItem>
+                        )}
+                      />
+                      <FormField
+                        control={form.control}
+                        name='discount.type'
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormControl>
+                              <Select
+                                onValueChange={field.onChange}
+                                defaultValue={field.value}
+                              >
+                                <SelectTrigger
+                                  className='w-20 rounded-s-none rtl:rounded-e-none 
+                          rtl:rounded-s-md focus:ring-0 focus:ring-offset-0'
+                                >
+                                  <SelectValue />
+                                </SelectTrigger>
+                                <SelectContent>
+                                  <SelectItem value='amount' defaultChecked>
+                                    {t('kw')}
+                                  </SelectItem>
+                                  <SelectItem value='percentage'>%</SelectItem>
+                                </SelectContent>
+                              </Select>
+                            </FormControl>
+                          </FormItem>
+                        )}
+                      />
+                    </div>
+                  </div>
                   <FormField
                     control={form.control}
                     name='stock'
@@ -326,19 +332,23 @@ export function ProductCreationForm(props: INewProductFormProps) {
               </div>
             </div>
             <div className='flex flex-col space-y-5 bg-gray-100 p-4 rounded-lg'>
-              <ProductNewSKUs generateSKU={generateSKU} removeSKU={removeSKU} />
+              <ProductSKUs generateSKU={generateSKU} removeSKU={removeSKU} />
             </div>
           </section>
           <section>
             {/* Product Details [images] */}
             <div className='flex flex-col space-y-5 bg-gray-100 p-4 rounded-lg'>
-              <ProductNewImages />
+              <ProductImages data={data?.images as string[]} />
             </div>
           </section>
         </div>
         <div className='block md:hidden my-4'>
-          <Button className='w-full'>
-            <span>{t('add_new_product')}</span>
+          <Button type='submit' className='w-full'>
+            {mode === 'create' ? (
+              <span>{t('add_new_product')}</span>
+            ) : (
+              <span>{t('update_product')}</span>
+            )}
           </Button>
         </div>
       </form>

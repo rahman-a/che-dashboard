@@ -4,19 +4,10 @@ import { cn } from '@/lib/utils'
 type Props = {
   className?: string
   isTitle?: boolean
-  description: {
-    en: {
-      title: string
-      points: { id: number; text: string }[]
-    }
-    ar: {
-      title: string
-      points: { id: number; text: string }[]
-    }
-  }
+  description: string
 }
 
-export function ProductDetails({ className, description, isTitle }: Props) {
+export function ProductDetails({ className, isTitle, description }: Props) {
   const t = useTranslations()
   const locale = useLocale() as 'en' | 'ar'
   return (
@@ -25,12 +16,7 @@ export function ProductDetails({ className, description, isTitle }: Props) {
         <h3 className='text-xl md:text-2xl min-w-fit'>Design Details:</h3>
       )}
       <article className='text-base md:text-base bg-primary/5 shadow-sm p-2 rounded-md'>
-        <h4>{description[locale].title}</h4>
-        <ul>
-          {description[locale].points.map((point) => (
-            <li key={point.id}>{point.text}</li>
-          ))}
-        </ul>
+        <div dangerouslySetInnerHTML={{ __html: description }} />
       </article>
     </div>
   )

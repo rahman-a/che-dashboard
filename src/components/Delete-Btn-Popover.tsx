@@ -1,3 +1,4 @@
+'use client'
 import React from 'react'
 import {
   Popover,
@@ -12,9 +13,10 @@ import { useTranslations } from 'next-intl'
 type Props = {
   className?: string
   btnClassName?: string
+  onClick?: () => void
 }
 
-export function DeleteBtnPopover({ className, btnClassName }: Props) {
+export function DeleteBtnPopover({ className, btnClassName, onClick }: Props) {
   const t = useTranslations()
   return (
     <Popover>
@@ -25,7 +27,7 @@ export function DeleteBtnPopover({ className, btnClassName }: Props) {
       </PopoverTrigger>
       <PopoverContent className={cn('w-32', className)}>
         <div className='flex items-center justify-center'>
-          <Button variant='destructive'>
+          <Button variant='destructive' onClick={onClick}>
             <Trash className='mr-1 rtl:ml-1 rtl:mr-0 h-4 w-4' />
             <span>{t('confirm_deletion')}</span>
           </Button>

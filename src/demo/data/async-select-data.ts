@@ -1,20 +1,18 @@
 export interface AsyncDataOptions {
   readonly value: string
   readonly label: string
-  readonly color: string
   readonly isFixed?: boolean
   readonly isDisabled?: boolean
 }
 
 export const colourOptions: readonly AsyncDataOptions[] = [
-  { value: 'ocean', label: 'Ocean', color: '#00B8D9', isFixed: true },
-  { value: 'blue', label: 'Blue', color: '#0052CC', isDisabled: true },
-  { value: 'purple', label: 'Purple', color: '#5243AA' },
-  { value: 'red', label: 'Red', color: '#FF5630', isFixed: true },
-  { value: 'orange', label: 'Orange', color: '#FF8B00' },
-  { value: 'yellow', label: 'Yellow', color: '#FFC400' },
-  { value: 'green', label: 'Green', color: '#36B37E' },
-  { value: 'forest', label: 'Forest', color: '#00875A' },
-  { value: 'slate', label: 'Slate', color: '#253858' },
-  { value: 'silver', label: 'Silver', color: '#666666' },
+  { value: 'st-55-makani-01', label: 'ST-55-MAKANI' },
+  { value: 'st-55-makani-02', label: 'ST-55-MAKANI' },
+  { value: 'st-55-makani-03', label: 'ST-55-MAKANI' },
+  { value: 'st-55-makani-04', label: 'ST-55-MAKANI' },
+  { value: 'st-55-makani-05', label: 'ST-55-MAKANI' },
+  { value: 'st-55-makani-06', label: 'ST-55-MAKANI' },
+  { value: 'st-55-makani-07', label: 'ST-55-MAKANI' },
+  { value: 'st-55-makani-08', label: 'ST-55-MAKANI' },
+  { value: 'st-55-makani-09', label: 'ST-55-MAKANI' },
 ]

@@ -1,9 +1,7 @@
 'use client'
 import React from 'react'
-import { useForm } from 'react-hook-form'
+import { useForm, useFormContext } from 'react-hook-form'
 import { Button } from '../ui/button'
-import { Edit } from 'lucide-react'
-import { z } from 'zod'
 import { Input } from '../ui/input'
 import { Textarea } from '../ui/textarea'
 import {
@@ -23,9 +21,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
-import { cn } from '@/lib/utils'
-import { customerAddressSchema } from '@/schema'
-import { CustomerAddress } from '@/types'
+import { CustomerAddress, Order } from '@/types'
 import { useLocale, useTranslations } from 'next-intl'
 import { getLangDir } from 'rtl-detect'
 type Props = {}
@@ -33,7 +29,8 @@ type Props = {}
 export function CustomerNewShippingAddress({}: Props) {
   const t = useTranslations()
   const locale = useLocale()
-  const form = useForm({
+  const orderFormContext = useFormContext<Order>()
+  const form = useForm<CustomerAddress>({
     defaultValues: {
       country: '',
       governorate: '',
@@ -45,10 +42,15 @@ export function CustomerNewShippingAddress({}: Props) {
       floor: '',
       apartment: '',
       note: '',
+      primary: false,
+      type: 'home',
     },
   })
   function onSubmit(data: CustomerAddress) {
     console.log('Form Data: ', data)
+    const customer = orderFormContext.getValues('customer')
+    customer.address = data
+    orderFormContext.setValue('customer', customer)
   }
   return (
     <Form {...form}>

@@ -1,92 +1,155 @@
-import { useTranslations } from 'next-intl'
 import { z } from 'zod'
+import { MAX_FILE_SIZE, ACCEPTED_IMAGE_TYPES } from '@/constants'
+import { type UseTranslationsType } from '@/types'
 
-const MAX_FILE_SIZE = 5000000
-const ACCEPTED_IMAGE_TYPES = [
-  'image/jpeg',
-  'image/jpg',
-  'image/png',
-  'image/webp',
-]
-
-type T = ReturnType<typeof useTranslations>
-
-export const customerAddressSchema = z.object({
-  country: z.string().min(2, {
-    message: 'Please enter a valid country.',
-  }),
-  governorate: z.string().min(2, {
-    message: 'Please enter a valid governorate.',
-  }),
-  region: z.string().min(2, {
-    message: 'Please enter a valid region.',
-  }),
-  block: z
-    .string()
-    .min(2, {
-      message: 'Please enter a valid Block.',
-    })
-    .optional(),
-  street: z
-    .string()
-    .min(2, {
-      message: 'Please enter a valid street address.',
-    })
-    .optional(),
-  neighborhood: z
-    .string()
-    .min(2, {
-      message: 'Please enter a valid Neighborhood.',
-    })
-    .optional(),
-  building: z
-    .string()
-    .min(2, {
-      message: 'Please enter a valid Building.',
-    })
-    .optional(),
-  floor: z
-    .string()
-    .min(2, {
-      message: 'Please enter a valid floor.',
-    })
-    .optional(),
-  apartment: z
-    .string()
-    .min(5, {
-      message: 'Please enter a valid apartment.',
-    })
-    .optional(),
-  note: z.string().optional(),
-})
-
-export const customerSchema = z.object({
-  name: z.string().min(2, {
-    message: 'Username must be at least 2 characters.',
-  }),
-  email: z.string().email({
-    message: 'Please enter a valid email.',
-  }),
-  phone: z.string().min(10, {
-    message: 'Please enter a valid phone number.',
-  }),
-  address: customerAddressSchema,
-})
-
-// name - details - price - category - type -size - images -discount
-
-/**
- * name - shortcut
- * details
- * category - stock
- * price - discount - shipping
- * images
- * //////////////////////////
- * sku/'s size - type - sku
- */
-
-export const productSchema = (t: T) =>
+export const customerAddressSchema = (t: UseTranslationsType) =>
   z.object({
+    id: z.string().optional(),
+    country: z.string().min(1, {
+      message: t('required_value'),
+    }),
+    governorate: z.string().min(1, {
+      message: t('required_value'),
+    }),
+    region: z.string().min(1, {
+      message: t('required_value'),
+    }),
+    block: z
+      .string()
+      .min(1, {
+        message: t('valid_value_required'),
+      })
+      .optional(),
+    street: z
+      .string()
+      .min(1, {
+        message: t('valid_value_required'),
+      })
+      .optional(),
+    neighborhood: z
+      .string()
+      .min(1, {
+        message: t('valid_value_required'),
+      })
+      .optional(),
+    building: z
+      .string()
+      .min(1, {
+        message: t('valid_value_required'),
+      })
+      .optional(),
+    floor: z
+      .string()
+      .min(1, {
+        message: t('valid_value_required'),
+      })
+      .optional(),
+    apartment: z
+      .string()
+      .min(1, {
+        message: t('valid_value_required'),
+      })
+      .optional(),
+    type: z.enum(['home', 'office', 'other']).optional(),
+    primary: z.boolean().default(false).optional(),
+    note: z.string().optional(),
+  })
+
+export const customerSchema = (t: UseTranslationsType, type?: string) =>
+  z.object({
+    id: z.string().optional(),
+    name: z.string().min(1, {
+      message: t('required_value'),
+    }),
+    email: z
+      .string({
+        message: t('required_value'),
+      })
+      .email({
+        message: t('provide_valid_email'),
+      }),
+    phone: z.string().min(6, {
+      message: t('max_characters', { count: 6, name: t('phone') }),
+    }),
+    address: customerAddressSchema(t),
+  })
+
+export const orderProductSchema = (t: UseTranslationsType) =>
+  z.object({
+    id: z.string().optional(),
+    name: z.string(),
+    image: z.string(),
+    details: z.string(),
+    price: z.number({ coerce: true }).positive({
+      message: t('positive_value_required'),
+    }),
+    quantity: z
+      .number({ coerce: true })
+      .positive({
+        message: t('positive_value_required'),
+      })
+      .default(1),
+    total: z.number({ coerce: true }).positive({
+      message: t('positive_value_required'),
+    }),
+    discount: z.object({
+      type: z.enum(['amount', 'percentage']),
+      value: z
+        .number({ coerce: true })
+        .positive({
+          message: t('positive_value_required'),
+        })
+        .optional(),
+    }),
+    note: z.string().optional(),
+  })
+
+export const orderSchema = (t: UseTranslationsType) =>
+  z.object({
+    id: z.string().optional(),
+    customer: customerSchema(t),
+    products: z.array(orderProductSchema(t)).min(1, {
+      message: t('provide_at_least_one', { name: t('product') }),
+    }),
+    price: z.coerce
+      .number({
+        message: t('field_required_value', { field: t('price') }),
+      })
+      .positive({
+        message: t('field_positive_value_required', { field: t('price') }),
+      }),
+    total: z.coerce
+      .number({
+        message: t('field_required_value', { field: t('total') }),
+      })
+      .positive({
+        message: t('field_positive_value_required', { field: t('total') }),
+      }),
+    discount: z.object({
+      type: z.enum(['amount', 'percentage']),
+      value: z.coerce.number().optional(),
+      reason: z.string().optional().optional(),
+    }),
+    paidByCustomer: z.coerce.number().optional(),
+    shipping: z.object({
+      value: z.coerce.number().optional(),
+      reason: z.string().optional(),
+    }),
+    state: z
+      .enum(['completed', 'uncompleted', 'canceled', 'returned'])
+      .default('uncompleted'),
+    status: z.enum(['new', 'cut', 'sewed', 'delivered']).default('new'),
+    priority: z.enum(['urgent', 'important', 'contact']).default('important'),
+    payment: z.enum(['paid', 'unpaid']).default('unpaid'),
+    orderNote: z.string().optional(),
+    deliveryNote: z.string().optional(),
+    invoice: z.string().optional(),
+    createdAt: z.string().optional(),
+  })
+
+export const productSchema = (t: UseTranslationsType) =>
+  z.object({
+    id: z.string().optional(),
     name: z
       .string()
       .min(10, {
@@ -101,7 +164,10 @@ export const productSchema = (t: T) =>
     details: z
       .string()
       .min(25, {
-        message: t('min_characters', { count: 25, name: t('product_details') }),
+        message: t('min_characters', {
+          count: 25,
+          name: t('product_details'),
+        }),
       })
       .max(500, {
         message: t('max_characters', {
@@ -130,9 +196,11 @@ export const productSchema = (t: T) =>
     price: z.coerce.number().positive({
       message: t('positive_value_required'),
     }),
-    discount: z.coerce.number().default(0),
-    shipping: z.coerce.number().default(0),
-    images: z.array(z.instanceof(File)).superRefine((images, ctx) => {
+    discount: z.object({
+      value: z.coerce.number().default(0),
+      type: z.enum(['amount', 'percentage']).default('amount'),
+    }),
+    images: z.array(z.any()).superRefine((images, ctx) => {
       if (images.length === 0)
         return ctx.addIssue({
           code: z.ZodIssueCode.custom,
@@ -151,4 +219,59 @@ export const productSchema = (t: T) =>
           })
       })
     }),
+  })
+
+export const categoryFormSchema = (t: UseTranslationsType) =>
+  z.object({
+    name: z.string().min(1, { message: t('required_value') }),
+    description: z.string().min(1, { message: t('required_value') }),
+    image: z
+      .any()
+      .optional()
+      .superRefine((image, ctx) => {
+        if (!image) return true
+        if (image.size > MAX_FILE_SIZE)
+          return ctx.addIssue({
+            code: z.ZodIssueCode.custom,
+            message: t('file_too_large'),
+          })
+
+        if (!ACCEPTED_IMAGE_TYPES.includes(image.type))
+          return ctx.addIssue({
+            code: z.ZodIssueCode.custom,
+            message: `${t('file_type_not_allowed')} [${image.name}]`,
+          })
+      }),
+  })
+
+export const sizeFormSchema = (t: UseTranslationsType) =>
+  z.object({
+    size: z.coerce
+      .number()
+      .positive({ message: t('positive_value_required') })
+      .min(1, { message: t('required_value') }),
+    description: z.string().optional(),
+  })
+
+export const typeFormSchema = (t: UseTranslationsType) =>
+  z.object({
+    name: z.string().min(1, { message: t('required_value') }),
+    description: z.string().optional(),
+    image: z
+      .any()
+      .optional()
+      .superRefine((image, ctx) => {
+        if (!image) return true
+        if (image.size > MAX_FILE_SIZE)
+          return ctx.addIssue({
+            code: z.ZodIssueCode.custom,
+            message: t('file_too_large'),
+          })
+
+        if (!ACCEPTED_IMAGE_TYPES.includes(image.type))
+          return ctx.addIssue({
+            code: z.ZodIssueCode.custom,
+            message: `${t('file_type_not_allowed')} [${image.name}]`,
+          })
+      }),
   })

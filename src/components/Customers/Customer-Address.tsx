@@ -21,6 +21,8 @@ import {
 import { cn } from '@/lib/utils'
 import { useLocale, useTranslations } from 'next-intl'
 import { getLangDir } from 'rtl-detect'
+import { Customer } from '@/types'
+import { Checkbox } from '../ui/checkbox'
 
 export interface ICustomerCreationAddressProps {
   isCurrent: boolean
@@ -29,7 +31,7 @@ export interface ICustomerCreationAddressProps {
 export function CustomerAddress({ isCurrent }: ICustomerCreationAddressProps) {
   const t = useTranslations()
   const locale = useLocale()
-  const { control } = useFormContext()
+  const { control } = useFormContext<Customer>()
   return (
     <section
       className={cn(`hidden flex-col space-y-4`, {
@@ -220,6 +222,24 @@ export function CustomerAddress({ isCurrent }: ICustomerCreationAddressProps) {
                   {...field}
                 />
               </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={control}
+          name='address.primary'
+          render={({ field }) => (
+            <FormItem className='flex items-center space-x-1 py-2'>
+              <FormControl>
+                <Checkbox
+                  checked={field.value}
+                  onCheckedChange={field.onChange}
+                />
+              </FormControl>
+              <FormLabel className='!mt-0'>
+                {t('make_address_primary')}
+              </FormLabel>
               <FormMessage />
             </FormItem>
           )}

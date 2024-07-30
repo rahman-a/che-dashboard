@@ -1,4 +1,3 @@
-import { StatusLabelTypes, TranslationKeys } from '@/types'
 import {
   LucideLogIn,
   Scissors,
@@ -17,39 +16,36 @@ import {
   ArrowUpDown,
   BadgeDollarSign,
 } from 'lucide-react'
-
-type OptionsTypes = {
-  value: string
-  label: TranslationKeys
-  icon: React.ComponentType<{ className?: string }>
-  color?: string
-}
-
+import { TableFilterOptionsTypes } from '@/types'
 // new - cut - sewed - delivered
-export const statuses: OptionsTypes[] = [
+export const statuses: TableFilterOptionsTypes[] = [
   {
     value: 'new',
     label: 'new',
+    color: '--order-new',
     icon: LucideLogIn,
   },
   {
     value: 'cut',
     label: 'cut',
+    color: '--order-cut',
     icon: Scissors,
   },
   {
     value: 'sewed',
     label: 'sewed',
+    color: '--order-sewed',
     icon: Shirt,
   },
   {
     value: 'delivered',
     label: 'delivered',
+    color: '--order-delivered',
     icon: Truck,
   },
 ]
 
-export const payment: OptionsTypes[] = [
+export const payment: TableFilterOptionsTypes[] = [
   {
     value: 'paid',
     label: 'paid',
@@ -62,7 +58,7 @@ export const payment: OptionsTypes[] = [
   },
 ]
 
-export const filterByOptions: OptionsTypes[] = [
+export const filterByOptions: TableFilterOptionsTypes[] = [
   {
     value: 'no',
     label: 'order_no',
@@ -85,7 +81,7 @@ export const filterByOptions: OptionsTypes[] = [
   },
 ]
 // urgent - important - contact
-export const prioritization: OptionsTypes[] = [
+export const prioritization: TableFilterOptionsTypes[] = [
   {
     value: 'urgent',
     label: 'urgent',
@@ -106,7 +102,7 @@ export const prioritization: OptionsTypes[] = [
   },
 ]
 
-export const selectedRowsOptions: OptionsTypes[] = [
+export const selectedRowsOptions: TableFilterOptionsTypes[] = [
   {
     value: 'change-status',
     label: 'change_status',

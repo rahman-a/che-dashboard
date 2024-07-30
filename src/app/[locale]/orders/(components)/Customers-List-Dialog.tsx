@@ -12,12 +12,15 @@ import {
 import { FolderTree } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
-import { ProductsList } from '@/components/Products'
+import { CustomerList } from '@/components/Customers'
 import { useTranslations } from 'next-intl'
-export interface IProductsListDialogProps {}
+export interface ICustomerListDialogProps {}
 
-export function NewOrderProductsListDialog(props: IProductsListDialogProps) {
+export function NewOrderCustomerListDialog(props: ICustomerListDialogProps) {
   const t = useTranslations()
+  const [selectedCustomer, setSelectedCustomer] = React.useState<string | null>(
+    null
+  )
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -25,9 +28,10 @@ export function NewOrderProductsListDialog(props: IProductsListDialogProps) {
           className='flex rtl:flex-row-reverse items-center text-sm cursor-pointer
         bg-transparent hover:bg-transparent border-none 
         h-auto px-2 py-1.5 space-x-1 rtl:space-x-reverse rounded-sm hover:bg-gray-100'
+          onClick={(e) => e.stopPropagation()}
         >
           <FolderTree className='h-5 w-5 text-muted-foreground' />
-          <span>{t('browse_products')}</span>
+          <span>{t('browse_customers')}</span>
         </div>
       </DialogTrigger>
       <DialogContent
@@ -36,10 +40,10 @@ export function NewOrderProductsListDialog(props: IProductsListDialogProps) {
       >
         <DialogHeader>
           <DialogTitle className='flex items-center space-x-2'>
-            <p>{t('products_list')}</p>
+            <p>{t('customers_list')}</p>
           </DialogTitle>
         </DialogHeader>
-        <ProductsList />
+        <CustomerList mode='select' />
         <DialogFooter className='flex-row justify-end space-x-2'>
           <DialogClose asChild>
             <Button variant='secondary'>{t('cancel')}</Button>

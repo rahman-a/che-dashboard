@@ -23,10 +23,16 @@ export function NewOrderCustomerShippingAddressDialog(
       <DialogTrigger asChild>
         <div
           className='flex flex-col space-y-2 items-center justify-center 
-    border border-dashed w-full lg:w-56 h-20 rounded-lg'
+          border border-dashed w-full lg:w-56 h-20 rounded-lg'
+          onClick={(e) => e.stopPropagation()}
         >
           <p>{t('add_new_address')}</p>
-          <Button variant='outline' size='icon' className='h-6 w-6 p-1'>
+          <Button
+            type='button'
+            variant='outline'
+            size='icon'
+            className='h-6 w-6 p-1'
+          >
             <Edit className='w-5 h-5 cursor-pointer' />
           </Button>
         </div>
@@ -43,7 +49,9 @@ export function NewOrderCustomerShippingAddressDialog(
         <CustomerNewShippingAddress />
         <DialogFooter className='flex-row justify-end space-x-2'>
           <DialogClose asChild>
-            <Button variant='secondary'>{t('cancel')}</Button>
+            <Button type='button' variant='secondary'>
+              {t('cancel')}
+            </Button>
           </DialogClose>
         </DialogFooter>
       </DialogContent>

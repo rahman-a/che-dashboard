@@ -7,8 +7,8 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
 }
 
-export function filterDateWithinRange(
-  row: Row<Order>,
+export function filterDateWithinRange<T>(
+  row: Row<T>,
   columnId: string,
   value: any
 ) {
@@ -28,4 +28,39 @@ export function filterDateWithinRange(
       date.getTime() <= endDate.getTime()
     )
   } else return true
+}
+
+export const getFileNameAndExtension = (url: string) => {
+  const urlParts = url.split('/')
+  const lastPart = urlParts[urlParts.length - 1]
+  const name = lastPart.split('.')[0]
+  const extension = lastPart.split('.')[1]
+  return { name, extension }
+}
+
+export const blobUrlToFile = (blobUrl: string): Promise<File> =>
+  new Promise((resolve) => {
+    fetch(blobUrl).then((res) => {
+      res.blob().then((blob) => {
+        const { extension, name } = getFileNameAndExtension(blobUrl)
+        const file = new File([blob], `${name}.${extension}`, {
+          type: blob.type,
+        })
+        resolve(file)
+      })
+    })
+  })
+
+export const getFullNameInitials = (fullName: string) => {
+  if (!fullName) return 'CN'
+  const isArabic = /[\u0600-\u06FF]/.test(fullName)
+  const initials =
+    fullName
+      .match(/(^\S\S?|\s\S)?/g)
+      ?.map((v) => v.trim())
+      .join('')
+      ?.match(/(^\S|\S$)?/g)
+      ?.join(isArabic ? ' ' : '')
+      ?.toLocaleUpperCase() || ''
+  return isArabic ? initials.trimEnd() : initials
 }

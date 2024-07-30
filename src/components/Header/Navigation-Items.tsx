@@ -1,20 +1,25 @@
+'use client'
 import React from 'react'
 import Link from 'next/link'
 import { useTranslations } from 'next-intl'
 import {
   Blocks,
   BookType,
-  File,
+  CircleOff,
+  FilePlus,
   Home,
   LineChart,
   List,
+  ListChecks,
+  ListRestart,
+  ListX,
   Package,
   Ruler,
+  Settings,
   ShoppingCart,
   Users,
 } from 'lucide-react'
 import { Logo } from '@/icons'
-import { Badge } from '../ui/badge'
 import {
   Menubar,
   MenubarMenu,
@@ -22,11 +27,14 @@ import {
   MenubarContent,
   MenubarItem,
 } from '../ui/menubar'
+import { cn } from '@/lib/utils'
+import { useCurrentPage } from '@/hooks/useCurrentPage'
 
 type Props = {}
 
 export function NavigationItems({}: Props) {
   const t = useTranslations()
+  const isCurrentPage = useCurrentPage()
   return (
     <nav className='grid gap-2 md:gap-0 md:items-start md:px-2 text-lg md:text-sm font-medium lg:px-4'>
       <Link
@@ -38,33 +46,117 @@ export function NavigationItems({}: Props) {
       </Link>
       <Link
         href='/'
-        className='mx-[-0.65rem] md:mx-0 flex items-center gap-4 md:gap-4 rounded-xl md:rounded-lg px-3 py-2 text-muted-foreground md:transition-all hover:text-foreground md:hover:text-primary'
+        className={cn(
+          `mx-[-0.65rem] md:mx-0 flex items-center gap-4 md:gap-4 
+          rounded-xl md:rounded-lg px-3 py-2 text-muted-foreground 
+          md:transition-all hover:text-foreground md:hover:text-primary`,
+          {
+            'bg-muted': isCurrentPage(''),
+          }
+        )}
       >
         <Home className='h-5 w-5 md:h-4 md:w-4' />
         {t('dashboard')}
       </Link>
-      <Link
-        href='/orders'
-        className='mx-[-0.65rem] md:mx-0 flex items-center gap-4 md:gap-4 
-        bg-muted rounded-xl md:rounded-lg px-3 py-2 text-foreground 
-        md:text-muted-foreground md:transition-all hover:text-foreground md:hover:text-primary'
-      >
-        <ShoppingCart className='h-5 w-5 md:h-4 md:w-4' />
-        {t('orders')}
-        <Badge className='ml-auto flex h-6 w-6 shrink-0 items-center justify-center rounded-full'>
-          6
-        </Badge>
-      </Link>
       <Menubar className='w-full !border-none p-0'>
         <MenubarMenu>
           <MenubarTrigger
-            className='w-full mx-[-0.65rem] md:mx-0 flex items-center gap-4 md:gap-4 text-muted-foreground 
-          md:transition-all text-lg md:text-base rounded-lg px-3 py-2 hover:text-foreground md:hover:text-primary cursor-pointer'
+            className={cn(
+              `w-full mx-[-0.65rem] md:mx-0 flex items-center gap-4 md:gap-4 text-muted-foreground 
+          md:transition-all text-lg md:text-base rounded-lg px-3 py-2 hover:text-foreground md:hover:text-primary cursor-pointer`,
+              {
+                'bg-muted': isCurrentPage('/orders/*'),
+              }
+            )}
+          >
+            <ShoppingCart className='h-5 w-5 md:h-4 md:w-4' />
+            {t('orders')}
+          </MenubarTrigger>
+          <MenubarContent className='w-56'>
+            <MenubarItem asChild>
+              <Link
+                href='/orders/new'
+                className='w-full mx-[-0.65rem] md:mx-0 flex items-center rtl:flex-row-reverse gap-4 md:gap-4 
+                rounded-xl md:rounded-lg px-3 py-2 text-muted-foreground 
+                md:transition-all hover:text-foreground md:hover:text-primary cursor-pointer'
+              >
+                <FilePlus className='h-5 w-5 md:h-4 md:w-4' />
+                {t('create_new_order')}
+              </Link>
+            </MenubarItem>
+            <MenubarItem asChild>
+              <Link
+                href='/orders'
+                className='w-full mx-[-0.65rem] md:mx-0 flex items-center rtl:flex-row-reverse gap-4 md:gap-4 
+                rounded-xl md:rounded-lg px-3 py-2 text-muted-foreground 
+                md:transition-all hover:text-foreground md:hover:text-primary cursor-pointer'
+              >
+                <ListChecks className='h-5 w-5 md:h-4 md:w-4' />
+                {t('completed_orders')}
+              </Link>
+            </MenubarItem>
+            <MenubarItem asChild>
+              <Link
+                href='/orders/non-completed'
+                className='w-full mx-[-0.65rem] md:mx-0 flex items-center rtl:flex-row-reverse gap-4 md:gap-4 
+                rounded-xl md:rounded-lg px-3 py-2 text-muted-foreground 
+                md:transition-all hover:text-foreground md:hover:text-primary cursor-pointer'
+              >
+                <ListX className='h-5 w-5 md:h-4 md:w-4' />
+                {t('non_completed_orders')}
+              </Link>
+            </MenubarItem>
+            <MenubarItem asChild>
+              <Link
+                href='/orders/canceled'
+                className='w-full mx-[-0.65rem] md:mx-0 flex items-center rtl:flex-row-reverse gap-4 md:gap-4 
+                rounded-xl md:rounded-lg px-3 py-2 text-muted-foreground 
+                md:transition-all hover:text-foreground md:hover:text-primary cursor-pointer'
+              >
+                <CircleOff className='h-5 w-5 md:h-4 md:w-4' />
+                {t('canceled_orders')}
+              </Link>
+            </MenubarItem>
+            <MenubarItem asChild>
+              <Link
+                href='/orders/returned'
+                className='w-full mx-[-0.65rem] md:mx-0 flex items-center rtl:flex-row-reverse gap-4 md:gap-4 
+                rounded-xl md:rounded-lg px-3 py-2 text-muted-foreground 
+                md:transition-all hover:text-foreground md:hover:text-primary cursor-pointer'
+              >
+                <ListRestart className='h-5 w-5 md:h-4 md:w-4' />
+                {t('returned_orders')}
+              </Link>
+            </MenubarItem>
+            <MenubarItem asChild>
+              <Link
+                href='/orders/setting'
+                className='w-full mx-[-0.65rem] md:mx-0 flex items-center rtl:flex-row-reverse gap-4 md:gap-4 
+                rounded-xl md:rounded-lg px-3 py-2 text-muted-foreground 
+                md:transition-all hover:text-foreground md:hover:text-primary cursor-pointer'
+              >
+                <Settings className='h-5 w-5 md:h-4 md:w-4' />
+                {t('orders_setting')}
+              </Link>
+            </MenubarItem>
+          </MenubarContent>
+        </MenubarMenu>
+      </Menubar>
+      <Menubar className='w-full !border-none p-0'>
+        <MenubarMenu>
+          <MenubarTrigger
+            className={cn(
+              `w-full mx-[-0.65rem] md:mx-0 flex items-center gap-4 md:gap-4 text-muted-foreground 
+          md:transition-all text-lg md:text-base rounded-lg px-3 py-2 hover:text-foreground md:hover:text-primary cursor-pointer`,
+              {
+                'bg-muted': isCurrentPage('/products/*'),
+              }
+            )}
           >
             <Package className='h-5 w-5 md:h-4 md:w-4' />
             {t('products')}
           </MenubarTrigger>
-          <MenubarContent>
+          <MenubarContent className='w-56'>
             <MenubarItem asChild>
               <Link
                 href='/products'
@@ -83,7 +175,7 @@ export function NavigationItems({}: Props) {
                 rounded-xl md:rounded-lg px-3 py-2 text-muted-foreground 
                 md:transition-all hover:text-foreground md:hover:text-primary cursor-pointer'
               >
-                <File className='h-5 w-5 md:h-4 md:w-4' />
+                <FilePlus className='h-5 w-5 md:h-4 md:w-4' />
                 {t('add_new_product')}
               </Link>
             </MenubarItem>
@@ -123,24 +215,44 @@ export function NavigationItems({}: Props) {
           </MenubarContent>
         </MenubarMenu>
       </Menubar>
-
       <Link
         href='/customers'
-        className='mx-[-0.65rem] md:mx-0 flex items-center gap-4 md:gap-4 rounded-xl md:rounded-lg px-3 py-2 text-muted-foreground md:transition-all hover:text-foreground md:hover:text-primary'
+        className={cn(
+          `mx-[-0.65rem] md:mx-0 flex items-center gap-4 md:gap-4 
+          rounded-xl md:rounded-lg px-3 py-2 text-muted-foreground 
+          md:transition-all hover:text-foreground md:hover:text-primary`,
+          {
+            'bg-muted': isCurrentPage('/customers/*'),
+          }
+        )}
       >
         <Users className='h-5 w-5 md:h-4 md:w-4' />
         {t('customers')}
       </Link>
       <Link
         href='/offers'
-        className='mx-[-0.65rem] md:mx-0 flex items-center gap-4 md:gap-4 rounded-xl md:rounded-lg px-3 py-2 text-muted-foreground md:transition-all hover:text-foreground md:hover:text-primary'
+        className={cn(
+          `mx-[-0.65rem] md:mx-0 flex items-center gap-4 md:gap-4 
+          rounded-xl md:rounded-lg px-3 py-2 text-muted-foreground 
+          md:transition-all hover:text-foreground md:hover:text-primary`,
+          {
+            'bg-muted': isCurrentPage('/offers/*'),
+          }
+        )}
       >
         <LineChart className='h-5 w-5 md:h-4 md:w-4' />
         {t('offers')}
       </Link>
       <Link
         href='/invoices/1'
-        className='mx-[-0.65rem] md:mx-0 flex items-center gap-4 md:gap-4 rounded-xl md:rounded-lg px-3 py-2 text-muted-foreground md:transition-all hover:text-foreground md:hover:text-primary'
+        className={cn(
+          `mx-[-0.65rem] md:mx-0 flex items-center gap-4 md:gap-4 
+          rounded-xl md:rounded-lg px-3 py-2 text-muted-foreground 
+          md:transition-all hover:text-foreground md:hover:text-primary`,
+          {
+            'bg-muted': isCurrentPage('/invoices/*'),
+          }
+        )}
       >
         <Package className='h-5 w-5 md:h-4 md:w-4' />
         {t('invoices')}

@@ -110,6 +110,10 @@ td:has(.order-customer-phone) {
   background-color: hsl(var(--background));
 }
 
+.rsw-editor {
+  max-width: 690px;
+}
+
 .rsw-toolbar {
   align-items: center;
   background-color: #f5f5f5;
