@@ -44,6 +44,11 @@ export default async function Orders({}: Props) {
             data={orders}
             columns={columns}
             toolbarOptions={toolbarOptions}
+            initialVisibilityState={{
+              country: false,
+              phone: false,
+              customer: false,
+            }}
             type='completed'
           />
         </div>

@@ -1,6 +1,7 @@
 import { z } from 'zod'
 import { MAX_FILE_SIZE, ACCEPTED_IMAGE_TYPES } from '@/constants'
 import { type UseTranslationsType } from '@/types'
+import { addDays } from 'date-fns'
 
 export const customerAddressSchema = (t: UseTranslationsType) =>
   z.object({
@@ -14,42 +15,12 @@ export const customerAddressSchema = (t: UseTranslationsType) =>
     region: z.string().min(1, {
       message: t('required_value'),
     }),
-    block: z
-      .string()
-      .min(1, {
-        message: t('valid_value_required'),
-      })
-      .optional(),
-    street: z
-      .string()
-      .min(1, {
-        message: t('valid_value_required'),
-      })
-      .optional(),
-    neighborhood: z
-      .string()
-      .min(1, {
-        message: t('valid_value_required'),
-      })
-      .optional(),
-    building: z
-      .string()
-      .min(1, {
-        message: t('valid_value_required'),
-      })
-      .optional(),
-    floor: z
-      .string()
-      .min(1, {
-        message: t('valid_value_required'),
-      })
-      .optional(),
-    apartment: z
-      .string()
-      .min(1, {
-        message: t('valid_value_required'),
-      })
-      .optional(),
+    block: z.string().optional(),
+    street: z.string().optional(),
+    neighborhood: z.string().optional(),
+    building: z.string().optional(),
+    floor: z.string().optional(),
+    apartment: z.string().optional(),
     type: z.enum(['home', 'office', 'other']).optional(),
     primary: z.boolean().default(false).optional(),
     note: z.string().optional(),
@@ -71,7 +42,7 @@ export const customerSchema = (t: UseTranslationsType, type?: string) =>
     phone: z.string().min(6, {
       message: t('max_characters', { count: 6, name: t('phone') }),
     }),
-    address: customerAddressSchema(t),
+    address: customerAddressSchema(t).or(z.array(customerAddressSchema(t))),
   })
 
 export const orderProductSchema = (t: UseTranslationsType) =>
@@ -101,6 +72,7 @@ export const orderProductSchema = (t: UseTranslationsType) =>
         })
         .optional(),
     }),
+    SKUs: z.array(z.string()).optional(),
     note: z.string().optional(),
   })
 
@@ -274,4 +246,60 @@ export const typeFormSchema = (t: UseTranslationsType) =>
             message: `${t('file_type_not_allowed')} [${image.name}]`,
           })
       }),
+  })
+
+export const offerSchema = (t: UseTranslationsType) =>
+  z.object({
+    firstChoice: z
+      .array(z.object({ id: z.string(), name: z.string() }))
+      .min(1, {
+        message: t('provide_at_least_one', { name: t('choice') }),
+      }),
+    secondChoice: z
+      .array(z.object({ id: z.string(), name: z.string() }))
+      .min(1, {
+        message: t('provide_at_least_one', { name: t('choice') }),
+      }),
+    thirdChoice: z
+      .array(z.object({ id: z.string(), name: z.string() }))
+      .min(1, {
+        message: t('provide_at_least_one', { name: t('choice') }),
+      }),
+    price: z.coerce
+      .number()
+      .min(0)
+      .positive({
+        message: t('positive_value_required'),
+      })
+      .default(0),
+    discount: z.object({
+      type: z.enum(['amount', 'percentage']).default('amount'), // Use the imported value of DiscountTypes
+      value: z.coerce.number().optional(),
+    }),
+    status: z.enum(['active', 'inactive']).default('active'),
+    expiryDate: z.date().default(() => addDays(new Date(), 7)),
+  })
+
+export const couponsSchema = (t: UseTranslationsType) =>
+  z.object({
+    id: z.string().optional(),
+    code: z.string().min(1, { message: t('required_value') }),
+    description: z.string().min(1, { message: t('required_value') }),
+    discount: z.object({
+      type: z.enum(['amount', 'percentage']).default('amount'), // Use the imported value of DiscountTypes
+      value: z.coerce.number().positive({
+        message: t('positive_value_required'),
+      }),
+    }),
+    timesUsed: z.coerce.number().default(0),
+    maxUsed: z.coerce.number().default(1),
+    status: z.enum(['active', 'inactive']).default('active'),
+    expireAt: z
+      .date()
+      .default(() => addDays(new Date(), 7))
+      .or(z.string()),
+    createdAt: z
+      .date()
+      .default(() => new Date())
+      .or(z.string()),
   })

@@ -64,3 +64,22 @@ export const getFullNameInitials = (fullName: string) => {
       ?.toLocaleUpperCase() || ''
   return isArabic ? initials.trimEnd() : initials
 }
+
+export function generateCouponCode(length = 10) {
+  let text = ''
+  const generated: string[] = []
+  const possible =
+    'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
+
+  for (var i = 0; i < length; i++) {
+    text += possible.charAt(Math.floor(Math.random() * possible.length))
+  }
+
+  if (generated.indexOf(text) == -1) {
+    generated.push(text)
+  } else {
+    generateCouponCode(length)
+  }
+
+  return text
+}

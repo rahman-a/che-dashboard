@@ -1,0 +1,142 @@
+[
+  {
+    "id": "01J49MBXR96E86AYPH13CW6W1X",
+    "code": "ZQF7crx4qJ",
+    "description": "Morbi odio odio, elementum eu, interdum eu, tincidunt in, leo. Maecenas pulvinar lobortis est.",
+    "discount": {
+      "value": 1,
+      "type": "percentage"
+    },
+    "timesUsed": 7,
+    "maxUsed": 10,
+    "status": "inactive",
+    "expireAt": "2024-04-22T01:24:30Z",
+    "createdAt": "2023-09-17T04:06:11Z"
+  },
+  {
+    "id": "01J49MBXRD9Y9W9AGPV29T392J",
+    "code": "h35SqZaU42",
+    "description": "Vestibulum rutrum rutrum neque. Aenean auctor gravida sem",
+    "discount": {
+      "value": 14,
+      "type": "amount"
+    },
+    "timesUsed": 2,
+    "maxUsed": 5,
+    "status": "inactive",
+    "expireAt": "2023-09-19T01:55:00Z",
+    "createdAt": "2023-11-26T11:42:26Z"
+  },
+  {
+    "id": "01J49MBXRE2NVNE3BQ6V84C07K",
+    "code": "qGadMb5Yi0",
+    "description": "Morbi odio odio, elementum eu, interdum eu, tincidunt in, leo. Maecenas pulvinar lobortis est.",
+    "discount": {
+      "value": 2,
+      "type": "percentage"
+    },
+    "timesUsed": 3,
+    "maxUsed": 6,
+    "status": "active",
+    "expireAt": "2024-09-27T20:41:43Z",
+    "createdAt": "2024-02-19T01:56:31Z"
+  },
+  {
+    "id": "01J49MBXRF31XXREAJG7638AHV",
+    "code": "LAQNUKQ4SP",
+    "description": "Donec dapibus. Duis at velit eu est congue elementum.",
+    "discount": {
+      "value": 12,
+      "type": "amount"
+    },
+    "timesUsed": 4,
+    "maxUsed": 4,
+    "status": "active",
+    "expireAt": "2024-01-22T09:49:31Z",
+    "createdAt": "2024-04-24T16:26:25Z"
+  },
+  {
+    "id": "01J49MBXRGZR6N5ZG1ZYWA0Z7W",
+    "code": "88XeyTUb2N",
+    "description": "Sed ante. Vivamus tortor. Duis mattis egestas metus. Aenean fermentum.",
+    "discount": {
+      "value": 1,
+      "type": "percentage"
+    },
+    "timesUsed": 5,
+    "maxUsed": 8,
+    "status": "active",
+    "expireAt": "2024-07-17T04:24:17Z",
+    "createdAt": "2023-08-23T17:52:52Z"
+  },
+  {
+    "id": "01J49MBXRH0WMQWSJHS67TRNBH",
+    "code": "bLpTb9vC7k",
+    "description": "Morbi odio odio, elementum eu, interdum eu, tincidunt in, leo. Maecenas pulvinar lobortis est.",
+    "discount": {
+      "value": 5,
+      "type": "percentage"
+    },
+    "timesUsed": 6,
+    "maxUsed": 12,
+    "status": "inactive",
+    "expireAt": "2024-07-13T22:21:34Z",
+    "createdAt": "2024-05-09T06:09:41Z"
+  },
+  {
+    "id": "01J49MBXRJ6P1Z29DTG1XEY3XW",
+    "code": "Ky2kE6RqUH",
+    "description": "Vestibulum rutrum rutrum neque. Aenean auctor gravida sem",
+    "discount": {
+      "value": 25,
+      "type": "amount"
+    },
+    "timesUsed": 7,
+    "maxUsed": 10,
+    "status": "active",
+    "expireAt": "2024-06-29T09:10:17Z",
+    "createdAt": "2023-10-28T23:39:08Z"
+  },
+  {
+    "id": "01J49MBXRJBXTZH635SZTPCQ3T",
+    "code": "0s0bKD3V8o",
+    "description": "Donec dapibus. Duis at velit eu est congue elementum.",
+    "discount": {
+      "value": 28,
+      "type": "amount"
+    },
+    "timesUsed": 5,
+    "maxUsed": 8,
+    "status": "active",
+    "expireAt": "2023-08-21T03:54:30Z",
+    "createdAt": "2023-12-17T11:14:55Z"
+  },
+  {
+    "id": "01J49MBXRKPQMQFST689XQBWTZ",
+    "code": "bW9a6qb7RN",
+    "description": "Sed ante. Vivamus tortor. Duis mattis egestas metus. Aenean fermentum.",
+    "discount": {
+      "value": 2,
+      "type": "percentage"
+    },
+    "timesUsed": 9,
+    "maxUsed": 10,
+    "status": "inactive",
+    "expireAt": "2023-12-29T19:29:40Z",
+    "createdAt": "2023-10-18T19:43:10Z"
+  },
+  {
+    "id": "01J49MBXRM5620XTE77NPH3Q6K",
+    "code": "4VG7Rx6ahW",
+    "description": "Vestibulum rutrum rutrum neque. Aenean auctor gravida sem",
+    "discount": {
+      "value": 6,
+      "type": "percentage"
+    },
+    "timesUsed": 8,
+    "maxUsed": 10,
+    "status": "inactive",
+    "expireAt": "2024-01-01T06:05:58Z",
+    "createdAt": "2023-07-28T15:12:27Z"
+  }
+]

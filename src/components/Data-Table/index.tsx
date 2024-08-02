@@ -35,18 +35,14 @@ interface DataTableProps<TData, TValue> {
   data: TData[]
   toolbarOptions: ToolbarOptions
   type?: 'completed' | 'non-completed' | 'canceled' | 'returned'
-}
-
-const initialVisibilityState = {
-  country: false,
-  phone: false,
-  customer: false,
+  initialVisibilityState?: { [key: string]: boolean }
 }
 
 export function DataTable<TData, TValue>({
   columns,
   data,
   toolbarOptions,
+  initialVisibilityState = {},
 }: DataTableProps<TData, TValue>) {
   const t = useTranslations()
   const [rowSelection, setRowSelection] = React.useState({})

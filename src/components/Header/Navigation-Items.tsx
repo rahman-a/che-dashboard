@@ -3,6 +3,7 @@ import React from 'react'
 import Link from 'next/link'
 import { useTranslations } from 'next-intl'
 import {
+  BadgePercent,
   Blocks,
   BookType,
   CircleOff,
@@ -17,6 +18,7 @@ import {
   Ruler,
   Settings,
   ShoppingCart,
+  TicketPercent,
   Users,
 } from 'lucide-react'
 import { Logo } from '@/icons'
@@ -215,6 +217,46 @@ export function NavigationItems({}: Props) {
           </MenubarContent>
         </MenubarMenu>
       </Menubar>
+      <Menubar className='w-full !border-none p-0'>
+        <MenubarMenu>
+          <MenubarTrigger
+            className={cn(
+              `w-full mx-[-0.65rem] md:mx-0 flex items-center gap-4 md:gap-4 text-muted-foreground 
+          md:transition-all text-lg md:text-base rounded-lg px-3 py-2 hover:text-foreground md:hover:text-primary cursor-pointer`,
+              {
+                'bg-muted': isCurrentPage('/offers/*'),
+              }
+            )}
+          >
+            <BadgePercent className='h-5 w-5 md:h-4 md:w-4' />
+            {t('offers')}
+          </MenubarTrigger>
+          <MenubarContent className='w-56'>
+            <MenubarItem asChild>
+              <Link
+                href='/offers'
+                className='w-full mx-[-0.65rem] md:mx-0 flex items-center rtl:flex-row-reverse gap-4 md:gap-4 
+                rounded-xl md:rounded-lg px-3 py-2 text-muted-foreground 
+                md:transition-all hover:text-foreground md:hover:text-primary cursor-pointer'
+              >
+                <List className='h-5 w-5 md:h-4 md:w-4' />
+                {t('offers_list')}
+              </Link>
+            </MenubarItem>
+            <MenubarItem asChild>
+              <Link
+                href='/offers/new'
+                className='w-full mx-[-0.65rem] md:mx-0 flex items-center rtl:flex-row-reverse gap-4 md:gap-4 
+                rounded-xl md:rounded-lg px-3 py-2 text-muted-foreground 
+                md:transition-all hover:text-foreground md:hover:text-primary cursor-pointer'
+              >
+                <FilePlus className='h-5 w-5 md:h-4 md:w-4' />
+                {t('create_new_offer')}
+              </Link>
+            </MenubarItem>
+          </MenubarContent>
+        </MenubarMenu>
+      </Menubar>
       <Link
         href='/customers'
         className={cn(
@@ -230,20 +272,20 @@ export function NavigationItems({}: Props) {
         {t('customers')}
       </Link>
       <Link
-        href='/offers'
+        href='/coupons'
         className={cn(
           `mx-[-0.65rem] md:mx-0 flex items-center gap-4 md:gap-4 
           rounded-xl md:rounded-lg px-3 py-2 text-muted-foreground 
           md:transition-all hover:text-foreground md:hover:text-primary`,
           {
-            'bg-muted': isCurrentPage('/offers/*'),
+            'bg-muted': isCurrentPage('/coupons/*'),
           }
         )}
       >
-        <LineChart className='h-5 w-5 md:h-4 md:w-4' />
-        {t('offers')}
+        <TicketPercent className='h-5 w-5 md:h-4 md:w-4' />
+        {t('coupons')}
       </Link>
-      <Link
+      {/* <Link
         href='/invoices/1'
         className={cn(
           `mx-[-0.65rem] md:mx-0 flex items-center gap-4 md:gap-4 
@@ -256,7 +298,7 @@ export function NavigationItems({}: Props) {
       >
         <Package className='h-5 w-5 md:h-4 md:w-4' />
         {t('invoices')}
-      </Link>
+      </Link> */}
     </nav>
   )
 }

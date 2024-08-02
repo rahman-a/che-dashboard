@@ -15,12 +15,15 @@ import { DatePicker } from '../Date-Picker'
 import { Column } from '@tanstack/react-table'
 import { addDays } from 'date-fns'
 import { useTranslations } from 'next-intl'
+import { TranslationKeys } from '@/types'
 interface SortDataTableByDateProps<TData, TValue> {
   column?: Column<TData, TValue>
+  title?: TranslationKeys
 }
 
 export default function SortDataTableByDate<TData, TValue>({
   column,
+  title,
 }: SortDataTableByDateProps<TData, TValue>) {
   const t = useTranslations()
   const [start, setStart] = React.useState<Date | undefined>(new Date())
@@ -43,9 +46,9 @@ export default function SortDataTableByDate<TData, TValue>({
       </DialogTrigger>
       <DialogContent className='sm:max-w-[425px]'>
         <DialogHeader className='rtl:text-center'>
-          <DialogTitle>{t('sort_by_date')}</DialogTitle>
+          <DialogTitle>{title ? t(title) : t('sort_by_date')}</DialogTitle>
           <DialogDescription>
-            {t('filter_orders_by_date_range')}
+            {t('filter_data_by_date_range')}
           </DialogDescription>
         </DialogHeader>
         <div className='flex justify-center items-center py-4'>

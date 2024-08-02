@@ -46,6 +46,7 @@ export function DataTableToolbar<TData>({
           {toolbarOptions.filterByDateRange.show && (
             <SortDataTableByDate
               column={table.getColumn(toolbarOptions.filterByDateRange.column!)}
+              title={toolbarOptions.filterByDateRange.title!}
             />
           )}
         </div>

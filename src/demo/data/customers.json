@@ -1,0 +1,104 @@
+[
+  {
+    "id": "1",
+    "no": "1",
+    "name": "Abdallah Aziz",
+    "email": "ashky@gmail.com",
+    "phone": "+965-859-14523",
+    "address": [
+      {
+        "id": "1",
+        "country": "kuwait",
+        "governorate": "Hawalli",
+        "region": "Salmiya",
+        "block": "1",
+        "street": "1234 Elm St",
+        "neighborhood": "Salmiya",
+        "building": "1234",
+        "primary": true,
+        "floor": "2",
+        "apartment": "B",
+        "type": "home",
+        "note": "Please leave at the front door"
+      },
+      {
+        "id": "2",
+        "country": "kuwait",
+        "governorate": "Hawalli",
+        "region": "Salmiya",
+        "block": "1",
+        "street": "1234 Elm St",
+        "neighborhood": "Salmiya",
+        "building": "1234",
+        "primary": false,
+        "floor": "2",
+        "apartment": "B",
+        "type": "home",
+        "note": "Please leave at the front door"
+      }
+    ]
+  },
+  {
+    "id": "2",
+    "no": "2",
+    "name": "Kimbra Antonoyev",
+    "email": "sabu@gmail.com",
+    "phone": "+965-555-58837",
+    "address": [
+      {
+        "id": "1",
+        "country": "kuwait",
+        "governorate": "Hawalli",
+        "region": "Salmiya",
+        "block": "1",
+        "street": "1234 Elm St",
+        "neighborhood": "Salmiya",
+        "building": "1234",
+        "primary": true,
+        "floor": "2",
+        "apartment": "B",
+        "type": "home",
+        "note": "Please leave at the front door"
+      }
+    ]
+  },
+  {
+    "id": "3",
+    "no": "3",
+    "name": "John Doe",
+    "email": "dertu@gmail.com",
+    "phone": "+965-784-25469",
+    "address": [
+      {
+        "id": "1",
+        "country": "kuwait",
+        "governorate": "Hawalli",
+        "region": "Salmiya",
+        "block": "1",
+        "street": "1234 Elm St",
+        "neighborhood": "Salmiya",
+        "building": "1234",
+        "primary": true,
+        "floor": "2",
+        "apartment": "B",
+        "type": "home",
+        "note": "Please leave at the front door"
+      },
+      {
+        "id": "2",
+        "country": "kuwait",
+        "governorate": "Hawalli",
+        "region": "Salmiya",
+        "block": "1",
+        "street": "1234 Elm St",
+        "neighborhood": "Salmiya",
+        "building": "1234",
+        "primary": false,
+        "floor": "2",
+        "apartment": "B",
+        "type": "home",
+        "note": "Please leave at the front door"
+      }
+    ]
+  }
+]

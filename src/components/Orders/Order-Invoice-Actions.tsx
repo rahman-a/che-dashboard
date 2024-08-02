@@ -11,6 +11,7 @@ import {
   DropdownMenuTrigger,
 } from '../ui/dropdown-menu'
 import { useTranslations } from 'next-intl'
+import Link from 'next/link'
 
 interface DataTableRowActionsProps<TData> {
   row: Row<TData>
@@ -46,7 +47,7 @@ export function OrderInvoiceActions<TData extends Order>({
           <DropdownMenuShortcut className='mr-1 ml-0'>
             <FileEdit className='h-4 w-4' />
           </DropdownMenuShortcut>
-          <span>{t('view_invoice')}</span>
+          <Link href="/invoices/1">{t('view_invoice')}</Link>
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

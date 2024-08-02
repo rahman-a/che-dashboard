@@ -138,7 +138,9 @@ export function CreateUpdateType({ mode, data }: ICreateUpdateTypeProps) {
             <DialogFooter className='flex-row space-x-2 rtl:space-x-reverse justify-end !mt-5'>
               <Button type='submit'>{t('save')}</Button>
               <DialogClose>
-                <Button variant='outline'>{t('cancel')}</Button>
+                <Button type='button' variant='outline'>
+                  {t('cancel')}
+                </Button>
               </DialogClose>
             </DialogFooter>
           </form>

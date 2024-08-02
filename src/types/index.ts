@@ -1,7 +1,9 @@
 import { z } from 'zod'
 import {
+  couponsSchema,
   customerAddressSchema,
   customerSchema,
+  offerSchema,
   orderProductSchema,
   orderSchema,
   productSchema,
@@ -13,7 +15,8 @@ export type CustomerAddress = z.infer<ReturnType<typeof customerAddressSchema>>
 export type Product = z.infer<ReturnType<typeof productSchema>>
 export type Order = z.infer<ReturnType<typeof orderSchema>>
 export type OrderProduct = z.infer<ReturnType<typeof orderProductSchema>>
-
+export type Offer = z.infer<ReturnType<typeof offerSchema>>
+export type Coupon = z.infer<ReturnType<typeof couponsSchema>>
 export type TranslationKeys = MessageKeys<IntlMessages, keyof IntlMessages>
 
 export type ResourceTypes =
@@ -57,6 +60,7 @@ export type ToolbarOptions = {
   filterByDateRange: {
     show: boolean
     column?: TranslationKeys
+    title?: TranslationKeys
   }
   facetedFilter: {
     show: boolean

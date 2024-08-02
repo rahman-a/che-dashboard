@@ -21,6 +21,7 @@ import {
 import { cn } from '@/lib/utils'
 import { useLocale, useTranslations } from 'next-intl'
 import { getLangDir } from 'rtl-detect'
+import { RequiredAsterisk } from '../Required-Asterisk'
 import { Customer } from '@/types'
 import { Checkbox } from '../ui/checkbox'
 
@@ -31,7 +32,8 @@ export interface ICustomerCreationAddressProps {
 export function CustomerAddress({ isCurrent }: ICustomerCreationAddressProps) {
   const t = useTranslations()
   const locale = useLocale()
-  const { control } = useFormContext<Customer>()
+  const { control, getValues } = useFormContext<Customer>()
+  console.log('customer-Values', getValues())
   return (
     <section
       className={cn(`hidden flex-col space-y-4`, {
@@ -43,7 +45,10 @@ export function CustomerAddress({ isCurrent }: ICustomerCreationAddressProps) {
         name='address.country'
         render={({ field }) => (
           <FormItem>
-            <FormLabel>{t('country')}</FormLabel>
+            <FormLabel>
+              {t('country')}
+              <RequiredAsterisk/>
+              </FormLabel>
             <FormControl>
               <Select
                 dir={getLangDir(locale)}
@@ -76,7 +81,10 @@ export function CustomerAddress({ isCurrent }: ICustomerCreationAddressProps) {
         name='address.governorate'
         render={({ field }) => (
           <FormItem>
-            <FormLabel>{t('governorate')}</FormLabel>
+            <FormLabel>
+              {t('governorate')}
+              <RequiredAsterisk/>
+              </FormLabel>
             <FormControl>
               <Select
                 dir={getLangDir(locale)}
@@ -106,7 +114,10 @@ export function CustomerAddress({ isCurrent }: ICustomerCreationAddressProps) {
         name='address.region'
         render={({ field }) => (
           <FormItem>
-            <FormLabel>{t('region')}</FormLabel>
+            <FormLabel>
+              {t('region')}
+              <RequiredAsterisk/>
+              </FormLabel>
             <FormControl>
               <Select
                 dir={getLangDir(locale)}

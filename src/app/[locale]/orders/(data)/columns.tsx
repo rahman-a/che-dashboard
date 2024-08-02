@@ -200,7 +200,7 @@ export const columns: ColumnDef<Order>[] = [
       <DataTableColumnHeader column={column} title='phone' className='w-32' />
     ),
     cell: ({ row }) => (
-      <span className='w-32 order-customer-phone'>{row.getValue('phone')}</span>
+      <span className='w-32 order-customer-phone block'>{row.getValue('phone')}</span>
     ),
     enableSorting: false,
   },

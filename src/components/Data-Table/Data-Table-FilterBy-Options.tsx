@@ -48,7 +48,7 @@ export function DataTableFilterByOptions<TData>({
               <FilterIcon className='h-4 w-4' />
             </Button>
           </PopoverTrigger>
-          <PopoverContent className='py-2 px-1 w-36'>
+          <PopoverContent className='py-2 px-1 w-38'>
             <RadioGroup
               defaultValue={filterColumn}
               className='gap-0'

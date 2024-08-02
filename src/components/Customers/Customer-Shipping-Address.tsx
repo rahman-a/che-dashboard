@@ -8,6 +8,7 @@ import { Separator } from '../ui/separator'
 import { Button } from '../ui/button'
 import { CheckCheck } from 'lucide-react'
 import { useFormContext } from 'react-hook-form'
+import { CustomerShippingAddressEditDialog } from '@/app/[locale]/customers/(components)'
 
 type Props = {
   data: CustomerAddress
@@ -26,7 +27,7 @@ export function CustomerShippingAddress({
 }: Props) {
   const t = useTranslations()
   const [isSelected, setIsSelected] = React.useState(false)
-  const orderFormContext = useFormContext<Order>()
+  const formContext = useFormContext<Order>()
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -62,6 +63,7 @@ export function CustomerShippingAddress({
               )}
             </ul>
           )}
+          <CustomerShippingAddressEditDialog data={data}/>
         </div>
         {isSelect && (
           <Button
@@ -70,9 +72,9 @@ export function CustomerShippingAddress({
             type='button'
             className='text-xs font-semibold text-sky-800'
             onClick={() => {
-              const customer = orderFormContext.getValues('customer')
+              const customer = formContext.getValues('customer')
               customer.address = data
-              orderFormContext.setValue('customer', customer)
+              formContext.setValue('customer', customer)
               setIsSelected(true)
             }}
           >
