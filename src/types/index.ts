@@ -48,6 +48,7 @@ export type TableFilterOptionsTypes = {
   label: TranslationKeys
   icon: React.ComponentType<{ className?: string }>
   color?: string
+  resource?: ResourceTypes
 }
 
 export type ToolbarOptions = {

@@ -1,12 +1,5 @@
 import React, { useEffect } from 'react'
-import {
-  LayoutList,
-  ListChecks,
-  Trash,
-  Factory,
-  ArrowUpDown,
-  BadgeDollarSign,
-} from 'lucide-react'
+import { LayoutList, ListChecks } from 'lucide-react'
 import {
   DropdownMenu,
   DropdownMenuTrigger,
@@ -19,16 +12,12 @@ import { Column, Row, RowSelectionState } from '@tanstack/react-table'
 import { OrderTableChangeActions } from '../Orders/Order-Table-Change-Actions'
 import { DeleteBtn } from '../'
 import { useTranslations } from 'next-intl'
-import { TranslationKeys } from '@/types'
+import { TableFilterOptionsTypes, TranslationKeys } from '@/types'
 
 interface SelectedRowsActionsProps<TData> {
   getColumn: (columnId: string) => Column<TData, unknown> | undefined
   getRow: (id: string, searchAll?: boolean) => Row<TData>
-  options: {
-    label: TranslationKeys
-    value: string
-    icon?: React.ComponentType<{ className?: string }>
-  }[]
+  options: TableFilterOptionsTypes[]
   selectedRows: RowSelectionState
   isRowsSelected?: boolean
 }
@@ -52,6 +41,12 @@ export function SelectedRowsActions<TData>({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [SelectedRowsCount])
 
+  const actionHandler = (selectedValue: string, resource: string) => {
+    console.log('Assets Affected: ', resource)
+    console.log('Selected Values: ', selectedValue)
+    console.log('selectedRowsData: ', selectedRowsData)
+  }
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -63,7 +58,7 @@ export function SelectedRowsActions<TData>({
           )}
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className='w-40 p-1'>
+      <DropdownMenuContent className='w-48 p-1'>
         <DropdownMenuLabel className='flex items-center justify-between text-[13px] rtl:flex-row-reverse'>
           <span>{t('selected_rows')}</span>
           <span className='border border-dashed px-1 rounded-sm'>
@@ -78,6 +73,8 @@ export function SelectedRowsActions<TData>({
               label={option.label}
               value={option.value}
               Icon={option.icon}
+              resource={option.resource!}
+              actionHandler={actionHandler}
             />
           ))}
         </div>

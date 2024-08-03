@@ -15,10 +15,17 @@ import { cn } from '@/lib/utils'
 import { useTranslations } from 'next-intl'
 type Props = {
   className?: string
+  asset?: string
+  ids?: string[]
 }
 
-export function DeleteBtn({ className }: Props) {
+export function DeleteBtn({ className, asset, ids }: Props) {
   const t = useTranslations()
+
+  const deleteHandler = () => {
+    console.log('Asset: ', asset)
+    console.log('ids: ', ids)
+  }
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -43,7 +50,12 @@ export function DeleteBtn({ className }: Props) {
         </DialogHeader>
         <div className='flex justify-center items-center py-4'></div>
         <DialogFooter className='rtl:flex-row rtl:justify-end'>
-          <Button type='submit' variant='destructive' className='ml-2'>
+          <Button
+            onClick={deleteHandler}
+            type='submit'
+            variant='destructive'
+            className='ml-2'
+          >
             {t('delete')}
           </Button>
           <DialogClose>

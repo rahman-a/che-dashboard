@@ -23,6 +23,7 @@ import {
   prioritization,
   statuses,
   payment,
+  ordersCategorization,
 } from '@/app/[locale]/orders/(data)/data'
 import { useLocale, useTranslations } from 'next-intl'
 import { getLangDir } from 'rtl-detect'
@@ -32,12 +33,15 @@ type ActionTriggerProps = {
   label: TranslationKeys
   value: string
   Icon?: React.ComponentType<{ className?: string }>
+  resource: string
+  actionHandler: (value: string, asset: string) => void
 }
 
 const options = {
   'change-status': statuses,
   'change-payment': payment,
   'change-priority': prioritization,
+  'orders-categorization': ordersCategorization,
 }
 
 type OptionsValue = keyof typeof options
@@ -46,7 +50,10 @@ export function OrderTableChangeActions({
   label,
   value,
   Icon,
+  resource,
+  actionHandler,
 }: ActionTriggerProps) {
+  const [selectedValue, setSelectedValue] = React.useState<string>('')
   const t = useTranslations()
   const locale = useLocale()
   return (
@@ -67,7 +74,7 @@ export function OrderTableChangeActions({
           <DialogDescription>{t('order_change_guide_msg')}</DialogDescription>
         </DialogHeader>
         <div className='flex justify-center items-center py-4'>
-          <Select dir={getLangDir(locale)}>
+          <Select dir={getLangDir(locale)} onValueChange={setSelectedValue}>
             <SelectTrigger className='w-full'>
               <SelectValue placeholder={t(label)} />
             </SelectTrigger>
@@ -87,7 +94,12 @@ export function OrderTableChangeActions({
           </Select>
         </div>
         <DialogFooter>
-          <Button type='submit'>{t('save_change')}</Button>
+          <Button
+            onClick={() => actionHandler(selectedValue, resource)}
+            type='submit'
+          >
+            {t('save_change')}
+          </Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>

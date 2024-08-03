@@ -15,6 +15,11 @@ import {
   Factory,
   ArrowUpDown,
   BadgeDollarSign,
+  Blocks,
+  ListChecks,
+  ListX,
+  CircleOff,
+  ListRestart,
 } from 'lucide-react'
 import { TableFilterOptionsTypes } from '@/types'
 // new - cut - sewed - delivered
@@ -102,20 +107,52 @@ export const prioritization: TableFilterOptionsTypes[] = [
   },
 ]
 
+export const ordersCategorization: TableFilterOptionsTypes[] = [
+  {
+    value: 'completed',
+    label: 'completed_orders',
+    icon: ListChecks,
+  },
+  {
+    value: 'non-completed',
+    label: 'non_completed_orders',
+    icon: ListX,
+  },
+  {
+    value: 'canceled',
+    label: 'canceled_orders',
+    icon: CircleOff,
+  },
+  {
+    value: 'returned',
+    label: 'returned_orders',
+    icon: ListRestart,
+  },
+]
+
 export const selectedRowsOptions: TableFilterOptionsTypes[] = [
   {
     value: 'change-status',
     label: 'change_status',
     icon: Factory,
+    resource: 'orders',
   },
   {
     value: 'change-priority',
     label: 'change_priority',
     icon: ArrowUpDown,
+    resource: 'orders',
   },
   {
     value: 'change-payment',
     label: 'change_payment',
     icon: BadgeDollarSign,
+    resource: 'orders',
+  },
+  {
+    value: 'orders-categorization',
+    label: 'orders_categorization',
+    icon: Blocks,
+    resource: 'orders',
   },
 ]
