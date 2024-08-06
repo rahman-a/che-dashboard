@@ -12,13 +12,16 @@ import {
 import { DataTableColumnHeader } from '@/components/Data-Table/Data-Table-Column-Header'
 import { DataTableSimpleHeaderRender } from '@/components/Data-Table/Data-Table-Simple-Header-Render'
 import { DataTableRowActions } from '@/components/Data-Table/Data-Table-Row-Action'
+import DateTableCellContentDialog from '@/components/Data-Table/Data-Table-Cell-content-Dialog'
 import {
   CreateUpdateCategory,
+  CreateUpdateMaterial,
   CreateUpdateSize,
   CreateUpdateType,
 } from '../(components)'
 import { filterDateWithinRange } from '@/lib/utils'
-import { ToolbarOptions } from '@/types'
+import { ToolbarOptions, Material } from '@/types'
+import { materialSchema, productSchema } from '@/schema'
 import { filterByOptions } from './data'
 
 // no - image - name - description - stock - price - category - SKUs - actions
@@ -459,6 +462,153 @@ export const typesToolbarOptions: ToolbarOptions = {
     show: false,
     defaultFilterColumn: 'name',
     inputPlaceholder: 'filter_types',
+  },
+  filterByDateRange: {
+    show: false,
+  },
+  selectedRowFilter: {
+    show: false,
+  },
+  facetedFilter: {
+    show: false,
+  },
+  toggleColumn: {
+    show: true,
+  },
+}
+
+//******************* MATERIALS *******************//
+export const materialsColumns: ColumnDef<Material>[] = [
+  {
+    accessorKey: 'no',
+    header: () => <DataTableSimpleHeaderRender title='no' />,
+    cell: ({ row }) => <div className='text-xs'>{parseInt(row.id) + 1}</div>,
+    enableSorting: false,
+    enableHiding: false,
+  },
+  {
+    accessorKey: 'name',
+    header: () => <DataTableSimpleHeaderRender title='name' />,
+    cell: ({ row }) => <div className='w-28'>{row.getValue('name')}</div>,
+    enableSorting: true,
+  },
+  {
+    accessorKey: 'image',
+    header: () => <DataTableSimpleHeaderRender title='image' />,
+    cell: ({ row }) => {
+      return (
+        <div className='w-[80px]'>
+          <Image
+            width={100}
+            height={100}
+            src={row.getValue('image')}
+            alt='product image'
+          />
+        </div>
+      )
+    },
+    enableSorting: false,
+  },
+
+  {
+    accessorKey: 'description',
+    header: () => <DataTableSimpleHeaderRender title='description' />,
+    cell: ({ row }) => {
+      const value = row.getValue('description') as string
+      return <DateTableCellContentDialog content={value} />
+    },
+    enableSorting: false,
+  },
+  {
+    accessorKey: 'purchasedUnits',
+    header: ({ column }) => (
+      <DataTableColumnHeader
+        column={column}
+        title='purchased_units'
+        className='w-full lg:w-20'
+      />
+    ),
+    cell: ({ row }) => {
+      return <div className='text-center'>{row.getValue('purchasedUnits')}</div>
+    },
+    enableSorting: true,
+  },
+  {
+    accessorKey: 'pricePerUnit',
+    header: ({ column }) => (
+      <DataTableColumnHeader
+        column={column}
+        title='price_per_unit'
+        className='w-full lg:w-28 translate-x-4 rtl:translate-x-0'
+      />
+    ),
+    cell: ({ row }) => {
+      return (
+        <div className='text-center w-full'>{row.getValue('pricePerUnit')}</div>
+      )
+    },
+    enableSorting: true,
+  },
+  {
+    accessorKey: 'availableUnits',
+    header: ({ column }) => (
+      <DataTableColumnHeader
+        column={column}
+        title='available_units'
+        className='w-full lg:w-20'
+      />
+    ),
+    cell: ({ row }) => {
+      return <div className='text-center'>{row.getValue('availableUnits')}</div>
+    },
+    enableSorting: true,
+  },
+  {
+    accessorKey: 'consumedUnits',
+    header: ({ column }) => (
+      <DataTableColumnHeader
+        column={column}
+        title='consumed_units'
+        className='w-full lg:w-20'
+      />
+    ),
+    cell: ({ row }) => {
+      return <div className='text-center'>{row.getValue('consumedUnits')}</div>
+    },
+    enableSorting: true,
+  },
+  {
+    accessorKey: 'createdAt',
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title='createdAt' />
+    ),
+    cell: ({ row }) => (
+      <span>{format(new Date(row.getValue('createdAt')), 'dd/MM/yyyy')}</span>
+    ),
+    filterFn: filterDateWithinRange<Material>,
+  },
+  {
+    id: 'actions',
+    cell: ({ row }) => {
+      return (
+        <DataTableRowActions
+          resource='types'
+          row={row}
+          updateComponent={
+            <CreateUpdateMaterial mode='update' data={row.original} />
+          }
+        />
+      )
+    },
+    enableSorting: false,
+    enableHiding: false,
+  },
+]
+export const materialsToolbarOptions: ToolbarOptions = {
+  filterByOptions: {
+    show: false,
+    defaultFilterColumn: 'name',
+    inputPlaceholder: 'filter_materials',
   },
   filterByDateRange: {
     show: false,

@@ -18,6 +18,7 @@ import {
 } from '@/components/ui/chart'
 import { DateRangePicker } from './'
 import { useTranslations, useLocale } from 'next-intl'
+import { DateRange } from 'react-day-picker'
 const chartData = [
   { date: '2024-04-01', desktop: 222, mobile: 150 },
   { date: '2024-04-02', desktop: 97, mobile: 180 },
@@ -115,6 +116,7 @@ const chartData = [
 export function TotalSalesChart() {
   const [activeChart, setActiveChart] =
     React.useState<keyof typeof chartConfig>('desktop')
+  const [dateRange, setDateRange] = React.useState<DateRange | undefined>()
   const t = useTranslations()
   const locale = useLocale()
   const chartConfig = {
@@ -146,7 +148,7 @@ export function TotalSalesChart() {
           <CardDescription>{t('show_sales_last_3months')}</CardDescription>
         </div>
         <div className='flex mx-4'>
-          <DateRangePicker />
+          <DateRangePicker date={dateRange} setDate={setDateRange} />
         </div>
       </CardHeader>
       <CardContent className='px-2 sm:p-6'>

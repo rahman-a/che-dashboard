@@ -25,6 +25,10 @@ const exampleProductData = {
     type: 'percentage' as const,
   },
   shipping: 0,
+  material: {
+    name: '5',
+    usedUnits: 2,
+  },
   SKUs: [
     {
       id: '1',

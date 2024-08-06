@@ -29,10 +29,10 @@ export function ProfileDropdown({}: Props) {
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuItem className='cursor-pointer rtl:justify-end'>
-          {t('account_setting')}
+          <Link href='/staff/me'>{t('account_setting')}</Link>
         </DropdownMenuItem>
         <DropdownMenuItem className='cursor-pointer rtl:justify-end'>
-          {t('view_accounts')}
+          <Link href='/staff'>{t('view_accounts')}</Link>
         </DropdownMenuItem>
         <DropdownMenuSeparator />
         <DropdownMenuItem className='cursor-pointer rtl:justify-end'>

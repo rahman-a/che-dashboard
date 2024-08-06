@@ -28,9 +28,9 @@ export function CustomerAddresses({ addresses }: Props) {
         </Button>
       </SheetTrigger>
       <SheetContent className='h-[calc(100vw-0)] overflow-y-auto w-full sm:max-w-xl'>
-      <div className='flex flex-col space-y-6 [&>div:not(:last)]:'>
-          {addresses.map((address:CustomerAddress) => (
-            <CustomerShippingAddress data={address} key={address.id} />
+        <div className='flex flex-col space-y-6 mt-4'>
+          {addresses.map((address: CustomerAddress) => (
+            <CustomerShippingAddress data={address} key={address.id} isEdit />
           ))}
         </div>
         <SheetFooter>

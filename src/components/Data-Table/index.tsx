@@ -90,7 +90,8 @@ export function DataTable<TData, TValue>({
                       [&:has(>.order-status-head)]:text-center
                       [&:has(>.order-priority-head)]:text-center
                       [&:has(>.order-payment-head)]:text-center
-                      [&:has(>.order-total-head)]:rtl:translate-x-2'
+                      [&:has(>.order-total-head)]:rtl:translate-x-2
+                      [&_span]:whitespace-normal'
                       key={header.id}
                       colSpan={header.colSpan}
                     >

@@ -1,3 +1,4 @@
+'use client'
 import React from 'react'
 import {
   Table,
@@ -18,17 +19,68 @@ import { Eye } from 'lucide-react'
 import Link from 'next/link'
 import { Button } from '../ui/button'
 import orders from '@/demo/data/orders.json'
-import { useTranslations } from 'next-intl'
+import { useLocale, useTranslations } from 'next-intl'
 import { TranslationKeys } from '@/types'
+
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select'
+import { getLangDir } from 'rtl-detect'
+import { DateRangePicker } from '../Date-Range-Picker'
+import { DateRange } from 'react-day-picker'
 
 type Props = {}
 
 export function RecentOrdersTable({}: Props) {
+  const [tableType, setTableType] = React.useState<string>('orders')
+  const [dateRange, setDateRange] = React.useState<DateRange | undefined>()
   const t = useTranslations()
+  const locale = useLocale()
   return (
     <Card>
       <CardHeader>
-        <CardTitle>{t('recent_orders')}</CardTitle>
+        <div className='flex items-center justify-between'>
+          <CardTitle>{t('recent_orders')}</CardTitle>
+          <div className='flex flex-col space-y-2 lg:space-y-0 lg:flex-row items-center lg:space-x-2 rtl:space-x-reverse'>
+            <Select
+              onValueChange={setTableType}
+              defaultValue={tableType}
+              dir={getLangDir(locale)}
+            >
+              <SelectTrigger className='w-full lg:w-[90px]'>
+                <SelectValue placeholder={t('orders')} />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectGroup>
+                  <SelectItem value='orders' defaultChecked>
+                    {t('orders')}
+                  </SelectItem>
+                  <SelectItem value='pieces'>{t('pieces')}</SelectItem>
+                </SelectGroup>
+              </SelectContent>
+            </Select>
+            <div className='flex lg:mx-4'>
+              <DateRangePicker
+                className='hidden lg:block'
+                date={dateRange}
+                setDate={setDateRange}
+              />
+            </div>
+          </div>
+        </div>
+        <div className='flex lg:mx-4'>
+          <DateRangePicker
+            className='block lg:hidden'
+            date={dateRange}
+            setDate={setDateRange}
+          />
+        </div>
       </CardHeader>
       <CardContent>
         <Table className='border-separate w-full overflow-x-auto'>

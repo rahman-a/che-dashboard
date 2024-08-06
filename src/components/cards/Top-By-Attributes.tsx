@@ -18,6 +18,8 @@ import Link from 'next/link'
 import { type TopAttributes } from '@/types/stat-cards'
 import { cn } from '@/lib/utils'
 import { useTranslations } from 'next-intl'
+import { DateRangePicker } from '../Date-Range-Picker'
+import { DateRange } from 'react-day-picker'
 
 type TopByAttributesType = 'top-categories' | 'top-sizes'
 
@@ -29,13 +31,21 @@ type Props = {
 }
 
 export function TopByAttributes({ data, className, tableHeads }: Props) {
+  const [dateRange, setDateRange] = React.useState<DateRange | undefined>()
   const t = useTranslations()
   return (
     <Card className={cn(className)}>
-      <CardHeader>
+      <CardHeader className='flex lg:flex-row items-center justify-between'>
         <CardTitle className='text-xl text-gray-700 font-medium'>
           {t(data.title)}
         </CardTitle>
+        <div className='flex mx-4 w-60'>
+          <DateRangePicker
+            date={dateRange}
+            setDate={setDateRange}
+            className='w-full [&>button]:w-full'
+          />
+        </div>
       </CardHeader>
       <CardContent>
         <Table className='border-separate'>

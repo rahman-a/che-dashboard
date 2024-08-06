@@ -27,6 +27,7 @@ import {
 import { ProductImages, ProductSKUs } from '.'
 import { RequiredAsterisk, SimpleRichTextEditor } from '@/components'
 import { Label } from '@/components/ui/label'
+import { materials } from '@/demo/data/materials'
 
 type Product = z.infer<ReturnType<typeof productSchema>>
 
@@ -48,6 +49,10 @@ export function ProductForm({ mode, data }: IProductFormProps) {
       price: data?.price || 0,
       discount: data?.discount || { value: 0, type: 'amount' },
       stock: data?.stock || 0,
+      material: data?.material || {
+        name: '',
+        usedUnits: 0,
+      },
       SKUs: data?.SKUs || [
         {
           id: uuid(),
@@ -118,6 +123,7 @@ export function ProductForm({ mode, data }: IProductFormProps) {
             {/* Product Details [Name - Abbreviation - Description] */}
             <div className='flex flex-col space-y-5 bg-gray-100 p-4 rounded-lg'>
               <div className='flex flex-col md:flex-row justify-between gap-4'>
+                {/* PRODUCT NAME */}
                 <FormField
                   control={form.control}
                   name='name'
@@ -137,6 +143,7 @@ export function ProductForm({ mode, data }: IProductFormProps) {
                     </FormItem>
                   )}
                 />
+                {/* PRODUCT ABBR */}
                 <FormField
                   control={form.control}
                   name='abbr'
@@ -158,6 +165,7 @@ export function ProductForm({ mode, data }: IProductFormProps) {
                 />
               </div>
               <div className='flex items-center justify-between gap-4'>
+                {/* PRODUCT DETAILS */}
                 <FormField
                   control={form.control}
                   name='details'
@@ -179,10 +187,70 @@ export function ProductForm({ mode, data }: IProductFormProps) {
                 />
               </div>
             </div>
+            {/* Product Materials [Name - Used units - Cost] */}
+            <div className='flex flex-col space-y-5 bg-gray-100 p-4 rounded-lg'>
+              <div className='flex flex-col md:flex-row justify-between gap-4'>
+                {/* PRODUCT MATERIAL NAME */}
+                <FormField
+                  control={form.control}
+                  name='material.name'
+                  render={({ field }) => (
+                    <FormItem className='w-full'>
+                      <FormLabel htmlFor='name'>
+                        {t('material_name')}
+                        <RequiredAsterisk />
+                      </FormLabel>
+                      <FormControl>
+                        <Select
+                          onValueChange={field.onChange}
+                          defaultValue={field.value}
+                          dir={getLangDir(locale)}
+                        >
+                          <SelectTrigger
+                            className='rounded-s-none rtl:rounded-e-none 
+                          rtl:rounded-s-md focus:ring-0 focus:ring-offset-0'
+                          >
+                            <SelectValue
+                              placeholder={t('choose_material_name')}
+                            />
+                          </SelectTrigger>
+                          <SelectContent>
+                            {materials.map((material) => (
+                              <SelectItem key={material.id} value={material.id}>
+                                {material.name}
+                              </SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                {/* PRODUCT MATERIAL USED UNITS */}
+                <FormField
+                  control={form.control}
+                  name='material.usedUnits'
+                  render={({ field }) => (
+                    <FormItem className='w-full'>
+                      <FormLabel>{t('material_used_units')}</FormLabel>
+                      <FormControl>
+                        <Input
+                          {...field}
+                          placeholder={t('define_materials_used_units')}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
+            </div>
             {/* Product Details [Category - Price - Discount - Shipping - Stock] */}
             <div className='flex flex-col space-y-5 bg-gray-100 p-4 rounded-lg'>
               <div className='flex flex-col space-y-4'>
                 <div className='flex flex-col md:flex-row gap-4'>
+                  {/* PRODUCT CATEGORY */}
                   <FormField
                     control={form.control}
                     name='category'
@@ -226,6 +294,7 @@ export function ProductForm({ mode, data }: IProductFormProps) {
                       </FormItem>
                     )}
                   />
+                  {/* PRODUCT PRICE */}
                   <FormField
                     control={form.control}
                     name='price'
@@ -252,6 +321,7 @@ export function ProductForm({ mode, data }: IProductFormProps) {
                   />
                 </div>
                 <div className='flex flex-col md:flex-row items-center gap-4'>
+                  {/* PRODUCT DISCOUNT */}
                   <div className='w-full lg:w-6/12 flex flex-col space-y-3'>
                     <Label>{t('discount')}</Label>
                     <div className='w-full flex relative items-center'>
@@ -305,6 +375,7 @@ export function ProductForm({ mode, data }: IProductFormProps) {
                       />
                     </div>
                   </div>
+                  {/* PRODUCT STOCK STATUS */}
                   <FormField
                     control={form.control}
                     name='stock'

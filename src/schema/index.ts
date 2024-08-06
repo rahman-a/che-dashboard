@@ -1,6 +1,7 @@
 import { z } from 'zod'
 import { MAX_FILE_SIZE, ACCEPTED_IMAGE_TYPES } from '@/constants'
 import { type UseTranslationsType } from '@/types'
+import { type Value } from 'react-phone-number-input'
 import { addDays } from 'date-fns'
 
 export const customerAddressSchema = (t: UseTranslationsType) =>
@@ -132,6 +133,12 @@ export const productSchema = (t: UseTranslationsType) =>
       }),
     abbr: z.string().min(2, {
       message: t('min_characters', { count: 2, name: t('abbr') }),
+    }),
+    material: z.object({
+      name: z.string().min(1, {
+        message: t('required_value'),
+      }),
+      usedUnits: z.coerce.number().default(0),
     }),
     details: z
       .string()
@@ -298,6 +305,77 @@ export const couponsSchema = (t: UseTranslationsType) =>
       .date()
       .default(() => addDays(new Date(), 7))
       .or(z.string()),
+    createdAt: z
+      .date()
+      .default(() => new Date())
+      .or(z.string()),
+  })
+
+export const materialSchema = (t: UseTranslationsType) =>
+  z.object({
+    id: z.string().optional(),
+    name: z.string().min(1, { message: t('required_value') }),
+    description: z.string().optional(),
+    purchasedUnits: z.coerce
+      .number()
+      .positive({
+        message: t('positive_value_required'),
+      })
+      .default(0),
+    pricePerUnit: z.coerce
+      .number()
+      .positive({
+        message: t('positive_value_required'),
+      })
+      .default(0),
+    totalPrice: z.coerce.number().default(0),
+    availableUnits: z.coerce.number().default(0),
+    consumedUnits: z.coerce.number().default(0),
+    image: z
+      .any()
+      .optional()
+      .superRefine((image, ctx) => {
+        if (!image) return true
+        if (typeof image === 'string') return true
+        if (image.size > MAX_FILE_SIZE)
+          return ctx.addIssue({
+            code: z.ZodIssueCode.custom,
+            message: t('file_too_large'),
+          })
+
+        if (!ACCEPTED_IMAGE_TYPES.includes(image.type))
+          return ctx.addIssue({
+            code: z.ZodIssueCode.custom,
+            message: `${t('file_type_not_allowed')} [${image.name}]`,
+          })
+      }),
+    createdAt: z
+      .date()
+      .default(() => new Date())
+      .or(z.string()),
+  })
+
+export const staffSchema = (t: UseTranslationsType) =>
+  z.object({
+    id: z.string().optional(),
+    name: z.string().min(1, { message: t('required_value') }),
+    email: z
+      .string()
+      .email({
+        message: t('provide_valid_email'),
+      })
+      .min(1, { message: t('required_value') }),
+    phone: z.custom<Value>().refine((value) => value.length > 6, {
+      message: t('min_characters', { count: 6, name: t('phone') }),
+      path: ['phone'],
+    }),
+    country: z.string().min(1, { message: t('required_value') }),
+    address: z.string().optional(),
+    password: z.string().min(8, {
+      message: t('min_characters', { count: 8, name: t('password') }),
+    }),
+    role: z.enum(['manager', 'employee']).default('employee'),
+    status: z.enum(['active', 'inactive']).default('active'),
     createdAt: z
       .date()
       .default(() => new Date())

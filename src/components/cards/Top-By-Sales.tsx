@@ -21,6 +21,8 @@ import Image from 'next/image'
 import { type CardStats } from '@/types/stat-cards'
 import { cn } from '@/lib/utils'
 import { useTranslations } from 'next-intl'
+import { DateRangePicker } from '../Date-Range-Picker'
+import { DateRange } from 'react-day-picker'
 
 type TopBySalesType =
   | 'top-customer-by-sales'
@@ -36,6 +38,7 @@ type Props = {
 }
 
 export function TopBySales({ data, type, tableHeads, className }: Props) {
+  const [dateRange, setDateRange] = React.useState<DateRange | undefined>()
   const t = useTranslations()
 
   const renderValue = (value: number | string) => {
@@ -46,10 +49,17 @@ export function TopBySales({ data, type, tableHeads, className }: Props) {
   }
   return (
     <Card className={cn('flex flex-col', className)}>
-      <CardHeader>
+      <CardHeader className='flex lg:flex-row items-center justify-between'>
         <CardTitle className='text-xl text-gray-700 font-medium'>
           {t(data.title)}
         </CardTitle>
+        <div className='flex mx-4 w-60'>
+          <DateRangePicker
+            date={dateRange}
+            setDate={setDateRange}
+            className='w-full [&>button]:w-full'
+          />
+        </div>
       </CardHeader>
       <CardContent>
         <div className='w-full flex items-center justify-center pt-5 pb-8 space-x-8 rtl:space-x-reverse'>

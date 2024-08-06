@@ -59,7 +59,7 @@ export function DataTableToolbar<TData>({
                     key={filter.column}
                     column={table.getColumn(filter.column)}
                     title={filter.column}
-                    options={filter.options}
+                    options={filter.options ?? []}
                   />
                 )
             )}

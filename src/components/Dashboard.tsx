@@ -1,3 +1,4 @@
+'use client'
 import React from 'react'
 import { Activity, CreditCard, DollarSign, Filter, Users } from 'lucide-react'
 import { SmallStatCard, TotalSalesChart, DateRangePicker } from '@/components'
@@ -14,11 +15,14 @@ import {
   topSizes,
 } from '@/demo/data'
 import { getTranslations } from 'next-intl/server'
+import { DateRange } from 'react-day-picker'
+import { useTranslations } from 'next-intl'
 
 type Props = {}
 
-export async function Dashboard({}: Props) {
-  const t = await getTranslations()
+export function Dashboard({}: Props) {
+  const t = useTranslations()
+  const [dateRange, setDateRange] = React.useState<DateRange | undefined>()
   return (
     <div
       className='flex flex-col space-y-5 flex-1 items-start rounded-lg py-4 px-2 
@@ -26,7 +30,7 @@ export async function Dashboard({}: Props) {
       x-chunk='dashboard-02-chunk-1'
     >
       <section className='flex items-center space-x-2 rtl:space-x-reverse justify-end w-full'>
-        <DateRangePicker />
+        <DateRangePicker date={dateRange} setDate={setDateRange} />
         <Button size='icon' variant='outline'>
           <Filter className='h-4 w-4' />
         </Button>
@@ -36,24 +40,28 @@ export async function Dashboard({}: Props) {
           title={t('total_revenue')}
           value='$45,231.89'
           state={`+20.1% ${t('from_last_month')}`}
+          type='revenue'
           icon={<DollarSign className='h-4 w-4 text-muted-foreground' />}
         />
         <SmallStatCard
           title={t('customers')}
           value='+2350'
           state={`+180.1% ${t('from_last_month')}`}
+          type='customers'
           icon={<Users className='h-4 w-4 text-muted-foreground' />}
         />
         <SmallStatCard
           title={t('sales')}
           value='+12,234'
           state={`+19% ${t('from_last_month')}`}
+          type='sales'
           icon={<CreditCard className='h-4 w-4 text-muted-foreground' />}
         />
         <SmallStatCard
           title={t('orders')}
           value='+573'
           state={`+25 ${t('last_24h')}`}
+          type='orders'
           icon={<Activity className='h-4 w-4 text-muted-foreground' />}
         />
       </section>

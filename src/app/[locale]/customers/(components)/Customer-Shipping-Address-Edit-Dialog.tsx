@@ -14,24 +14,24 @@ import { useTranslations } from 'next-intl'
 import { CustomerShippingAddressEdit } from '@/components/Customers'
 import { CustomerAddress } from '@/types'
 export interface ICustomerShippingAddressDialogEditProps {
-    data:CustomerAddress
+  data: CustomerAddress
 }
 
-export function CustomerShippingAddressEditDialog(
-  {data}: ICustomerShippingAddressDialogEditProps
-) {
+export function CustomerShippingAddressEditDialog({
+  data,
+}: ICustomerShippingAddressDialogEditProps) {
   const t = useTranslations()
   return (
     <Dialog>
       <DialogTrigger asChild>
-          <Button
-            type='button'
-            variant='outline'
-            className='px-2 w-16 rtl:w-20 justify-between'
-          >
-            <Edit size={12} />
-            <span>{t("edit")}</span>
-          </Button>
+        <Button
+          type='button'
+          variant='outline'
+          className='px-2 w-16 rtl:w-20 justify-between'
+        >
+          <Edit size={12} />
+          <span>{t('edit')}</span>
+        </Button>
       </DialogTrigger>
       <DialogContent
         onClick={(e) => e.stopPropagation()}
@@ -42,7 +42,7 @@ export function CustomerShippingAddressEditDialog(
             <p>{t('edit_shipping_address')}</p>
           </DialogTitle>
         </DialogHeader>
-        <CustomerShippingAddressEdit data={data}/>
+        <CustomerShippingAddressEdit data={data} />
         <DialogFooter className='flex-row justify-end space-x-2'>
           <DialogClose asChild>
             <Button type='button' variant='secondary'>

@@ -3,10 +3,12 @@ import {
   couponsSchema,
   customerAddressSchema,
   customerSchema,
+  materialSchema,
   offerSchema,
   orderProductSchema,
   orderSchema,
   productSchema,
+  staffSchema,
 } from '@/schema'
 import { MessageKeys, useTranslations } from 'next-intl'
 
@@ -17,6 +19,8 @@ export type Order = z.infer<ReturnType<typeof orderSchema>>
 export type OrderProduct = z.infer<ReturnType<typeof orderProductSchema>>
 export type Offer = z.infer<ReturnType<typeof offerSchema>>
 export type Coupon = z.infer<ReturnType<typeof couponsSchema>>
+export type Material = z.infer<ReturnType<typeof materialSchema>>
+export type Staff = z.infer<ReturnType<typeof staffSchema>>
 export type TranslationKeys = MessageKeys<IntlMessages, keyof IntlMessages>
 
 export type ResourceTypes =
@@ -27,7 +31,7 @@ export type ResourceTypes =
   | 'types'
   | 'statuses'
   | 'customers'
-  | 'users'
+  | 'staff'
   | 'offers'
   | 'coupons'
   | 'invoices'
@@ -42,11 +46,15 @@ export type AddressTypes = 'home' | 'office' | 'other'
 export type OrderStates = 'completed' | 'uncompleted' | 'canceled' | 'returned'
 export type UseTranslationsType = ReturnType<typeof useTranslations>
 export type ComponentFormMode = 'create' | 'edit' | 'view'
+export type FacetedFilterOption = {
+  column: TranslationKeys
+  options: TableFilterOptionsTypes[]
+}
 
 export type TableFilterOptionsTypes = {
   value: string
   label: TranslationKeys
-  icon: React.ComponentType<{ className?: string }>
+  icon?: React.ComponentType<{ className?: string }>
   color?: string
   resource?: ResourceTypes
 }
@@ -65,7 +73,7 @@ export type ToolbarOptions = {
   }
   facetedFilter: {
     show: boolean
-    data?: { column: TranslationKeys; options: TableFilterOptionsTypes[] }[]
+    data?: FacetedFilterOption[]
   }
   selectedRowFilter: {
     show: boolean

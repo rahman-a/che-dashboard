@@ -17,16 +17,17 @@ import {
 import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover'
 import { Separator } from '../ui/separator'
 import { useTranslations } from 'next-intl'
-import { StatusLabelTypes, TranslationKeys } from '@/types'
+import {
+  FacetedFilterOption,
+  StatusLabelTypes,
+  TableFilterOptionsTypes,
+  TranslationKeys,
+} from '@/types'
 
 interface DataTableFacetedFilterProps<TData, TValue> {
   column?: Column<TData, TValue>
   title?: TranslationKeys
-  options: {
-    label: TranslationKeys
-    value: string
-    icon?: React.ComponentType<{ className?: string }>
-  }[]
+  options: TableFilterOptionsTypes[]
 }
 
 export function DataTableFacetedFilter<TData, TValue>({
@@ -35,9 +36,8 @@ export function DataTableFacetedFilter<TData, TValue>({
   options,
 }: DataTableFacetedFilterProps<TData, TValue>) {
   const t = useTranslations()
-  const facets = column?.getFacetedUniqueValues()
+  const facets = column?.getFacetedUniqueValues() as Map<string, number>
   const selectedValues = new Set(column?.getFilterValue() as string[])
-
   return (
     <Popover>
       <PopoverTrigger asChild>
@@ -87,7 +87,7 @@ export function DataTableFacetedFilter<TData, TValue>({
         <Command>
           {/* <CommandInput placeholder={title} /> */}
           <CommandList>
-            <CommandEmpty>No results found.</CommandEmpty>
+            <CommandEmpty>{t('no_result_found')}</CommandEmpty>
             <CommandGroup>
               {options.map((option) => {
                 const isSelected = selectedValues.has(option.value)
@@ -120,7 +120,7 @@ export function DataTableFacetedFilter<TData, TValue>({
                       <option.icon className='mr-2 rtl:ml-2  h-4 w-4 text-muted-foreground' />
                     )}
                     <span>{t(option.label)}</span>
-                    {facets?.get(option.value) && (
+                    {facets?.get(option.value.toLocaleLowerCase()) && (
                       <span className='ml-auto rtl:mr-auto rtl:ml-0 flex h-4 w-4 items-center justify-center font-mono text-xs'>
                         {facets.get(option.value)}
                       </span>

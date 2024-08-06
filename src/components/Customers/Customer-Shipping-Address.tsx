@@ -16,6 +16,7 @@ type Props = {
   isSelect?: boolean
   title?: string
   className?: string
+  isEdit?: boolean
 }
 
 export function CustomerShippingAddress({
@@ -24,6 +25,7 @@ export function CustomerShippingAddress({
   data,
   addresses,
   isSelect,
+  isEdit,
 }: Props) {
   const t = useTranslations()
   const [isSelected, setIsSelected] = React.useState(false)
@@ -63,7 +65,7 @@ export function CustomerShippingAddress({
               )}
             </ul>
           )}
-          <CustomerShippingAddressEditDialog data={data}/>
+          {isEdit && <CustomerShippingAddressEditDialog data={data} />}
         </div>
         {isSelect && (
           <Button

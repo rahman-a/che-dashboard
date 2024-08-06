@@ -6,6 +6,7 @@ import {
   BadgePercent,
   Blocks,
   BookType,
+  BrickWall,
   CircleOff,
   FilePlus,
   Home,
@@ -212,6 +213,17 @@ export function NavigationItems({}: Props) {
               >
                 <BookType className='h-5 w-5 md:h-4 md:w-4' />
                 {t('types')}
+              </Link>
+            </MenubarItem>
+            <MenubarItem asChild>
+              <Link
+                href='/products/materials'
+                className='w-full mx-[-0.65rem] md:mx-0 flex items-center rtl:flex-row-reverse gap-4 md:gap-4 
+                rounded-xl md:rounded-lg px-3 py-2 text-muted-foreground 
+                md:transition-all hover:text-foreground md:hover:text-primary cursor-pointer'
+              >
+                <BrickWall className='h-5 w-5 md:h-4 md:w-4' />
+                {t('materials')}
               </Link>
             </MenubarItem>
           </MenubarContent>
